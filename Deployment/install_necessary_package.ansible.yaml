@@ -1,0 +1,22 @@
+---
+- hosts: ml-compute-engine
+  become: yes
+  name: Install necessary package
+  tasks:
+    - name: Install git
+      ansible.builtin.apt:
+        name:
+          - git
+    - name: Install python venv setup
+      ansible.builtin.apt:
+        name:
+          - python3-venv
+    - name: Install python pip module
+      ansible.builtin.apt:
+        name:
+          - python3-pip
+    - name: Install virtual env through pip
+      ansible.builtin.pip:
+        name:
+          - virtualenv
+        executable: pip3

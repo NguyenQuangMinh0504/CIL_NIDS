@@ -1,0 +1,9 @@
+---
+- hosts: ml-compute-engine
+  become: yes
+  tasks: 
+    - name: Create the virtual environment 
+      ansible.builtin.pip:
+        requirements: /opt/Thesis/Code/requirements.txt
+        virtualenv: /opt/Thesis/venv
+        virtualenv_python: python3

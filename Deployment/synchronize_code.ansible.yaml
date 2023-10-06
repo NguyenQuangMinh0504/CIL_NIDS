@@ -1,0 +1,12 @@
+---
+- hosts: ml-compute-engine
+  become: yes
+  name: Synchronize code
+  tasks:
+    - name: Pulling code from github
+      ansible.builtin.git:
+        repo: https://github.com/NguyenQuangMinh0504/Thesis
+        dest: /opt/Thesis
+        update: yes
+        clone: yes
+        force: yes
