@@ -139,11 +139,11 @@ def submit(data,key,no,source_file=None):
 
 from tensorflow.keras.utils import get_file
 
-try:
-    path = get_file('kddcup.data_10_percent.gz', origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
-except:
-    print('Error downloading')
-    raise
+# try:
+#     path = get_file('kddcup.data_10_percent.gz', origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
+# except:
+#     print('Error downloading')
+#     raise
 
 path = "/home/nguyenquangminh/kdd.data_10_percent"
 
