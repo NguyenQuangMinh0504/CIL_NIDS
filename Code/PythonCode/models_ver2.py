@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import requests
+import tensorflow as tf
 from sklearn import preprocessing
 
 
@@ -136,7 +137,7 @@ def submit(data,key,no,source_file=None):
     else: print("Failure: {}".format(r.text))
 
 
-from keras.utils.data_utils import get_file
+from tensorflow.keras.utils import get_file
 
 try:
     path = get_file('kddcup.data_10_percent.gz', origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
