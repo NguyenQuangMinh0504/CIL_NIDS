@@ -145,7 +145,7 @@ from tensorflow.keras.utils import get_file
 #     print('Error downloading')
 #     raise
 
-path = "/home/nguyenquangminh/kdd.data_10_percent"
+path = "/home/nguyenquangminh/kddcup.data_10_percent"
 
 # This file is a CSV, just no CSV extension or headers
 # Download from: http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html
