@@ -7,6 +7,10 @@ import pandas as pd
 import requests
 import tensorflow as tf
 from sklearn import preprocessing
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Activation
+# from keras.models import Sequential
+# from keras.layers.core import Dense, Activation
 
 
 # Encode text values to dummy variables(i.e. [1,0,0],[0,1,0],[0,0,1] for red,green,blue)
@@ -302,8 +306,7 @@ import numpy as np
 import os
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
-from keras.models import Sequential
-from keras.layers.core import Dense, Activation
+
 from keras.callbacks import EarlyStopping
 
 # Break into X (predictors) & y (prediction)
