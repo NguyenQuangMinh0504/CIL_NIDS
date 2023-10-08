@@ -2,3 +2,5 @@ pandas
 tensorflow
 scikit-learn
 matplotlib
+torch
+torchvision
