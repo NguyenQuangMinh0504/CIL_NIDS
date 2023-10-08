@@ -5,3 +5,7 @@ matplotlib
 torch
 torchvision
 tqdm
+POT
+quadprog
+numpy
+scipy
