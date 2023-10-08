@@ -7,3 +7,4 @@
         requirements: /opt/Thesis/Code/requirements.txt
         virtualenv: /opt/Thesis/venv
         virtualenv_python: python3
+        extra_args: --no-cache-dir
