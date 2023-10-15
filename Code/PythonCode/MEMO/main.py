@@ -8,8 +8,10 @@ def setup_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def get_convnet():
-    pass
+def get_convnet(convnet_type: str, pretrained: bool = False):
+    name = convnet_type.lower()
+    if name == "memo_resnet32":
+        _basenet, _adaptive_net = 
 
 
 class BaseLeaner(object):
@@ -24,6 +26,7 @@ class MEMO(BaseLeaner):
     def __init__(self, args):
         super().__init__(args)
         self._old_base = None
+        self._network = AdaptiveNet(args["convnet_type"], False)
 
 
 class BaseNet(nn.Module):
