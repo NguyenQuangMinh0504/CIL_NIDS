@@ -1,0 +1,18 @@
+2023-10-16 18:41:19,773 [trainer.py] => Time Str >>> 1016-18-41-19-773
+2023-10-16 18:41:19,774 [trainer.py] => memory_per_class: 20
+2023-10-16 18:41:19,774 [trainer.py] => fixed_memory: False
+2023-10-16 18:41:19,774 [trainer.py] => shuffle: True
+2023-10-16 18:41:19,774 [trainer.py] => model_name: memo
+2023-10-16 18:41:19,774 [trainer.py] => seed: 1993
+2023-10-16 18:41:19,774 [trainer.py] => dataset: cifar100
+2023-10-16 18:41:19,774 [trainer.py] => init_cls: 10
+2023-10-16 18:41:19,774 [trainer.py] => increment: 10
+2023-10-16 18:41:19,774 [trainer.py] => convnet_type: resnet32
+2023-10-16 18:41:19,775 [trainer.py] => prefix: benchmark
+2023-10-16 18:41:19,775 [trainer.py] => device: [device(type='cuda', index=0), device(type='cuda', index=1), device(type='cuda', index=2), device(type='cuda', index=3)]
+2023-10-16 18:41:19,775 [trainer.py] => debug: False
+2023-10-16 18:41:19,775 [trainer.py] => config: ./exps/memo.json
+2023-10-16 18:41:19,775 [trainer.py] => time_str: 1016-18-41-19-773
+2023-10-16 18:41:19,775 [trainer.py] => exp_name: 1016-18-41-19-773_cifar100_resnet32_1993_B0_Inc10
+2023-10-16 18:41:19,775 [trainer.py] => logfilename: logs/benchmark/cifar100/memo/1016-18-41-19-773_cifar100_resnet32_1993_B0_Inc10
+2023-10-16 18:41:19,775 [trainer.py] => csv_name: cifar100_1993_resnet32_B0_Inc10
