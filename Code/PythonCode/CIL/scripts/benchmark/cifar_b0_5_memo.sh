@@ -3,4 +3,4 @@ python3.9 main_memo.py \
     -init 5 \
     -incre 5 \
     -net memo_resnet32 \
-    --dataset cifar10 \
+    --dataset cifar100 \

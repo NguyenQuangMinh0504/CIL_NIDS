@@ -54,7 +54,6 @@ def train(args):
 def main():
     args = setup_parser().parse_args()
     args = vars(args)
-    print(args)
     train(args=args)
 
 

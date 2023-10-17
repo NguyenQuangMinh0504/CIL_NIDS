@@ -1,0 +1,24 @@
+{
+  "config": "./exps/memo.json",
+  "convnet_type": "memo_resnet32",
+  "csv_name": "cifar10_1993_memo_resnet32_B0_Inc5",
+  "dataset": "cifar10",
+  "debug": false,
+  "device": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "exp_name": "1016-21-49-50-330_cifar10_memo_resnet32_1993_B0_Inc5",
+  "fixed_memory": false,
+  "increment": 5,
+  "init_cls": 5,
+  "logfilename": "logs/benchmark/cifar10/memo/1016-21-49-50-330_cifar10_memo_resnet32_1993_B0_Inc5",
+  "memory_per_class": 20,
+  "model_name": "memo",
+  "prefix": "benchmark",
+  "seed": 1993,
+  "shuffle": true,
+  "time_str": "1016-21-49-50-330"
+}

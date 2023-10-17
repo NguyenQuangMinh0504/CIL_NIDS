@@ -3,9 +3,12 @@ import datetime
 import os
 import json
 import logging
+import time
 
 import torch
+from utils import factory
 from utils.data_manager import DataManager
+from utils.toolkit import count_parameters
 
 
 def train(args: dict):
@@ -73,6 +76,16 @@ def _train(args: dict):
                                seed=args["seed"],
                                init_cls=args["init_cls"],
                                increment=args["increment"])
+    model = factory.get_model(model_name=args["model_name"], args=args)
+    cnn_curve, nme_curve, no_nme = {"top1": [], "top5": []}, {"top1": [], "top5": []}, True
+    start_time = time.time()
+    logging.info(f"Start time:{start_time}")
+    count_parameters(model=model._network)
+    for task in range(data_manager.nb_tasks):
+        logging.info("All params: {}".format(count_parameters(model=model._network, trainable=True)))
+        logging.info("Trainable params: {}".format(count_parameters(model=model._network, trainable=True)))
+        model.incremental_training(data_manager=data_manager)
+
 
 
 def _set_device(args: dict):
