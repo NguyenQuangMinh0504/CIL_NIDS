@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torch.nn import functional as F
 import logging
 
 
@@ -9,4 +10,15 @@ class SimpleLinear(nn.Module):
         self.in_features = in_features
         self.out_features = out_features
         self.weight = nn.Parameter(torch.Tensor(out_features, in_features))
-        logging.info(self.weight)
+        if bias:
+            self.bias = nn.Parameter(torch.Tensor(out_features))
+        else:
+            self.register_parameter("bias", None)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        nn.init.kaiming_uniform_(self.weight, nonlinearity="linear")
+        nn.init.constant_(self.bias, 0)
+
+    def forward(self, input):
+        return {"logits": F.linear(input, self.weight, self.bias)}

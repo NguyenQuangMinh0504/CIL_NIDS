@@ -91,7 +91,7 @@ class SpecializedResNet_cifar(nn.Module):
     def _make_layer(self, block: Type[ResnetBasicblock], planes, blocks, stride=2):
         downsample = None
         if stride != 1 or self.inplanes != planes * block.expansion:
-            downsample = DownsampleA(nIn=self.inplanes, nOut=planes * block.expansion, stride=str)
+            downsample = DownsampleA(nIn=self.inplanes, nOut=planes * block.expansion, stride=stride)
         layers = []
         layers.append(block(inplanes=self.inplanes, planes=planes, stride=stride, downsample=downsample))
         self.inplanes = planes * block.expansion

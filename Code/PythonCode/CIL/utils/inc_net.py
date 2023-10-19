@@ -36,6 +36,7 @@ class AdaptiveNet(nn.Module):
         return self.output_dim*len(self.AdaptiveExtractor)
 
     def update_fc(self, nb_classes):
+        """Get specialize extractor -> """
         _, _new_extractor = get_convnet(self.convnet_type)
         if len(self.AdaptiveExtractor) == 0:
             self.AdaptiveExtractor.append(_new_extractor)
