@@ -34,6 +34,20 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument("--train_base", action="store_true")
     parser.add_argument("--train_adaptive", action="store_true")
 
+    # init
+    parser.add_argument("--scheduler", type=str, default="steplr", choices=["steplr", "cosine"])
+    parser.add_argument("--t_max", type=int, default=None)
+
+    # update
+    parser.add_argument("--epochs", type=int, default=170)
+    parser.add_argument("--milestones", type=int, default=[80, 120, 150])
+    parser.add_argument("--lrate_decay", type=float, default=0.1)
+    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--lrate", type=float, default=0.1)
+    parser.add_argument("--weight_decay", type=float, default=2e-4)
+
+    parser.add_argument("--alpha_aux", type=float, default=1.0)
+
     return parser
 
 

@@ -1,0 +1,189 @@
+2023-10-19 15:27:39,354 [trainer.py] => Time Str >>> 1019-15-27-39-354
+2023-10-19 15:27:39,355 [trainer.py] => memory_per_class: 20
+2023-10-19 15:27:39,355 [trainer.py] => fixed_memory: False
+2023-10-19 15:27:39,355 [trainer.py] => shuffle: True
+2023-10-19 15:27:39,355 [trainer.py] => model_name: memo
+2023-10-19 15:27:39,355 [trainer.py] => seed: 1993
+2023-10-19 15:27:39,355 [trainer.py] => dataset: cifar100
+2023-10-19 15:27:39,355 [trainer.py] => init_cls: 5
+2023-10-19 15:27:39,355 [trainer.py] => increment: 5
+2023-10-19 15:27:39,355 [trainer.py] => convnet_type: memo_resnet32
+2023-10-19 15:27:39,355 [trainer.py] => prefix: benchmark
+2023-10-19 15:27:39,355 [trainer.py] => device: [device(type='cpu')]
+2023-10-19 15:27:39,355 [trainer.py] => debug: False
+2023-10-19 15:27:39,355 [trainer.py] => train_base: False
+2023-10-19 15:27:39,355 [trainer.py] => train_adaptive: False
+2023-10-19 15:27:39,355 [trainer.py] => scheduler: steplr
+2023-10-19 15:27:39,355 [trainer.py] => t_max: None
+2023-10-19 15:27:39,355 [trainer.py] => epochs: 170
+2023-10-19 15:27:39,355 [trainer.py] => milestones: [80, 120, 150]
+2023-10-19 15:27:39,355 [trainer.py] => lrate_decay: 0.1
+2023-10-19 15:27:39,355 [trainer.py] => batch_size: 128
+2023-10-19 15:27:39,355 [trainer.py] => lrate: 0.1
+2023-10-19 15:27:39,355 [trainer.py] => weight_decay: 0.0002
+2023-10-19 15:27:39,355 [trainer.py] => config: ./exps/memo.json
+2023-10-19 15:27:39,355 [trainer.py] => time_str: 1019-15-27-39-354
+2023-10-19 15:27:39,355 [trainer.py] => exp_name: 1019-15-27-39-354_cifar100_memo_resnet32_1993_B0_Inc5
+2023-10-19 15:27:39,355 [trainer.py] => logfilename: logs/benchmark/cifar100/memo/1019-15-27-39-354_cifar100_memo_resnet32_1993_B0_Inc5
+2023-10-19 15:27:39,355 [trainer.py] => csv_name: cifar100_1993_memo_resnet32_B0_Inc5
+2023-10-19 15:27:42,019 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,028 [memo.py] => >>> train generalized blocks:False train_adaptive: False
+2023-10-19 15:27:42,029 [trainer.py] => Start time:1697704062.029022
+2023-10-19 15:27:42,029 [trainer.py] => All params: 464
+2023-10-19 15:27:42,029 [trainer.py] => Trainable params: 464
+2023-10-19 15:27:42,029 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,037 [inc_net.py] => SpecializedResNet_cifar(
+  (final_stage): Sequential(
+    (0): ResnetBasicblock(
+      (conv_a): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): DownsampleA(
+        (avg): AvgPool2d(kernel_size=1, stride=2, padding=0)
+      )
+    )
+    (1): ResnetBasicblock(
+      (conv_a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): ResnetBasicblock(
+      (conv_a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): ResnetBasicblock(
+      (conv_a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (4): ResnetBasicblock(
+      (conv_a): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AvgPool2d(kernel_size=8, stride=8, padding=0)
+)
+2023-10-19 15:27:42,038 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,038 [memo.py] => All params: 333520
+2023-10-19 15:27:42,038 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,051 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,051 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,051 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,063 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,064 [memo.py] => All params: 666576
+2023-10-19 15:27:42,064 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,070 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,070 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,070 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,080 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,081 [memo.py] => All params: 999632
+2023-10-19 15:27:42,081 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,087 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,088 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,088 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,098 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,098 [memo.py] => All params: 1332688
+2023-10-19 15:27:42,098 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,105 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,105 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,105 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,115 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,116 [memo.py] => All params: 1665744
+2023-10-19 15:27:42,116 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,122 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,122 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,122 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,132 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,133 [memo.py] => All params: 1998800
+2023-10-19 15:27:42,133 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,140 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,140 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,141 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,151 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,152 [memo.py] => All params: 2331856
+2023-10-19 15:27:42,152 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,158 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,159 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,159 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,169 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,170 [memo.py] => All params: 2664912
+2023-10-19 15:27:42,171 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,177 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,178 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,178 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,188 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,189 [memo.py] => All params: 2997968
+2023-10-19 15:27:42,189 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,196 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,196 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,197 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,206 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,207 [memo.py] => All params: 3331024
+2023-10-19 15:27:42,208 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,215 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,216 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,216 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,228 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,230 [memo.py] => All params: 3664080
+2023-10-19 15:27:42,230 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,240 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,241 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,241 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,261 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,263 [memo.py] => All params: 3997136
+2023-10-19 15:27:42,264 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,274 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,274 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,274 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,297 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,299 [memo.py] => All params: 4330192
+2023-10-19 15:27:42,300 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,308 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,308 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,309 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,319 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,321 [memo.py] => All params: 4663248
+2023-10-19 15:27:42,322 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,330 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,331 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,331 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,341 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,343 [memo.py] => All params: 4996304
+2023-10-19 15:27:42,345 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,353 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,354 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,354 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,364 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,367 [memo.py] => All params: 5329360
+2023-10-19 15:27:42,368 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,378 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,380 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,380 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,391 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,394 [memo.py] => All params: 5662416
+2023-10-19 15:27:42,396 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,405 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,406 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,406 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,419 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,422 [memo.py] => All params: 5995472
+2023-10-19 15:27:42,423 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,431 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,432 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,432 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,444 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,446 [memo.py] => All params: 6328528
+2023-10-19 15:27:42,447 [memo.py] => Trainable params: 333520
+2023-10-19 15:27:42,454 [trainer.py] => All params: 333520
+2023-10-19 15:27:42,455 [trainer.py] => Trainable params: 333520
+2023-10-19 15:27:42,455 [memo_cifar_resnet.py] => Layer block is: 5
+2023-10-19 15:27:42,466 [memo.py] => Learning on 0-5
+2023-10-19 15:27:42,468 [memo.py] => All params: 6661584
+2023-10-19 15:27:42,469 [memo.py] => Trainable params: 333520

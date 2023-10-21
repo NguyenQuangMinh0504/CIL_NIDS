@@ -4,3 +4,4 @@ python3.9 main_memo.py \
     -incre 5 \
     -net memo_resnet32 \
     --dataset cifar100 \
+    -d -1
