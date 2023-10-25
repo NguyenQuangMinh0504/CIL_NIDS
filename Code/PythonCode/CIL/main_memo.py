@@ -29,6 +29,7 @@ def setup_parser() -> argparse.ArgumentParser:
                         choices=["benchmark", "fair", "auc"])
     parser.add_argument("--device", "-d", nargs='+', type=int, default=[0, 1, 2, 3])
     parser.add_argument("--debug", action="store_true")
+    parser.add_argument("--skip", action="store_true")
 
     # Added in MEMO
     parser.add_argument("--train_base", action="store_true")
