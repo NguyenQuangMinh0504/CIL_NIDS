@@ -28,7 +28,7 @@ class ResnetBasicblock(nn.Module):
                                 kernel_size=3, stride=stride, padding=1, bias=False)
         self.bn_a = nn.BatchNorm2d(num_features=planes)
 
-        self.conv_b = nn.Conv2d(in_channels=inplanes, out_channels=planes,
+        self.conv_b = nn.Conv2d(in_channels=planes, out_channels=planes,
                                 kernel_size=3, stride=1, padding=1, bias=False)
         self.bn_b = nn.BatchNorm2d(num_features=planes)
         self.downsample = downsample
@@ -39,7 +39,7 @@ class ResnetBasicblock(nn.Module):
     def forward(self, x: Tensor):
         residual = x
         basicblock = self.conv_a(x)
-        basicblock = self.bn_a(x)
+        basicblock = self.bn_a(basicblock)
         basicblock = F.relu(basicblock, inplace=True)
 
         basicblock = self.conv_b(basicblock)
@@ -51,12 +51,13 @@ class ResnetBasicblock(nn.Module):
 
 
 class GeneralizedResNet_cifar(nn.Module):
+    """Include 2 stages, each stage includes 4 basic resnet block"""
     def __init__(self, block, depth, channels=3):
         super(GeneralizedResNet_cifar, self).__init__()
         assert (depth - 2) % 6 == 0, "depth should be one of 20, 32, 44, 56, 110"
         layer_blocks = (depth - 2) // 6
 
-        logging.info("Generalized Resnet Cifar")
+        # logging.info("Generalized Resnet Cifar")
 
         self.conv_1_3x3 = nn.Conv2d(in_channels=channels, out_channels=16,
                                     kernel_size=3, stride=1, padding=1, bias=False)
@@ -66,11 +67,11 @@ class GeneralizedResNet_cifar(nn.Module):
 
         self.stage_1 = self._make_layer(block, 16, layer_blocks, 1)
 
-        logging.info(f"Structure of stage 1 is: {self.stage_1}")
+        # logging.info(f"Structure of stage 1 is: {self.stage_1}")
 
         self.stage_2 = self._make_layer(block=block, planes=32, blocks=layer_blocks, stride=2)
 
-        logging.info(f"Structure of stage 2 is: {self.stage_2}")
+        # logging.info(f"Structure of stage 2 is: {self.stage_2}")
 
         self.out_dim = 64 * block.expansion
 
@@ -106,6 +107,7 @@ class GeneralizedResNet_cifar(nn.Module):
         x = F.relu(self.bn_1(x), inplace=True)
 
         x_1 = self.stage_1(x)  # [bs, 16, 32, 32]
+        logging.info(f"Size of x_1 is: {x_1.size()}")
         x_2 = self.stage_2(x_1)  # [bs, 32, 16, 16]
         return x_2
 

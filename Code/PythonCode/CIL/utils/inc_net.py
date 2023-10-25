@@ -29,6 +29,8 @@ class AdaptiveNet(nn.Module):
         self.convnet_type = convnet_type
         self.TaskAgnosticExtractor: nn.Module
         self.TaskAgnosticExtractor, _ = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
+        logging.info(f"Task Agnostic Extractor is: {type(self.TaskAgnosticExtractor)}")
+        logging.info(f"Task agnostic extractor structure: {self.TaskAgnosticExtractor}")
         self.TaskAgnosticExtractor.train()
         self.AdaptiveExtractors = nn.ModuleList()
         self.output_dim = None
@@ -48,7 +50,7 @@ class AdaptiveNet(nn.Module):
             self.AdaptiveExtractors.append(_new_extractor)
             self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict())
         if self.output_dim is None:
-            logging.info(self.AdaptiveExtractors[-1])
+            # logging.info(self.AdaptiveExtractors[-1])
             self.output_dim = self.AdaptiveExtractors[-1].feature_dim
         self.generate_fc(in_dim=self.feature_dim, out_dim=nb_classes)
 
