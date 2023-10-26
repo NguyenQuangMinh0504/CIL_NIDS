@@ -22,8 +22,8 @@ def tensor2numpy(x):
 
 def accuracy(y_pred, y_true, nb_old, increment=10):
 
-    logging.info(f"y pred size is: {y_pred.size()}")
-    logging.info(f"y true size is: {y_true.size()}")
+    # logging.info(f"y pred size is: {y_pred.size()}")
+    # logging.info(f"y true size is: {y_true.size()}")
     logging.info(f"y pred type is: {type(y_pred)}")
     logging.info(f"y true type is: {type(y_true)}")
 
