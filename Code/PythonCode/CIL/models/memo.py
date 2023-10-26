@@ -231,29 +231,30 @@ class MEMO(BaseLearner):
                 correct += preds.eq(targets.expand_as(preds)).cpu().sum()
                 total += len(targets)
 
-                scheduler.step()
-                train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
-                if epoch % 5 == 0:
-                    test_acc = self._compute_accuracy(self._network, test_loader)
-                    info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
-                        self._cur_task,
-                        epoch + 1,
-                        self.args["epochs"],
-                        losses/len(train_loader),
-                        losses_clf/len(train_loader),
-                        losses_aux/len(train_loader),
-                        train_acc,
-                        test_acc
-                    )
-                else:
-                    info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f} Train_accy {:.2f}".format(
-                        self._cur_task,
-                        epoch + 1,
-                        self.args["epochs"],
-                        losses/len(train_loader),
-                        losses_clf/len(train_loader),
-                        loss_aux/len(train_loader),
-                        train_acc,
-                    )
-                prog_bar.set_description(info)
-                logging.info(info)
+            scheduler.step()
+
+            train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+            if epoch % 5 == 0:
+                test_acc = self._compute_accuracy(self._network, test_loader)
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
+                    self._cur_task,
+                    epoch + 1,
+                    self.args["epochs"],
+                    losses/len(train_loader),
+                    losses_clf/len(train_loader),
+                    losses_aux/len(train_loader),
+                    train_acc,
+                    test_acc
+                )
+            else:
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f} Train_accy {:.2f}".format(
+                    self._cur_task,
+                    epoch + 1,
+                    self.args["epochs"],
+                    losses/len(train_loader),
+                    losses_clf/len(train_loader),
+                    loss_aux/len(train_loader),
+                    train_acc,
+                )
+            prog_bar.set_description(info)
+            logging.info(info)
