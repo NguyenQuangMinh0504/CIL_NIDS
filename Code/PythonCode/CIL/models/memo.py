@@ -213,7 +213,6 @@ class MEMO(BaseLearner):
                 outputs = self._network(inputs)
                 logits, aux_logits = outputs["logits"], outputs["aux_logits"]
                 loss_clf = F.cross_entropy(logits, targets)
-                logging.info(f"Type of target is: {type(targets)}")
                 aux_targets = targets.clone()
                 aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
                                           input=aux_targets - self._known_classes + 1, other=0)
