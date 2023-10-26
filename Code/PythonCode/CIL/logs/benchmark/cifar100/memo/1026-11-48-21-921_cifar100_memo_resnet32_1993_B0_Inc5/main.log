@@ -144,3 +144,15 @@
 2023-10-26 12:22:25,700 [memo.py] => Task 0, Epoch 24/200 => Loss 0.706, Train_accy 71.24
 2023-10-26 12:23:40,411 [memo.py] => Task 0, Epoch 25/200 => Loss 0.694, Train_accy 72.68
 2023-10-26 12:25:49,585 [memo.py] => Task 0, Epoch 26/200 => Loss 0.659, Train_accy 73.24, Test_accy 71.04
+2023-10-26 12:27:05,992 [memo.py] => Task 0, Epoch 27/200 => Loss 0.646, Train_accy 73.36
+2023-10-26 12:28:18,472 [memo.py] => Task 0, Epoch 28/200 => Loss 0.636, Train_accy 74.96
+2023-10-26 12:29:32,004 [memo.py] => Task 0, Epoch 29/200 => Loss 0.619, Train_accy 75.24
+2023-10-26 12:30:45,594 [memo.py] => Task 0, Epoch 30/200 => Loss 0.596, Train_accy 77.28
+2023-10-26 12:32:56,431 [memo.py] => Task 0, Epoch 31/200 => Loss 0.611, Train_accy 75.56, Test_accy 77.60
+2023-10-26 12:34:09,418 [memo.py] => Task 0, Epoch 32/200 => Loss 0.578, Train_accy 76.44
+2023-10-26 12:35:22,667 [memo.py] => Task 0, Epoch 33/200 => Loss 0.548, Train_accy 78.48
+2023-10-26 12:36:35,517 [memo.py] => Task 0, Epoch 34/200 => Loss 0.541, Train_accy 78.76
+2023-10-26 12:37:47,772 [memo.py] => Task 0, Epoch 35/200 => Loss 0.548, Train_accy 78.28
+2023-10-26 12:39:59,985 [memo.py] => Task 0, Epoch 36/200 => Loss 0.486, Train_accy 80.76, Test_accy 82.88
+2023-10-26 12:41:12,934 [memo.py] => Task 0, Epoch 37/200 => Loss 0.510, Train_accy 79.48
+2023-10-26 12:42:25,331 [memo.py] => Task 0, Epoch 38/200 => Loss 0.511, Train_accy 78.92

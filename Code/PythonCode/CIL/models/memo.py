@@ -135,7 +135,7 @@ class MEMO(BaseLearner):
                 logging.info(f"Loaded_Test_Acc:{load_acc} Cur_Test_Acc:{cur_test_acc}")
         else:
             optimizer = optim.SGD(
-                params=(lambda p: p.requires_grad, self._network.parameters()),
+                params=filter(lambda p: p.requires_grad, self._network.parameters()),
                 lr=self.args["lrate"],
                 momentum=0.9,
                 weight_decay=self.args["weight_decay"],
