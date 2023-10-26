@@ -90,13 +90,13 @@ class MEMO(BaseLearner):
             self._network.TaskAgnosticExtractor.eval()
 
         # set adaptive extractor's status
-        self._network.AdaptiveExtractor[-1].train()
+        self._network.AdaptiveExtractors[-1].train()
         if self._cur_task >= 1:
             for i in range(self._cur_task):
                 if self.args["train_adaptive"]:
-                    self._network.AdaptiveExtractor[i].train()
+                    self._network.AdaptiveExtractors[i].train()
                 else:
-                    self._network.AdaptiveExtractor[i].eval()
+                    self._network.AdaptiveExtractors[i].eval()
         if len(self._multiple_gpus) > 1:
             self._network == nn.DataParallel(self._network, self._multiple_gpus)
 
