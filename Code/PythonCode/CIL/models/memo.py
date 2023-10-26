@@ -218,7 +218,7 @@ class MEMO(BaseLearner):
                 aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
                                           input=aux_targets - self._known_classes + 1, other=0)
                 loss_aux = F.cross_entropy(aux_logits, aux_targets)
-                loss = loss_clf + self.args["alpla_aux"] * loss_aux
+                loss = loss_clf + self.args["alpha_aux"] * loss_aux
 
                 optimizer.zero_grad()
                 loss.bachward()
