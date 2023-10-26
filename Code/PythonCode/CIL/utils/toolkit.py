@@ -40,7 +40,7 @@ def accuracy(y_pred, y_true, nb_old, increment=10):
     # Old accuracy
     idxes = np.where(y_true < nb_old)[0]
     all_acc["old"] = (
-        0 if len(idxes) == 0 else np.around((y_pred[idxes] == y_true[idxes]).sum() * 100 / len(idxes), decimals=2)\
+        0 if len(idxes) == 0 else np.around((y_pred[idxes] == y_true[idxes]).sum() * 100 / len(idxes), decimals=2)
     )
 
     # new accuracy
