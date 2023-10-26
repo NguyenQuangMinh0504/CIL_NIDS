@@ -170,7 +170,7 @@ def save_time(args, cost_time):
 def save_results(args, cnn_curve, nme_curve, no_nme=False):
     cnn_top1, cnn_top5 = cnn_curve["top1"], cnn_curve['top5']
     nme_top1, nme_top5 = nme_curve["top1"], nme_curve['top5']
-    
+
     # -------CNN TOP1----------
     _log_dir = os.path.join("./results/", f"{args['prefix']}", "cnn_top1")
     os.makedirs(_log_dir, exist_ok=True)
@@ -226,7 +226,7 @@ def save_results(args, cnn_curve, nme_curve, no_nme=False):
                 f.write(f"{args['time_str']},{args['model_name']},{args['memory_size']},")
                 for _acc in nme_top1[:-1]:
                     f.write(f"{_acc},")
-                f.write(f"{nme_top1[-1]} \n")       
+                f.write(f"{nme_top1[-1]} \n")
 
         # -------NME TOP5----------
         _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top5")

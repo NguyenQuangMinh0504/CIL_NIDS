@@ -1,3 +1,4 @@
+import copy
 import logging
 import torch
 from torch import nn
@@ -21,7 +22,7 @@ class AdaptiveNet(nn.Module):
     """Generalized block"""
     AdaptiveExtractors: nn.ModuleList
     "Specialized block"
-    fc: nn.Module
+    fc: SimpleLinear
     "Fully connected block"
 
     def __init__(self, convnet_type: str, pretrained: bool):
@@ -33,26 +34,55 @@ class AdaptiveNet(nn.Module):
         logging.info(f"Task agnostic extractor structure: {self.TaskAgnosticExtractor}")
         self.TaskAgnosticExtractor.train()
         self.AdaptiveExtractors = nn.ModuleList()
-        self.output_dim = None
+        self.out_dim = None
+        self.fc = None
+        self.aux_fc = None
+        self.task_sizes = []
 
     @property
     def feature_dim(self):
-        if self.output_dim is None:
+        if self.out_dim is None:
             return 0
-        return self.output_dim*len(self.AdaptiveExtractors)
+        return self.out_dim*len(self.AdaptiveExtractors)
 
     def update_fc(self, nb_classes):
         """Get specialize extractor -> """
+        logging.info("----------------------------------------------------")
+        logging.info("Calling function update_fc from Adaptive net class...")
+        logging.info("Updating fully connected layer...")
+
         _, _new_extractor = get_convnet(self.convnet_type)
+        # logging.info("Get extractor")
+        # logging.info(_new_extractor)
+
         if len(self.AdaptiveExtractors) == 0:
             self.AdaptiveExtractors.append(_new_extractor)
         else:
             self.AdaptiveExtractors.append(_new_extractor)
             self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict())
-        if self.output_dim is None:
+
+        if self.out_dim is None:
             # logging.info(self.AdaptiveExtractors[-1])
-            self.output_dim = self.AdaptiveExtractors[-1].feature_dim
-        self.generate_fc(in_dim=self.feature_dim, out_dim=nb_classes)
+            self.out_dim = self.AdaptiveExtractors[-1].feature_dim
+
+        # logging.info(f"out dim is: {self.out_dim}")
+        logging.info(f"Current fc is: {self.fc}")
+        logging.info(f"Generating fully connected layer with in_dim {self.feature_dim}, out_dim {nb_classes}")
+
+        fc = self.generate_fc(in_dim=self.feature_dim, out_dim=nb_classes)
+
+        if self.fc is not None:
+            nb_output = self.fc.out_features
+            weight = copy.deepcopy(self.fc.weight.data)
+            bias = copy.deepcopy(self.fc.bias.data)
+            fc.weight.data[:nb_output, :self.feature_dim-self.out_dim] = weight
+            fc.bias.data[:nb_output] = bias
+        del self.fc
+        self.fc = fc
+        logging.info(f"New fc is: {self.fc}")
+        new_task_size = nb_classes - sum(self.task_sizes)
+        self.task_sizes.append(new_task_size)
+        self.aux_fc = self.generate_fc(self.out_dim, new_task_size + 1)
 
     def generate_fc(self, in_dim: int, out_dim: int):
         fc = SimpleLinear(in_features=in_dim, out_features=out_dim)

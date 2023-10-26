@@ -1,0 +1,126 @@
+2023-10-26 11:20:50,838 [trainer.py] => Time Str >>> 1026-11-20-50-838
+2023-10-26 11:20:50,839 [trainer.py] => memory_per_class: 20
+2023-10-26 11:20:50,839 [trainer.py] => fixed_memory: False
+2023-10-26 11:20:50,839 [trainer.py] => shuffle: True
+2023-10-26 11:20:50,839 [trainer.py] => model_name: memo
+2023-10-26 11:20:50,839 [trainer.py] => seed: 1993
+2023-10-26 11:20:50,839 [trainer.py] => dataset: cifar100
+2023-10-26 11:20:50,839 [trainer.py] => init_cls: 5
+2023-10-26 11:20:50,839 [trainer.py] => increment: 5
+2023-10-26 11:20:50,839 [trainer.py] => convnet_type: memo_resnet32
+2023-10-26 11:20:50,839 [trainer.py] => prefix: benchmark
+2023-10-26 11:20:50,839 [trainer.py] => device: [device(type='cpu')]
+2023-10-26 11:20:50,839 [trainer.py] => debug: False
+2023-10-26 11:20:50,839 [trainer.py] => skip: False
+2023-10-26 11:20:50,839 [trainer.py] => train_base: True
+2023-10-26 11:20:50,839 [trainer.py] => train_adaptive: False
+2023-10-26 11:20:50,839 [trainer.py] => scheduler: steplr
+2023-10-26 11:20:50,839 [trainer.py] => init_epoch: 200
+2023-10-26 11:20:50,839 [trainer.py] => init_milestones: ['6', '0', ',', '1', '2', '0', ',', '1', '7', '0']
+2023-10-26 11:20:50,839 [trainer.py] => t_max: None
+2023-10-26 11:20:50,839 [trainer.py] => epochs: 170
+2023-10-26 11:20:50,839 [trainer.py] => milestones: [80, 120, 150]
+2023-10-26 11:20:50,839 [trainer.py] => lrate_decay: 0.1
+2023-10-26 11:20:50,839 [trainer.py] => batch_size: 128
+2023-10-26 11:20:50,839 [trainer.py] => lrate: 0.1
+2023-10-26 11:20:50,839 [trainer.py] => weight_decay: 0.0002
+2023-10-26 11:20:50,839 [trainer.py] => alpha_aux: 1.0
+2023-10-26 11:20:50,839 [trainer.py] => config: ./exps/memo.json
+2023-10-26 11:20:50,839 [trainer.py] => time_str: 1026-11-20-50-838
+2023-10-26 11:20:50,839 [trainer.py] => exp_name: 1026-11-20-50-838_cifar100_memo_resnet32_1993_B0_Inc5
+2023-10-26 11:20:50,839 [trainer.py] => logfilename: logs/benchmark/cifar100/memo/1026-11-20-50-838_cifar100_memo_resnet32_1993_B0_Inc5
+2023-10-26 11:20:50,839 [trainer.py] => csv_name: cifar100_1993_memo_resnet32_B0_Inc5
+2023-10-26 11:20:52,445 [inc_net.py] => Task Agnostic Extractor is: <class 'convs.memo_cifar_resnet.GeneralizedResNet_cifar'>
+2023-10-26 11:20:52,445 [inc_net.py] => Task agnostic extractor structure: GeneralizedResNet_cifar(
+  (conv_1_3x3): Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (bn_1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (stage_1): Sequential(
+    (0): ResnetBasicblock(
+      (conv_a): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): ResnetBasicblock(
+      (conv_a): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): ResnetBasicblock(
+      (conv_a): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): ResnetBasicblock(
+      (conv_a): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (4): ResnetBasicblock(
+      (conv_a): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(16, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (stage_2): Sequential(
+    (0): ResnetBasicblock(
+      (conv_a): Conv2d(16, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): DownsampleA(
+        (avg): AvgPool2d(kernel_size=1, stride=2, padding=0)
+      )
+    )
+    (1): ResnetBasicblock(
+      (conv_a): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): ResnetBasicblock(
+      (conv_a): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): ResnetBasicblock(
+      (conv_a): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (4): ResnetBasicblock(
+      (conv_a): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_a): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (conv_b): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn_b): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+)
+2023-10-26 11:20:52,446 [memo.py] => >>> train generalized blocks:True train_adaptive: False
+2023-10-26 11:20:52,446 [trainer.py] => Type of model is: <class 'models.memo.MEMO'>
+2023-10-26 11:20:52,446 [trainer.py] => Type of model network is: <class 'utils.inc_net.AdaptiveNet'>
+2023-10-26 11:20:52,446 [trainer.py] => Start time:1698294052.446302
+2023-10-26 11:20:52,446 [trainer.py] => Data manager.nb_tasks is: 20
+2023-10-26 11:20:52,446 [trainer.py] => All params: 112016
+2023-10-26 11:20:52,446 [trainer.py] => Trainable params: 112016
+2023-10-26 11:20:52,446 [inc_net.py] => ----------------------------------------------------
+2023-10-26 11:20:52,446 [inc_net.py] => Calling function update_fc from Adaptive net class...
+2023-10-26 11:20:52,446 [inc_net.py] => Updating fully connected layer...
+2023-10-26 11:20:52,455 [inc_net.py] => Current fc is: None
+2023-10-26 11:20:52,455 [inc_net.py] => Generating fully connected layer with in_dim 64, out_dim 5
+2023-10-26 11:20:52,455 [inc_net.py] => New fc is: SimpleLinear()
+2023-10-26 11:20:52,455 [memo.py] => Learning on 0-5
+2023-10-26 11:20:52,455 [memo.py] => All params: 464219
+2023-10-26 11:20:52,455 [memo.py] => Trainable params: 464219
+2023-10-26 11:21:59,762 [memo.py] => Task 0, Epoch 1/200 => Loss 0.191, Train_accy 20.31, Test_accy 20.00
+2023-10-26 11:22:56,461 [memo.py] => Task 0, Epoch 1/200 => Loss 2.857, Train_accy 17.97, Test_accy 20.00
+2023-10-26 11:23:54,016 [memo.py] => Task 0, Epoch 1/200 => Loss 16620143786182017932066816.000, Train_accy 19.53, Test_accy 20.00
+2023-10-26 11:24:50,758 [memo.py] => Task 0, Epoch 1/200 => Loss nan, Train_accy 19.14, Test_accy 20.00
+2023-10-26 11:25:48,455 [memo.py] => Task 0, Epoch 1/200 => Loss nan, Train_accy 18.59, Test_accy 20.00
+2023-10-26 11:26:44,689 [memo.py] => Task 0, Epoch 1/200 => Loss nan, Train_accy 18.88, Test_accy 20.00

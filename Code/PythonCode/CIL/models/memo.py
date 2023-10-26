@@ -16,13 +16,14 @@ num_workers = 8
 
 class MEMO(BaseLearner):
     _network: AdaptiveNet
+
     def __init__(self, args):
         super().__init__(args)
         self.args = args
         self._network = AdaptiveNet(convnet_type=args["convnet_type"], pretrained=False)
         logging.info(
             f">>> train generalized blocks:{self.args['train_base']} train_adaptive: {self.args['train_adaptive']}")
-    
+
     def after_task(self):
         self._known_classes = self._total_classes
         if self._cur_task == 0:
@@ -40,9 +41,11 @@ class MEMO(BaseLearner):
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
     def incremental_training(self, data_manager: DataManager):
+        """Training model"""
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
         self._network.update_fc(self._total_classes)
+
         logging.info("Learning on {}-{}".format(self._known_classes, self._total_classes))
 
         if self._cur_task > 0:
@@ -74,6 +77,7 @@ class MEMO(BaseLearner):
                                       shuffle=False, num_workers=num_workers)
         if len(self._multiple_gpus) > 1:
             self._network = nn.DataParallel(module=self._network, device_ids=self._multiple_gpus)
+        self._train(self.train_loader, self.test_loader)
 
     def set_network(self):
         if (self._multiple_gpus) > 1:
@@ -106,7 +110,7 @@ class MEMO(BaseLearner):
             if self.args["scheduler"] == "steplr":
                 scheduler = optim.lr_scheduler.MultiStepLR(
                     optimizer=optimizer,
-                    milestones=self.args["milesstones"],
+                    milestones=self.args["init_milestones"],
                     gamma=self.args["lrate_decay"],
                 )
             elif self.args["scheduler"] == "cosine":
@@ -154,14 +158,15 @@ class MEMO(BaseLearner):
             if len(self._multiple_gpus) > 1:
                 self._network.module.weight_align(self._total_classes - self._known_classes)
             else:
-                self._network.weight
+                self._network.weight_align(self._total_classes - self._known_classes)
 
-    def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer: optim.SGD, scheduler):
+    def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0
             correct, total = 0, 0
+
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
                 logits = self._network(inputs)["logits"]
@@ -175,21 +180,26 @@ class MEMO(BaseLearner):
                 correct += preds.eq(targets.expand_as(preds)).cpu().sum()
                 total += len(targets)
 
-                scheduler.step()
-                train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
-                if epoch % 5 == 0:
-                    test_acc = self._compute_accuracy(self._network, test_loader)
-                    info = 'Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}'.format(
-                        self._cur_task, epoch + 1,
-                        self.args["init_epoch"], losses / len(train_loader), train_acc, test_acc
-                    )
-                else:
-                    info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
-                        self._cur_task, epoch + 1, self.args["init_epoch"], losses / len(train_loader), train_acc
-                    )
-                logging.info(info)
+            scheduler.step()
 
-    def _update_representation(self, train_loader: DataLoader, test_loader: DataLoader, optimizer: optim.SGD, scheduler):
+            train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+
+            # Generate info message
+            if epoch % 5 == 0:
+                test_acc = self._compute_accuracy(self._network, test_loader)
+                info = 'Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}'.format(
+                    self._cur_task, epoch + 1,
+                    self.args["init_epoch"],
+                    losses / len(train_loader), train_acc, test_acc
+                )
+            else:
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
+                    self._cur_task, epoch + 1, self.args["init_epoch"], losses / len(train_loader), train_acc
+                )
+            logging.info(info)
+
+    def _update_representation(self, train_loader: DataLoader,
+                               test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
         for _, epoch in enumerate(prog_bar):
             self._network()
