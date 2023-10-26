@@ -107,7 +107,6 @@ class GeneralizedResNet_cifar(nn.Module):
         x = F.relu(self.bn_1(x), inplace=True)
 
         x_1 = self.stage_1(x)  # [bs, 16, 32, 32]
-        logging.info(f"Size of x_1 is: {x_1.size()}")
         x_2 = self.stage_2(x_1)  # [bs, 32, 16, 16]
         return x_2
 
@@ -142,6 +141,12 @@ class SpecializedResNet_cifar(nn.Module):
         for i in range(1, blocks):
             layers.append(block(inplanes=self.inplanes, planes=planes))
         return nn.Sequential(*layers)
+
+    def forward(self, base_feature_map):
+        final_feature_map = self.final_stage(base_feature_map)
+        pooled = self.avgpool(final_feature_map)
+        features = pooled.view(pooled.size(0), -1)
+        return features
 
 
 def get_resnet32_a2fc() -> (nn.Module, nn.Module):
