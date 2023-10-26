@@ -221,7 +221,7 @@ class MEMO(BaseLearner):
                 loss = loss_clf + self.args["alpha_aux"] * loss_aux
 
                 optimizer.zero_grad()
-                loss.bachward()
+                loss.backward()
                 optimizer.step()
                 losses += loss.item()
                 losses_aux += loss_aux.item()
