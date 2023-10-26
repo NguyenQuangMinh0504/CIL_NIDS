@@ -81,7 +81,7 @@ class MEMO(BaseLearner):
         self._train(self.train_loader, self.test_loader)
 
     def set_network(self):
-        if (self._multiple_gpus) > 1:
+        if self._multiple_gpus > 1:
             self._network = self._network.module
         self._network.train()
         if self.args["train_base"]:
