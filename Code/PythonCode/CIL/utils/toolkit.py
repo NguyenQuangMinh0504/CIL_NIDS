@@ -3,6 +3,7 @@ import numpy as np
 from torch import nn
 import os
 import torch
+import logging
 
 
 class ConfigEncoder(json.JSONEncoder):
@@ -20,6 +21,12 @@ def tensor2numpy(x):
 
 
 def accuracy(y_pred, y_true, nb_old, increment=10):
+
+    logging.info(f"y pred size is: {y_pred.size()}")
+    logging.info(f"y true size is: {y_true.size()}")
+    logging.info(f"y pred type is: {type(y_pred)}")
+    logging.info(f"y true type is: {type(y_true)}")
+
     assert len(y_pred) == len(y_true), "Data length error"
     all_acc = {}
     all_acc["total"] = np.around((y_pred == y_true).sum() * 100 / len(y_true), decimals=2)
@@ -47,8 +54,8 @@ def accuracy(y_pred, y_true, nb_old, increment=10):
 
 def save_fc(args, model):
     _path = os.path.join(args['logfilename'], "fc.pt")
-    if len(args['device']) > 1: 
-        fc_weight = model._network.fc.weight.data    
+    if len(args['device']) > 1:
+        fc_weight = model._network.fc.weight.data
     else:
         fc_weight = model._network.fc.weight.data.cpu()
     torch.save(fc_weight, _path)

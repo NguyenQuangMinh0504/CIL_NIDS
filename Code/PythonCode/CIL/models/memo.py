@@ -25,9 +25,10 @@ class MEMO(BaseLearner):
             f">>> train generalized blocks:{self.args['train_base']} train_adaptive: {self.args['train_adaptive']}")
 
     def after_task(self):
+        """After task"""
+        logging.info("Running after task....")
         self._known_classes = self._total_classes
         if self._cur_task == 0:
-            logging.info("Loop enter")
             if self.args["train_base"]:
                 logging.info("Train Generalized Blocks...")
                 self._network.TaskAgnosticExtractor.train()
@@ -202,7 +203,7 @@ class MEMO(BaseLearner):
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
         for _, epoch in enumerate(prog_bar):
-            self._network()
+            self.set_network()
             losses = 0.
             losses_clf = 0.
             losses_aux = 0.

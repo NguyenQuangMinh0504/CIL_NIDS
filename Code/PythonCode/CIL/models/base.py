@@ -44,6 +44,7 @@ class BaseLearner(object):
         return ret
 
     def eval_task(self, save_conf=False):
+        """Evaluating result"""
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)
 

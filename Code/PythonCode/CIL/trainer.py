@@ -84,21 +84,27 @@ def _train(args: dict):
     cnn_curve, nme_curve, no_nme = {"top1": [], "top5": []}, {"top1": [], "top5": []}, True
     start_time = time.time()
     logging.info(f"Start time:{start_time}")
+
     count_parameters(model=model._network)
 
     logging.info(f"Data manager.nb_tasks is: {data_manager.nb_tasks}")
 
     for task in range(data_manager.nb_tasks):
+
+        logging.info(f"current task is: {task}")
         logging.info("All params: {}".format(count_parameters(model=model._network, trainable=True)))
         logging.info("Trainable params: {}".format(count_parameters(model=model._network, trainable=True)))
+
         model.incremental_training(data_manager=data_manager)
-        logging.info(f"current task is: {task}")
+
         if task == data_manager.nb_tasks - 1:
             cnn_accy, nme_accy = model.eval_task(save_conf=True)
             no_nme = True if exp_name is None else False
         else:
             cnn_accy, nme_accy = model.eval_task(save_conf=False)
+
         model.after_task()
+
         if nme_accy is not None:
             logging.info("CNN: {}".format(cnn_accy["grouped"]))
             logging.info("NME: {}".format(nme_accy["grouped"]))
@@ -122,6 +128,7 @@ def _train(args: dict):
 
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
+
     end_time = time.time()
     cost_time = end_time - start_time
     logging.info(f"End Time: {end_time}")
