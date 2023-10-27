@@ -30,7 +30,11 @@ class DataManager(object):
         return self._increments[task]
 
     def get_dataset(self, indices, source, mode, appendent=None, ret_data=False, m_rate=None):
-        """indices: list of training classes"""
+        """indices: list of training classes
+
+        Args:
+            appendent: Data adding to the dataset
+        """
 
         if source == "train":
             x, y = self._train_data, self._train_targets

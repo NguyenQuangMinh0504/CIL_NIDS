@@ -41,6 +41,7 @@ class AdaptiveNet(nn.Module):
 
     @property
     def feature_dim(self):
+        """Feature dimension. Apparently it is used as input for fully connected layer LOL."""
         if self.out_dim is None:
             return 0
         return self.out_dim*len(self.AdaptiveExtractors)
