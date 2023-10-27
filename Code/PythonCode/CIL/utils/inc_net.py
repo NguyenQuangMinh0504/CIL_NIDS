@@ -46,7 +46,7 @@ class AdaptiveNet(nn.Module):
         return self.out_dim*len(self.AdaptiveExtractors)
 
     def update_fc(self, nb_classes):
-        """Get specialize extractor -> """
+        """Updating specialized adaptive net and fully connected layers"""
         logging.info("----------------------------------------------------")
         logging.info("Calling function update_fc from Adaptive net class...")
         logging.info("Updating fully connected layer...")
@@ -61,11 +61,13 @@ class AdaptiveNet(nn.Module):
             self.AdaptiveExtractors.append(_new_extractor)
             self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict())
 
+        logging.info(f"Current adaptive extractor: {self.AdaptiveExtractors}")
+
         if self.out_dim is None:
             # logging.info(self.AdaptiveExtractors[-1])
             self.out_dim = self.AdaptiveExtractors[-1].feature_dim
 
-        # logging.info(f"out dim is: {self.out_dim}")
+        logging.info(f"out dim is: {self.out_dim}")
         logging.info(f"Current fc is: {self.fc}")
         logging.info(f"Generating fully connected layer with in_dim {self.feature_dim}, out_dim {nb_classes}")
 
@@ -101,6 +103,9 @@ class AdaptiveNet(nn.Module):
     def forward(self, x):
         base_feature_map = self.TaskAgnosticExtractor(x)
         features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
+
+        logging.info(f"output feature size is: {features.size()}")
+
         features = torch.cat(features, 1)
         out = self.fc(features)  # {logits: self.fc(features)}
 
