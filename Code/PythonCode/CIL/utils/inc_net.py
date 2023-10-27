@@ -104,9 +104,11 @@ class AdaptiveNet(nn.Module):
         base_feature_map = self.TaskAgnosticExtractor(x)
         features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
 
-        logging.info(f"output feature size is: {len(features)}")
+        # logging.info(f"output feature size is: {len(features)}")
 
         features = torch.cat(features, 1)
+
+        logging.info(f"output feature size is: {features.size()}")
         out = self.fc(features)  # {logits: self.fc(features)}
 
         aux_logits = self.aux_fc(features[:, -self.out_dim:])["logits"]
