@@ -1,3 +1,4 @@
+import copy
 import logging
 import numpy as np
 import torch
@@ -131,6 +132,32 @@ class BaseLearner(object):
             vectors.append(_vectors)
             targets.append(_targets)
         return np.concatenate(vectors), np.concatenate(targets)
+
+    def _reduce_exemplar(self, data_manager: DataManager, m):
+        logging.info(f"Reducing exemplars...({m} per classes)")
+        dummy_data, dummy_targets = copy.deepcopy(self._data_memory), copy.deepcopy(self._targets_memory)
+        self._class_means = np.zeros((self._total_classes, self.feature_dim))
+        self._data_memory, self._targets_memory = np.array([]), np.array([])
+        for class_idx in range(self._known_classes):
+            mask = np.where(dummy_targets == class_idx)[0]
+            dd, dt = dummy_data[mask][:m], dummy_targets[mask][:m]
+
+            self._data_memory = (
+                np.concatenate((self._data_memory, dd)) if len(self._data_memory) != 0 else dd
+            )
+
+            self._targets_memory = (
+                np.concatenate((self._targets_memory, dt)) if len(self._targets_memory) != 0 else dt
+            )
+
+            # Exemplar mean
+            idx_dataset = data_manager.get_dataset(indices=[], source="main", mode="test", appendent=(dd, dt))
+            idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
+            vectors, _ = self._extract_vectors(idx_loader)
+            vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
+            mean = np.mean(vectors, axis=0)
+            mean = mean / np.linalg.norm(mean)
+            self._class_means[class_idx, :] = mean
 
     def _construct_exemplar(self, data_manager: DataManager, m):
         logging.info(f"Constructing exemplars...({m} per classes)")
