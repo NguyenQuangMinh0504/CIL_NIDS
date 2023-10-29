@@ -144,7 +144,7 @@ class BaseLearner(object):
         vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
         dists = cdist(class_means, vectors, "sqeuclidean")
         scores = dists.T
-        return np.argsort(scores, axis=1)[:, :, self.topk], y_true
+        return np.argsort(scores, axis=1)[:, : self.topk], y_true
 
     def _extract_vectors(self, loader):
         """Passing input and return layer before fully connected layer"""
