@@ -47,7 +47,7 @@ class AdaptiveNet(nn.Module):
         return self.out_dim*len(self.AdaptiveExtractors)
 
     def extract_vector(self, x):
-        base_feature_map = self.TaskAgnosticExtractor()
+        base_feature_map = self.TaskAgnosticExtractor(x)
         features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
         features = torch.cat(features, 1)
         return features
