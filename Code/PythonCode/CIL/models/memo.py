@@ -108,7 +108,7 @@ class MEMO(BaseLearner):
         if len(self._multiple_gpus) > 1:
             self._network == nn.DataParallel(self._network, self._multiple_gpus)
 
-    def _train(self, train_loader, test_loader):
+    def _train(self, train_loader: DataLoader, test_loader: DataLoader):
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(params=filter(lambda p: p.requires_grad, self._network.parameters()),
@@ -116,6 +116,10 @@ class MEMO(BaseLearner):
                                   momentum=0.9,
                                   weight_decay=self.args["weight_decay"]
                                   )
+
+            # Steplr Reference: https://hasty.ai/docs/mp-wiki/scheduler/multisteplr
+
+            # Set up scheduler
             if self.args["scheduler"] == "steplr":
                 scheduler = optim.lr_scheduler.MultiStepLR(
                     optimizer=optimizer,
@@ -130,6 +134,7 @@ class MEMO(BaseLearner):
                 )
             else:
                 raise NotImplementedError
+
             if not self.args["skip"]:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
             else:
