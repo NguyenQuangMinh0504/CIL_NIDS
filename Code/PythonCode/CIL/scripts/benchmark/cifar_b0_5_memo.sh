@@ -8,5 +8,4 @@ python3.9 main_memo.py \
     --scheduler steplr \
     --init_epoch 200 \
     --batch_size 128 \
-    -d -1 \
-    
+    -d -1 

@@ -1,6 +1,7 @@
 ---
 - hosts: ml-compute-engine
   become: yes
+  gather_facts: no
   name: Install necessary package
   tasks:
     - name: Install git

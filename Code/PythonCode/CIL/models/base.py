@@ -75,6 +75,9 @@ class BaseLearner(object):
 
     def eval_task(self, save_conf=False):
         """Evaluating result"""
+
+        logging.info(f"Test loader is: {self.test_loader}")
+
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)
 
@@ -117,13 +120,18 @@ class BaseLearner(object):
 
         return np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
-    def _eval_cnn(self, loader):
+    def _eval_cnn(self, loader: DataLoader):
         self._network.eval()
         y_pred, y_true = [], []
         for _, (_, inputs, targets) in enumerate(loader):
             inputs = inputs.to(self._device)
+
+            logging.info(f"Inputs is: {inputs}")
+
             with torch.no_grad():
                 outputs = self._network(inputs)["logits"]
+
+            logging.info(f"Outputs is: {outputs}")
             predicts = torch.topk(outputs, k=self.topk, dim=1, largest=True, sorted=True)[1]
             y_pred.append(predicts.cpu().numpy())
             y_true.append(targets.cpu().numpy())

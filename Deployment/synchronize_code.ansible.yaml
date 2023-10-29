@@ -1,6 +1,7 @@
 ---
 - hosts: ml-compute-engine
   become: yes
+  gather_facts: no
   name: Synchronize code
   tasks:
     - name: Pulling code from github
