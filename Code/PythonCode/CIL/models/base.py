@@ -216,7 +216,7 @@ class BaseLearner(object):
                 logging.info(f"S is: {exemplar_vectors}")
 
                 mu_p = (vectors + S) / k  # [n, feature_dim] sum to all vectors
-                i = np.argmin(np.sqrt(np.sum((class_mean - mu_p) ** 2)), axis=1)
+                i = np.argmin(np.sqrt(np.sum((class_mean - mu_p) ** 2, axis=1)))
                 selected_exemplars.append(np.array(data[i]))  # new object to avoid passing by inference
                 exemplar_vectors.append(np.array(vectors[i]))  # new object to avoid passsing by inference
                 vectors = np.delete(vectors, i, axis=0)  # Remove it to avoid duplicative selection
