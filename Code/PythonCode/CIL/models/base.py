@@ -18,7 +18,7 @@ class BaseLearner(object):
     _network: AdaptiveNet
     _test_loader: DataLoader
 
-    def __init__(self, args):
+    def __init__(self, args: dict):
         self.args = args
         self._cur_task: int = -1
         """Current trained task"""
@@ -28,6 +28,8 @@ class BaseLearner(object):
         self._data_memory, self._targets_memory = np.array([]), np.array([])
         self.topk = 5
 
+        self._memory_size = args["memory_size"]
+        self._memory_per_class = args.get("memory_per_class", None)
         self._fixed_memory = args.get("fixed_memory", False)
         self._device = args["device"][0]
         self._multiple_gpus = args["device"]
@@ -38,11 +40,26 @@ class BaseLearner(object):
         return len(self._targets_memory)
 
     @property
+    def samples_per_class(self):
+        if self._fixed_memory:
+            return self._memory_per_class
+        else:
+            assert self._total_classes != 0, "Total classes is 0"
+            return self._memory_size // self._total_classes
+
+    @property
     def feature_dim(self):
         if isinstance(self._network, nn.DataParallel):
             return self._network.module.feature_dim
         else:
             return self._network.feature_dim
+
+    def build_rehearsal_memory(self, data_manager, per_class):
+        if self._fixed_memory:
+            self._construct_exemplar_unified(data_manager, per_class)
+        else:
+            self._reduce_exemplar(data_manager, per_class)
+            self._construct_exemplar(data_manager, per_class)
 
     def _evaluate(self, y_pred, y_true):
         ret = {}

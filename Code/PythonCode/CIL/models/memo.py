@@ -79,6 +79,9 @@ class MEMO(BaseLearner):
         if len(self._multiple_gpus) > 1:
             self._network = nn.DataParallel(module=self._network, device_ids=self._multiple_gpus)
         self._train(self.train_loader, self.test_loader)
+        self.build_rehearsal_memory(data_manager=data_manager, per_class=self.samples_per_class)
+        if len(self._multiple_gpus) > 1:
+            self._network = self._network.module
 
     def set_network(self):
         if len(self._multiple_gpus) > 1:

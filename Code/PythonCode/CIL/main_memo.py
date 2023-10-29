@@ -21,6 +21,7 @@ def load_json(settings_path):
 def setup_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Reproduce of multiple continual learning algorithms.")
     parser.add_argument("--dataset", type=str, default="cifar100")
+    parser.add_argument("--memory_size", "-ms", type=int, default=2000)
     parser.add_argument("--init_cls", "-init", type=int, default=10)
     parser.add_argument("--increment", "-incre", type=int, default=10)
     parser.add_argument("--model_name", "-model", type=str, default=None, required=True)
