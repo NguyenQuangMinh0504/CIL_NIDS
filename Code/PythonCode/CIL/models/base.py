@@ -212,9 +212,6 @@ class BaseLearner(object):
             exemplar_vectors = []  # [n, feature_dim]
             for k in range(1, m + 1):
                 S = np.sum(exemplar_vectors, axis=0)  # [feature_dim] sum of selected exemplars vectors
-
-                logging.info(f"S is: {exemplar_vectors}")
-
                 mu_p = (vectors + S) / k  # [n, feature_dim] sum to all vectors
                 i = np.argmin(np.sqrt(np.sum((class_mean - mu_p) ** 2, axis=1)))
                 selected_exemplars.append(np.array(data[i]))  # new object to avoid passing by inference
@@ -226,12 +223,14 @@ class BaseLearner(object):
 
             selected_exemplars = np.array(selected_exemplars)
             exemplar_targets = np.full(selected_exemplars.shape[0], class_idx)
-            self._data_memory = (np.concatenate(
-                (self._data_memory, selected_exemplars) if len(self._data_memory) != 0 else selected_exemplars)
-            )
-            self._targets_memory = (np.concatenate(
-                (self._targets_memory, exemplar_targets) if len(self._targets_memory) != 0 else exemplar_targets)
-            )
+
+            self._data_memory = (
+                np.concatenate((self._data_memory, selected_exemplars))
+                if len(self._data_memory) != 0 else selected_exemplars)
+
+            self._targets_memory = (
+                np.concatenate((self._targets_memory, exemplar_targets))
+                if len(self._targets_memory) != 0 else exemplar_targets)
 
             # Exemplar mean
             idx_dataset = data_manager.get_dataset(
