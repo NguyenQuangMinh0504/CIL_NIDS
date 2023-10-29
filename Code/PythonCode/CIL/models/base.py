@@ -194,6 +194,10 @@ class BaseLearner(object):
                 mode="test",
                 ret_data=True
             )
+
+            logging.info(f"Data is: {data}")
+            logging.info(f"Target is: {targets}")
+
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T

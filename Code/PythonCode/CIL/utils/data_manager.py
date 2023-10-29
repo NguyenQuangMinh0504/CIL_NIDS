@@ -33,7 +33,8 @@ class DataManager(object):
         """indices: list of training classes
 
         Args:
-            appendent: Data adding to the dataset
+            appendent: Data adding to the dataset \n
+            mode: ["train", "test"]. If mode is test, dont use train transform like crop, flip, zitter, ....
         """
 
         if source == "train":
