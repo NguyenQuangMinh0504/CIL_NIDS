@@ -46,6 +46,12 @@ class AdaptiveNet(nn.Module):
             return 0
         return self.out_dim*len(self.AdaptiveExtractors)
 
+    def extract_vector(self, x):
+        base_feature_map = self.TaskAgnosticExtractor()
+        features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
+        features = torch.cat(features, 1)
+        return features
+
     def update_fc(self, nb_classes):
         """Updating specialized adaptive net and fully connected layers"""
         logging.info("----------------------------------------------------")

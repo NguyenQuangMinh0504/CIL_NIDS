@@ -45,10 +45,14 @@ class MEMO(BaseLearner):
         """Training model"""
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
+
+        logging.info(f"Current total task is: {self._total_classes}")
+
         self._network.update_fc(self._total_classes)
 
         logging.info("Learning on {}-{}".format(self._known_classes, self._total_classes))
 
+        #  Freeze previous Adaptive Extractor weight
         if self._cur_task > 0:
             for i in range(self._cur_task):
                 for p in self._network.AdaptiveExtractors[i].parameters():
@@ -84,9 +88,10 @@ class MEMO(BaseLearner):
             self._network = self._network.module
 
     def set_network(self):
+        """Update train() and eval() state of the model."""
         if len(self._multiple_gpus) > 1:
             self._network = self._network.module
-        self._network.train()
+        self._network.train()  # All status from eval to train
         if self.args["train_base"]:
             self._network.TaskAgnosticExtractor.train()
         else:

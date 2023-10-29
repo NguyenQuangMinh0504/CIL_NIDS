@@ -121,6 +121,7 @@ class BaseLearner(object):
         return np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
     def _eval_cnn(self, loader: DataLoader):
+        """Returning y prediction and y true"""
         self._network.eval()
         y_pred, y_true = [], []
         for _, (_, inputs, targets) in enumerate(loader):
@@ -153,7 +154,7 @@ class BaseLearner(object):
             if isinstance(self._network, nn.DataParallel):
                 _vectors = tensor2numpy(self._network.module.extract_vector(_inputs.to(self._device)))
             else:
-                _vectors = tensor2numpy(self._network.extract(_inputs.to(self._device)))
+                _vectors = tensor2numpy(self._network.extract_vector(_inputs.to(self._device)))
             vectors.append(_vectors)
             targets.append(_targets)
         return np.concatenate(vectors), np.concatenate(targets)
