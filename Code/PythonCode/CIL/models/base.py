@@ -147,6 +147,7 @@ class BaseLearner(object):
         return np.argsort(scores, axis=1)[:, :, self.topk], y_true
 
     def _extract_vectors(self, loader):
+        """Passing input and return layer before fully connected layer"""
         self._network.eval()
         vectors, targets = [], []
         for _, _inputs, _targets in loader:
@@ -200,7 +201,10 @@ class BaseLearner(object):
 
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
+
+            # Normalize vector
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
+
             class_mean = np.mean(vectors, axis=0)
 
             # Select
@@ -208,6 +212,9 @@ class BaseLearner(object):
             exemplar_vectors = []  # [n, feature_dim]
             for k in range(1, m + 1):
                 S = np.sum(exemplar_vectors, axis=0)  # [feature_dim] sum of selected exemplars vectors
+
+                logging.info(f"S is: {exemplar_vectors}")
+
                 mu_p = (vectors + S) / k  # [n, feature_dim] sum to all vectors
                 i = np.argmin(np.sqrt(np.sum((class_mean - mu_p) ** 2)), axis=1)
                 selected_exemplars.append(np.array(data[i]))  # new object to avoid passing by inference

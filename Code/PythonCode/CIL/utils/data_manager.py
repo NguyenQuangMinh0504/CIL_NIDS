@@ -29,7 +29,7 @@ class DataManager(object):
         """Return number of total classes at training iterator task"""
         return self._increments[task]
 
-    def get_dataset(self, indices, source, mode, appendent=None, ret_data=False, m_rate=None):
+    def get_dataset(self, indices, source, mode, appendent=None, ret_data: bool = False, m_rate=None):
         """indices: list of training classes
 
         Args:
