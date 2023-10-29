@@ -16,7 +16,7 @@ batch_size = 64
 
 class BaseLearner(object):
     _network: AdaptiveNet
-    _test_loader: DataLoader
+    test_loader: DataLoader
 
     def __init__(self, args: dict):
         self.args = args
@@ -79,7 +79,7 @@ class BaseLearner(object):
         cnn_accy = self._evaluate(y_pred, y_true)
 
         if hasattr(self, "_class_means"):
-            y_pred, y_true = self._eval_nme(self._test_loader, self._class_means)
+            y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
         else:
             nme_accy = None

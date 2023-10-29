@@ -10,10 +10,10 @@
         update: yes
         clone: yes
         force: yes
-    # - name: Pulling CIL code from github
-    #   ansible.builtin.git:
-    #     repo: https://github.com/NguyenQuangMinh0504/CIL_Survey
-    #     dest: /opt/CIL_Survey
-    #     update: yes
-    #     clone: yes
-    #     force: yes
+    - name: Pulling CIL code from github
+      ansible.builtin.git:
+        repo: https://github.com/NguyenQuangMinh0504/CIL_Survey
+        dest: /opt/CIL_Survey
+        update: yes
+        clone: yes
+        force: yes
