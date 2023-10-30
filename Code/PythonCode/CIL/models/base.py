@@ -178,7 +178,7 @@ class BaseLearner(object):
             )
 
             # Exemplar mean
-            idx_dataset = data_manager.get_dataset(indices=[], source="main", mode="test", appendent=(dd, dt))
+            idx_dataset = data_manager.get_dataset(indices=[], source="train", mode="test", appendent=(dd, dt))
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T

@@ -268,5 +268,5 @@ class MEMO(BaseLearner):
                     loss_aux/len(train_loader),
                     train_acc,
                 )
-            prog_bar.set_description(info)
+            # prog_bar.set_description(info)
             logging.info(info)
