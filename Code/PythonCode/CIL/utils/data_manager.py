@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 from PIL import Image
 from torch.utils.data import Dataset
@@ -96,6 +97,11 @@ class DataManager(object):
         else:
             order = idata.class_order
         self._class_order = order
+        logging.info(self._class_order)
+
+        # Map indices
+        self._train_targets = _map_new_class_index(self._train_targets, self._class_order)
+        self._test_targets = _map_new_class_index(self._test_targets, self._class_order)
 
     def _select(self, x, y, low_range, high_range):
         idxes = np.where(np.logical_and(y >= low_range, y < high_range))[0]
@@ -131,6 +137,10 @@ class DummyDataset(Dataset):
             image = self.trsf(Image.fromarray(self.images[idx]))
         label = self.labels[idx]
         return idx, image, label
+
+
+def _map_new_class_index(y, order):
+    return np.array(list(map(lambda x: order.index(x), y)))
 
 
 def _get_idata(dataset_name: str):
