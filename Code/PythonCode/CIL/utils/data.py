@@ -8,9 +8,9 @@ from torchvision.transforms import RandomCrop, RandomHorizontalFlip, ColorJitter
 
 
 class iData(object):
-    train_trsf: dict
-    test_trsf: dict
-    common_trsf: dict
+    train_trsf: list
+    test_trsf: list
+    common_trsf: list
     class_order: dict
     train_data: np.ndarray
     train_targets: np.ndarray
@@ -65,6 +65,7 @@ class KDD99(iData):
     use_path = False
     train_trsf = []
     test_trsf = []
+    common_trsf = []
 
     def download_data(self):
         # try:
