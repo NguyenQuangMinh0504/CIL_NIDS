@@ -17,6 +17,7 @@ class iData(object):
     test_data: np.ndarray
     test_targets: np.ndarray
     use_path: bool
+    """True: load from array, False: load from real image path"""
 
 
 class iCIFAR10(iData):
@@ -65,7 +66,7 @@ class KDD99(iData):
     use_path = False
     train_trsf = []
     test_trsf = []
-    common_trsf = []
+    common_trsf = [ToTensor()]
 
     def download_data(self):
         # try:
@@ -77,6 +78,7 @@ class KDD99(iData):
 
         # Pre processing
         df = pd.read_csv(path, header=None)
+
         df.dropna(inplace=True, axis=1)
         df.columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', 'dst_bytes', 'land',
                       'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised',
@@ -134,9 +136,15 @@ class KDD99(iData):
         logging.info(outcomes)
 
         y = df["outcome"].to_numpy()
+
         df.drop(labels="outcome", axis=1)
 
-        self.train_data, self.train_targets, self.test_data, self.test_targets = train_test_split(
+        self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             df.to_numpy(), y, test_size=0.2, random_state=42)
+
+        self.train_data = self.train_data.astype(np.float32)
+        self.test_data = self.test_data.astype(np.float32)
+        # self.train_targets = self.train_targets.astype(np.float32)
+        # self.test_targets = self.test_targets.astype(np.float32)
 
         del df

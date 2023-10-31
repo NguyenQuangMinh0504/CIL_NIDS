@@ -70,12 +70,13 @@ class DataManager(object):
             data.append(appendent_data)
             targets.append(appendent_targets)
         data, targets = np.concatenate(data), np.concatenate(targets)
+
         if ret_data:
             return data, targets, DummyDataset(data, targets, trsf, self.use_path)
         else:
             return DummyDataset(data, targets, trsf, self.use_path)
 
-    def _setup_data(self, dataset_name, shuffle: bool, seed):
+    def _setup_data(self, dataset_name: str, shuffle: bool, seed):
         idata: iData = _get_idata(dataset_name)
         idata.download_data()
 
@@ -97,7 +98,7 @@ class DataManager(object):
         else:
             order = idata.class_order
         self._class_order = order
-        logging.info(self._class_order)
+        logging.info(f"Class order is: {self._class_order}")
 
         # Map indices
         self._train_targets = _map_new_class_index(self._train_targets, self._class_order)

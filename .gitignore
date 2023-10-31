@@ -1,6 +1,8 @@
 .DS_Store
 Dataset
 **__pycache__**
+__pycache__/
 Code/PythonCode/CIL/data
 Code/PythonCode/CIL/logs
-Code/PythonCode/CIL/utils/__pycache__/*
+Code/PythonCode/CIL/utils/__pycache__/**
+*.pyc

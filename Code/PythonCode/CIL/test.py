@@ -1,6 +1,107 @@
-from math import sqrt
-sum = 0
-for i in range(5):
-    sum += 2*(i*i)
-print(sum)
-print(sqrt(sum))
+from utils.data import KDD99, iCIFAR100
+from torch.utils.data import Dataset, DataLoader
+import torch.nn as nn
+import torch
+from torch.nn import functional as F
+import torch.optim as optim
+from tqdm import tqdm
+kdd99 = KDD99()
+kdd99.download_data()
+cifar100 = iCIFAR100()
+cifar100.download_data()
+
+# iCIFAR100().download_data()
+
+
+class DummyDataset(Dataset):
+    def __init__(self, images, labels, use_path=False):
+        assert len(images) == len(labels), "Data size error!"
+        self.images = images
+        self.labels = labels
+        # self.trsf = trsf
+        self.use_path = use_path
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+        # if self.use_path:
+        #     image = self.trsf(pil_loader(self.images[idx]))
+        # else:
+        #     image = self.trsf(Image.fromarray(self.images[idx]))
+        image = self.images[idx]
+        label = self.labels[idx]
+        return idx, image, label
+
+
+dataset = DummyDataset(kdd99.train_data, kdd99.train_targets)
+val_dataset = DummyDataset(kdd99.test_data, kdd99.test_targets)
+
+
+class IntrusionDetectionNet(nn.Module):
+    def __init__(self, input_dim, output_dim):
+        super(IntrusionDetectionNet, self).__init__()
+
+        # Define the network layers.
+        self.layers = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, output_dim),
+        )
+
+    def forward(self, x):
+        # Pass the input data through the network layers.
+        x = self.layers(x)
+
+        return x
+
+
+model = IntrusionDetectionNet(122, 23)
+
+# Define the loss function and optimizer.
+loss_fn = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters())
+
+prog_bar = tqdm(range(100))
+# Train the model for 10 epochs
+for epoch in prog_bar:
+    # Get the training data
+    train_loader = DataLoader(dataset=dataset, batch_size=32, shuffle=True)
+
+    # Train the model
+    for batch_idx, (_, data, target) in enumerate(train_loader):
+        model.train()
+        # Forward pass
+        output = model(data)
+        # Calculate the loss
+        loss = F.cross_entropy(output, target)
+
+        # Backward pass
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+# Get the validation data
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+
+# Evaluate the model
+correct = 0
+total = 0
+for batch_idx, (_, data, target) in enumerate(val_loader):
+    # Forward pass
+    model.eval()
+    output = model(data)
+
+    # Calculate the predictions
+    _, predicted = torch.max(output.data, 1)
+
+    # Update the correct and total counters
+    total += target.size(0)
+    correct += (predicted == target).sum().item()
+
+# Calculate the accuracy
+accuracy = 100 * correct / total
+
+print('Validation accuracy:', accuracy)
