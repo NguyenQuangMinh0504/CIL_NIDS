@@ -150,6 +150,7 @@ from tensorflow.keras.utils import get_file
 #     raise
 
 path = "/home/nguyenquangminh/kddcup.data_10_percent"
+path = "/Users/nguyenquangminh/Desktop/Thesis/Dataset/kddcup.data_10_percent"
 
 # This file is a CSV, just no CSV extension or headers
 # Download from: http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html

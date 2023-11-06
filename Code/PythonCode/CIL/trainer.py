@@ -215,7 +215,6 @@ def save_results(args, cnn_curve, nme_curve, no_nme=False):
                 f.write(f"{_acc},")
             f.write(f"{cnn_top5[-1]} \n")
 
-
     # -------NME TOP1----------
     if no_nme is False:
         _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top1")

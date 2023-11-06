@@ -79,7 +79,6 @@ class KDD99(iData):
         # Pre processing
         df = pd.read_csv(path, header=None)
 
-        df.dropna(inplace=True, axis=1)
         df.columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', 'dst_bytes', 'land',
                       'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised',
                       'root_shell', 'su_attempted', 'num_root', 'num_file_creations', 'num_shells', 'num_access_files',
@@ -132,7 +131,7 @@ class KDD99(iData):
         encode_numeric_zscore(df, 'dst_host_rerror_rate')
         encode_numeric_zscore(df, 'dst_host_srv_rerror_rate')
         outcomes = encode_text_index(df, 'outcome')
-        df.dropna()
+        df.dropna(inplace=True, axis=1)
         logging.info(outcomes)
 
         y = df["outcome"].to_numpy()

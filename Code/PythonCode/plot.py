@@ -9,10 +9,11 @@ memo = [96.2, 91.4, 81.47, 77.05, 76.04, 72.73, 70.94, 68.22, 66.96, 65.96, 64.3
 
 my_memo_len = [i for i in range(0, 55, 5)]
 x = [i for i in range(0, 100, 5)]
-plt.plot(x, rmm_foster, color="red")
-plt.plot(x, coil, color="green")
-plt.plot(x, finetune, color="pink")
-plt.plot(x, foster, color="black")
-plt.plot(x, memo, color="orange")
+plt.plot(x, rmm_foster, color="red", label="rmm_foster")
+plt.plot(x, coil, color="green", label="coil")
+plt.plot(x, finetune, color="pink", label="finetune")
+plt.plot(x, foster, color="black", label="foster")
+plt.plot(x, memo, color="orange", label="memo")
 # plt.plot(my_memo_len, my_memo, color="grey")
+plt.legend(loc='upper right')
 plt.show()

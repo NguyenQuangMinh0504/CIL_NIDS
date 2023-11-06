@@ -6,6 +6,7 @@ from torch import nn
 
 from convs.linears import SimpleLinear
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
+import matplotlib.pyplot as plt
 
 
 def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.Module):
@@ -57,6 +58,9 @@ class AdaptiveNet(nn.Module):
         logging.info("----------------------------------------------------")
         logging.info("Calling function update_fc from Adaptive net class...")
         logging.info("Updating fully connected layer...")
+        if self.fc is not None:
+            plt.imshow(self.fc.weight.detach().numpy())
+            plt.show()
 
         _, _new_extractor = get_convnet(self.convnet_type)
         # logging.info("Get extractor")

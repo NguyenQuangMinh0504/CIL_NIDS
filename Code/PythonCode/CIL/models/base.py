@@ -127,8 +127,6 @@ class BaseLearner(object):
         for _, (_, inputs, targets) in enumerate(loader):
             inputs = inputs.to(self._device)
 
-            logging.info(f"Inputs is: {inputs}")
-
             with torch.no_grad():
                 outputs = self._network(inputs)["logits"]
 
@@ -195,9 +193,6 @@ class BaseLearner(object):
                 mode="test",
                 ret_data=True
             )
-
-            logging.info(f"Data is: {data}")
-            logging.info(f"Target is: {targets}")
 
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
