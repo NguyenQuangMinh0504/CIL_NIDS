@@ -116,7 +116,7 @@ class AdaptiveNet(nn.Module):
         meannew = torch.mean(newnorm)
         meanold = torch.mean(oldnorm)
         gamma = meanold/meannew
-        print('alignweights,gamma=', gamma)
+        print('align weights, gamma = ', gamma)
         self.fc.weight.data[-increment:, :] *= gamma
 
     def forward(self, x):
