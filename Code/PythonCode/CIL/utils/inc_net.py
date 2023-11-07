@@ -2,6 +2,7 @@ import copy
 import logging
 import torch
 from torch import nn
+import numpy as np
 
 
 from convs.linears import SimpleLinear
@@ -58,9 +59,9 @@ class AdaptiveNet(nn.Module):
         logging.info("----------------------------------------------------")
         logging.info("Calling function update_fc from Adaptive net class...")
         logging.info("Updating fully connected layer...")
-        if self.fc is not None:
-            plt.imshow(self.fc.weight.detach().numpy())
-            plt.show()
+        # if self.fc is not None:
+        #     plt.imshow(self.fc.weight.detach().numpy())
+        #     plt.show()
 
         _, _new_extractor = get_convnet(self.convnet_type)
         # logging.info("Get extractor")
@@ -85,6 +86,13 @@ class AdaptiveNet(nn.Module):
         fc = self.generate_fc(in_dim=self.feature_dim, out_dim=nb_classes)
 
         if self.fc is not None:
+            # with open("data.json", "a+") as f:
+                # json.dump(self.fc.weight.data, f)
+                # json.dump(self.fc.weight.requires_grad, f)
+            # torch.save(self.fc.weight, "tensor.pt")
+            np.savetxt(fname=f"tensor-{len(self.AdaptiveExtractors)}.txt", X=self.fc.weight.detach().numpy())
+
+        if self.fc is not None:
             nb_output = self.fc.out_features
             weight = copy.deepcopy(self.fc.weight.data)
             bias = copy.deepcopy(self.fc.bias.data)
@@ -104,7 +112,7 @@ class AdaptiveNet(nn.Module):
     def weight_align(self, increment):
         weights = self.fc.weight.data
         newnorm = (torch.norm(weights[-increment:, :], p=2, dim=1))
-        oldnorm = (torch.norm(weights[-increment:, :], p=2, dim=1))
+        oldnorm = (torch.norm(weights[:-increment, :], p=2, dim=1))
         meannew = torch.mean(newnorm)
         meanold = torch.mean(oldnorm)
         gamma = meanold/meannew
