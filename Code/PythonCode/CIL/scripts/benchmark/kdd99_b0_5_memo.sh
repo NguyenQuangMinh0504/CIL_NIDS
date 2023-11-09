@@ -1,8 +1,8 @@
 python3.9 main_memo.py \
-    -model memo \
+    -model memo_kdd \
     -init 5 \
     -incre 5 \
-    -net memo_resnet32 \
+    -net kdd_fc \
     --dataset kdd99 \
     --train_base \
     --scheduler steplr \

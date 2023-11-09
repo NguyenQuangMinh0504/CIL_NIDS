@@ -2,10 +2,11 @@ python3.9 main_memo.py \
     -model memo \
     -init 5 \
     -incre 5 \
-    -net memo_resnet32 \
+    -net kdd_fc \
     --dataset cifar100 \
     --train_base \
     --scheduler steplr \
     --init_epoch 200 \
+    --epochs 170 \
     --batch_size 128 \
     -d -1

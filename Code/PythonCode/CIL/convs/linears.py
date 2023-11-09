@@ -4,6 +4,16 @@ from torch.nn import functional as F
 
 
 class SimpleLinear(nn.Module):
+
+    in_features: int
+    """Input dimension of fully connected layers"""
+    out_features: int
+    """Output dimension of fully connected layers"""
+    weight: nn.Parameter
+    """Weight of fully connected layers"""
+    bias: nn.Parameter
+    """Bias of fully connected layers"""
+
     def __init__(self, in_features, out_features, bias=True):
         super(SimpleLinear, self).__init__()
         self.in_features = in_features

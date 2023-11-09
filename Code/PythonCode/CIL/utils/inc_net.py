@@ -7,7 +7,7 @@ import numpy as np
 
 from convs.linears import SimpleLinear
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
-import matplotlib.pyplot as plt
+from convs.memo_kdd_fc import get_kdd_fc
 
 
 def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.Module):
@@ -17,6 +17,84 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
         pass
     elif name == "memo_resnet32":
         return get_memo_resnet32()
+    elif name == "kdd_fc":
+        return get_kdd_fc()
+
+
+class BaseNet(nn.Module):
+    def __init__(self, convnet_type, pretrained):
+        super(BaseNet, self).__init__()
+        self.convnet = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
+        self.fc = None
+
+
+class AdaptiveKDDNet(nn.Module):
+
+    TaskAgnosticExtractor: nn.Module
+    """Generalized block"""
+    AdaptiveExtractors: nn.ModuleList
+    """Specialized block"""
+    fc: SimpleLinear
+    """Fully connected block"""
+    convnet_type: str
+    """Name of convolution net used"""
+
+    def __init__(self, convnet_type: str, pretrained: bool):
+        super(AdaptiveKDDNet, self).__init__()
+        self.convnet_type = convnet_type
+        self.TaskAgnosticExtractor, _ = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
+        self.TaskAgnosticExtractor.train()
+        self.AdaptiveExtractors = nn.ModuleList()
+        self.out_dim = None
+        self.fc = None
+        self.task_sizes = []
+
+    @property
+    def feature_dim(self):
+        """Feature dimension. Apparently it is used as input for fully connected layer LOL"""
+        if self.out_dim is None:
+            return 0
+        return self.out_dim * len(self.AdaptiveExtractors)
+
+    def extract_vector(self, x):
+        base_feature_map = self.TaskAgnosticExtractor(x)
+        features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
+        features = torch.cat(features, 1)
+        return features
+
+    def update_fc(self, nb_classes: int):
+        _, _new_extractor = get_convnet(self.convnet_type)
+        if len(self.AdaptiveExtractors) == 0:
+            self.AdaptiveExtractors.append(_new_extractor)
+        else:
+            self.AdaptiveExtractors.append(_new_extractor)
+            self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict)
+
+        if self.out_dim is None:
+            self.out_dim = self.AdaptiveExtractors[-1].feature_dim
+        fc = self.generate_fc(in_dim=self.feature_dim, out_dim=nb_classes)
+
+        if self.fc is not None:
+            nb_output = self.fc.out_features
+            weight = copy.deepcopy(self.fc.weight.data)
+            bias = copy.deepcopy(self.fc.bias.data)
+            fc.weight.data[:nb_output, :self.feature_dim - self.out_dim] = weight
+            fc.bias.data[:nb_output] = bias
+        del self.fc
+        self.fc = fc
+
+    def forward(self, x: torch.Tensor):
+        base_feature_map = self.TaskAgnosticExtractor(x)
+        features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
+        features = torch.cat(tensors=features, dim=1)
+        out = self.fc(features)
+        out.update({"features": features})
+        out.update({"base_features": base_feature_map})
+        return out
+
+    def generate_fc(self, in_dim: int, out_dim: int) -> SimpleLinear:
+        """Generate fully connected layers with input dimension in_dim and output dimension out_dim"""
+        return SimpleLinear(in_features=in_dim, out_features=out_dim)
 
 
 class AdaptiveNet(nn.Module):
@@ -30,7 +108,6 @@ class AdaptiveNet(nn.Module):
     def __init__(self, convnet_type: str, pretrained: bool):
         super(AdaptiveNet, self).__init__()
         self.convnet_type = convnet_type
-        self.TaskAgnosticExtractor: nn.Module
         self.TaskAgnosticExtractor, _ = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
         logging.info(f"Task Agnostic Extractor is: {type(self.TaskAgnosticExtractor)}")
         logging.info(f"Task agnostic extractor structure: {self.TaskAgnosticExtractor}")
