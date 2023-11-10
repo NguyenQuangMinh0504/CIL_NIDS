@@ -79,7 +79,7 @@ class KDD99(iData):
         # except Exception:
         #     print("Error downloading")
         #     raise
-        path = "../Dataset/kddcup.data_10_percent"
+        path = "../../../Dataset/kddcup.data_10_percent"
 
         # Pre processing
         df = pd.read_csv(path, header=None)
