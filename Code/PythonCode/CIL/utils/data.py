@@ -19,6 +19,10 @@ class iData(object):
     use_path: bool
     """True: load from array, False: load from real image path"""
 
+    def download_data(self):
+        """Downloading data"""
+        logging.info("Downloading data........")
+
 
 class iCIFAR10(iData):
     use_path = False
@@ -69,6 +73,7 @@ class KDD99(iData):
     common_trsf = [ToTensor()]
 
     def download_data(self):
+        super().download_data()
         # try:
         #     path = get_file('kddcup.data_10_percent.gz', origin='http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data_10_percent.gz')
         # except Exception:

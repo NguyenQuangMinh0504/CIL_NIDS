@@ -1,6 +1,5 @@
 from torch import Tensor
 from torch import nn
-import logging
 
 
 class GeneralizedFC(nn.Module):
@@ -12,7 +11,6 @@ class GeneralizedFC(nn.Module):
         )
 
     def forward(self, x: Tensor):
-        logging.info(x.size())
         return self.layers(x)
 
 
@@ -32,4 +30,4 @@ class SpecializedFC(nn.Module):
 
 
 def get_kdd_fc() -> (nn.Module, nn.Module):
-    return GeneralizedFC(input_dim=111), SpecializedFC()
+    return GeneralizedFC(input_dim=121), SpecializedFC()

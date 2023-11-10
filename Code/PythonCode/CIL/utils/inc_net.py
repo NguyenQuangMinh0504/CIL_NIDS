@@ -68,7 +68,7 @@ class AdaptiveKDDNet(nn.Module):
             self.AdaptiveExtractors.append(_new_extractor)
         else:
             self.AdaptiveExtractors.append(_new_extractor)
-            self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict)
+            self.AdaptiveExtractors[-1].load_state_dict(self.AdaptiveExtractors[-2].state_dict())
 
         if self.out_dim is None:
             self.out_dim = self.AdaptiveExtractors[-1].feature_dim
@@ -82,6 +82,16 @@ class AdaptiveKDDNet(nn.Module):
             fc.bias.data[:nb_output] = bias
         del self.fc
         self.fc = fc
+
+    def weight_align(self, increment):
+        weights = self.fc.weight.data
+        newnorm = (torch.norm(weights[-increment:, :], p=2, dim=1))
+        oldnorm = (torch.norm(weights[:-increment, :], p=2, dim=1))
+        meannew = torch.mean(newnorm)
+        meanold = torch.mean(oldnorm)
+        gamma = meanold/meannew
+        print('align weights, gamma = ', gamma)
+        self.fc.weight.data[-increment:, :] *= gamma
 
     def forward(self, x: torch.Tensor):
         base_feature_map = self.TaskAgnosticExtractor(x)

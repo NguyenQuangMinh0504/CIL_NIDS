@@ -175,6 +175,9 @@ class MEMO_KDD(BaseLearner):
                 self._network.weight_align(self._total_classes - self._known_classes)
 
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
+
+        logging.info("Initialize training.........................")
+
         prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
@@ -224,20 +227,21 @@ class MEMO_KDD(BaseLearner):
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
                 outputs = self._network(inputs)
-                logits, aux_logits = outputs["logits"], outputs["aux_logits"]
-                loss_clf = F.cross_entropy(logits, targets)
-                aux_targets = targets.clone()
-                aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
-                                          input=aux_targets - self._known_classes + 1, other=0)
-                loss_aux = F.cross_entropy(aux_logits, aux_targets)
-                loss = loss_clf + self.args["alpha_aux"] * loss_aux
-
+                # logits, aux_logits = outputs["logits"], outputs["aux_logits"]
+                # loss_clf = F.cross_entropy(logits, targets)
+                # aux_targets = targets.clone()
+                # aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
+                #                           input=aux_targets - self._known_classes + 1, other=0)
+                # loss_aux = F.cross_entropy(aux_logits, aux_targets)
+                # loss = loss_clf + self.args["alpha_aux"] * loss_aux
+                logits = outputs["logits"]
+                loss = F.cross_entropy(logits, targets)
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
-                losses_aux += loss_aux.item()
-                losses_clf += loss_clf.item()
+                # losses_aux += loss_aux.item()
+                # losses_clf += loss_clf.item()
 
                 _, preds = torch.max(logits, dim=1)
                 correct += preds.eq(targets.expand_as(preds)).cpu().sum()
@@ -248,24 +252,24 @@ class MEMO_KDD(BaseLearner):
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses/len(train_loader),
-                    losses_clf/len(train_loader),
-                    losses_aux/len(train_loader),
+                    # losses_clf/len(train_loader),
+                    # losses_aux/len(train_loader),
                     train_acc,
                     test_acc
                 )
             else:
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f} Train_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f} Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses/len(train_loader),
-                    losses_clf/len(train_loader),
-                    loss_aux/len(train_loader),
+                    # losses_clf/len(train_loader),
+                    # loss_aux/len(train_loader),
                     train_acc,
                 )
             # prog_bar.set_description(info)

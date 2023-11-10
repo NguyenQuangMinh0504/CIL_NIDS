@@ -8,12 +8,21 @@ from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
 
 class DataManager(object):
     dataset_name: str
+    """Name of the dataset"""
     _increments: list
     """_increments[i]: Number of classes at training iterator i"""
 
     def __init__(self, dataset_name: str, shuffle: bool, seed: int, init_cls: int, increment: int):
+
         self.dataset_name = dataset_name
+
+        if self.dataset_name == "kdd99":
+            self.is_image = False
+        else:
+            self.is_image = True
+
         self._setup_data(dataset_name, shuffle, seed)
+
         assert init_cls <= len(self._class_order), "Not enough classes."
         self._increments = [init_cls]
         while sum(self._increments) + increment < len(self._class_order):
@@ -37,7 +46,6 @@ class DataManager(object):
             appendent: Data adding to the dataset \n
             mode: ["train", "test"]. If mode is test, dont use train transform like crop, flip, zitter, ....
         """
-
         if source == "train":
             x, y = self._train_data, self._train_targets
         elif source == "test":
@@ -72,11 +80,12 @@ class DataManager(object):
         data, targets = np.concatenate(data), np.concatenate(targets)
 
         if ret_data:
-            return data, targets, DummyDataset(data, targets, trsf, self.use_path)
+            return data, targets, DummyDataset(data, targets, trsf, self.use_path, is_image=self.is_image)
         else:
-            return DummyDataset(data, targets, trsf, self.use_path)
+            return DummyDataset(data, targets, trsf, self.use_path, is_image=self.is_image)
 
     def _setup_data(self, dataset_name: str, shuffle: bool, seed):
+        """Downloading data -> Set up train and test data"""
         idata: iData = _get_idata(dataset_name)
         idata.download_data()
 
@@ -104,6 +113,8 @@ class DataManager(object):
         self._train_targets = _map_new_class_index(self._train_targets, self._class_order)
         self._test_targets = _map_new_class_index(self._test_targets, self._class_order)
 
+        del idata
+
     def _select(self, x, y, low_range, high_range):
         idxes = np.where(np.logical_and(y >= low_range, y < high_range))[0]
         return x[idxes], y[idxes]
@@ -121,22 +132,34 @@ class DataManager(object):
 
 
 class DummyDataset(Dataset):
-    def __init__(self, images, labels, trsf, use_path=False):
+    def __init__(self, images, labels, trsf, use_path=False, is_image: bool = True):
         assert len(images) == len(labels), "Data size error!"
+
         self.images = images
+        del images
+
         self.labels = labels
+        del labels
+
         self.trsf = trsf
         self.use_path = use_path
+        self.is_image = is_image
 
     def __len__(self):
         return len(self.images)
 
     def __getitem__(self, idx):
-        if self.use_path:
-            image = self.trsf(pil_loader(self.images[idx]))
-        else:
-            image = self.trsf(Image.fromarray(self.images[idx]))
         label = self.labels[idx]
+
+        # Handling data
+        if self.is_image:
+            if self.use_path:
+                image = self.trsf(pil_loader(self.images[idx]))
+            else:
+                image = self.trsf(Image.fromarray(self.images[idx]))
+        else:
+            image = self.images[idx]
+
         return idx, image, label
 
 
