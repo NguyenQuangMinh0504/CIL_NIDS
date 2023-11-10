@@ -2,6 +2,10 @@ import argparse
 import json
 from trainer import train
 
+# Handle too many open files ??
+import torch
+torch.multiprocessing.set_sharing_strategy('file_system')
+
 
 def main():
     args: argparse.Namespace = setup_parser().parse_args()
