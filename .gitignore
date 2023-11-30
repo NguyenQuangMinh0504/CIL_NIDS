@@ -1,5 +1,6 @@
 .DS_Store
 .vscode
+.ipynb_checkpoints
 Dataset
 **__pycache__**
 __pycache__/
