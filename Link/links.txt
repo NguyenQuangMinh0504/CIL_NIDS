@@ -1,0 +1,17 @@
+Dataset
+-------------------------------------------------------------
+kdd99 dataset
+https://kdd.ics.uci.edu/databases/kddcup99/task.html
+https://archive.ll.mit.edu/ideval/docs/attackDB.html
+------------------
+problems with kdd99 dataset
+https://www.kdnuggets.com/news/2007/n18/4i.html
+https://stackoverflow.com/questions/17024961/kdd1999-dataset-features-exolaination
+-------------------------------------------------------------
+Canadian Institute of CyberSecurity Instrusion Detection System Dataset 2017 (CIC-IDS-2017)
+https://www.unb.ca/cic/datasets/ids-2017.html
+------------------
+CICFlowMeter: Tool for generating dataset from pcap file 
+https://www.unb.ca/cic/research/applications.html#CICFlowMeter
+-------------------------------------------------------------
+UNSW Dataset
