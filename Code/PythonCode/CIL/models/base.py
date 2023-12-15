@@ -6,7 +6,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from utils.toolkit import tensor2numpy, accuracy
 from scipy.spatial.distance import cdist
-from utils.inc_net import AdaptiveNet
+from utils.inc_net import AdaptiveNet, DERNet
 from utils.data_manager import DataManager
 import os
 
@@ -15,7 +15,7 @@ batch_size = 64
 
 
 class BaseLearner(object):
-    _network: AdaptiveNet
+    _network: [AdaptiveNet, DERNet]
     test_loader: DataLoader
 
     def __init__(self, args: dict):
