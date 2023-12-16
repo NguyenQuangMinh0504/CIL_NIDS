@@ -6,6 +6,7 @@ import numpy as np
 
 
 from convs.linears import SimpleLinear
+from convs.cifar_resnet import resnet32
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
 from convs.memo_kdd_fc import get_kdd_fc
 
@@ -14,7 +15,7 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
     """Return generalize block + specialize block"""
     name = convnet_type.lower()
     if name == "resnet32":
-        pass
+        return resnet32()
     elif name == "memo_resnet32":
         return get_memo_resnet32()
     elif name == "kdd_fc":
@@ -141,11 +142,16 @@ class DERNet(nn.Module):
         return out
 
     def update_fc(self, nb_classes):
+
+        print(self.convnet_type)
+        print(get_convnet(convnet_type="resnet32"))
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:
             self.convnets.append(get_convnet(self.convnet_type))
             self.convnets[-1].load_state_dict(self.convnets[-2].state_dict())
+
+        print(self.convnets)
         if self.out_dim is None:
             self.out_dim = self.convnets[-1].out_dim
         fc = self.generate_fc(self.feature_dim, nb_classes)
@@ -267,8 +273,8 @@ class AdaptiveNet(nn.Module):
 
         if self.fc is not None:
             # with open("data.json", "a+") as f:
-                # json.dump(self.fc.weight.data, f)
-                # json.dump(self.fc.weight.requires_grad, f)
+            #     json.dump(self.fc.weight.data, f)
+            #     json.dump(self.fc.weight.requires_grad, f)
             # torch.save(self.fc.weight, "tensor.pt")
             np.savetxt(fname=f"tensor-{len(self.AdaptiveExtractors)}.txt", X=self.fc.weight.detach().numpy())
 

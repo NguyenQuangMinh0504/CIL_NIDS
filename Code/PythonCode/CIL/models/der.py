@@ -27,6 +27,7 @@ epochs = 170
 
 class DER(BaseLearner):
     def __init__(self, args):
+        super().__init__(args)
         self.args = args
         self._network = DERNet(convnet_type=args["convnet_type"], pretrained=False)
 
@@ -34,7 +35,7 @@ class DER(BaseLearner):
         self._known_classes = self._total_classes
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
-    def incremental_learning(self, data_manager: DataManager):
+    def incremental_training(self, data_manager: DataManager):
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
         self._network.update_fc(self._total_classes)
@@ -146,7 +147,7 @@ class DER(BaseLearner):
                 epoch + 1,
                 epochs,
                 losses / len(train_loader),
-                loss_clf / len(train_loader), 
+                loss_clf / len(train_loader),
                 losses_aux / len(train_loader),
                 train_acc,
             )
