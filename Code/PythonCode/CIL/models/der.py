@@ -97,6 +97,7 @@ class DER(BaseLearner):
 
     def train(self):
         logging.info("Calling function train ...")
+        logging.info("Network is: ", self._network)
         self._network.train()
         if len(self._multiple_gpus) > 1:
             self._network_module_ptr = self._network.module
