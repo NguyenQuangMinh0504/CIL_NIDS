@@ -142,9 +142,6 @@ class DERNet(nn.Module):
         return out
 
     def update_fc(self, nb_classes):
-
-        print(self.convnet_type)
-        print(get_convnet(convnet_type="resnet32"))
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:
