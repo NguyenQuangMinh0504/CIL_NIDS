@@ -7,6 +7,9 @@ from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
 
 
 class DataManager(object):
+    """
+    This class return train and test dataset
+    """
     dataset_name: str
     """Name of the dataset"""
     _increments: list
@@ -129,6 +132,11 @@ class DataManager(object):
         else:
             new_idxes = np.where(np.logical_and(y >= low_range, y < high_range))[0]
         return x[new_idxes], y[new_idxes]
+
+    def getlen(self, index):
+        """Return length of train target of given index"""
+        y = self._train_targets
+        return np.sum(np.where(y == index))
 
 
 class DummyDataset(Dataset):
