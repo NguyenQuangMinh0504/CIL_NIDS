@@ -10,4 +10,6 @@
 1. Write about Dataset
 2. Write about Method
 3. Experiment on KDD99 dataset (current doing)
+- Build a new network replacing Resnet32 for Der Model
+
 

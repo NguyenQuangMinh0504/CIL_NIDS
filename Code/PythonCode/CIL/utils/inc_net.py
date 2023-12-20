@@ -9,6 +9,7 @@ from convs.linears import SimpleLinear
 from convs.cifar_resnet import resnet32
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
 from convs.memo_kdd_fc import get_kdd_fc
+from convs.ann import get_ann
 
 
 def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.Module):
@@ -20,6 +21,10 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
         return get_memo_resnet32()
     elif name == "kdd_fc":
         return get_kdd_fc()
+    elif name == "ann":
+        return get_ann()
+    else:
+        raise NotImplementedError(f"Convnet type : {name} has not been implemented yet!!!")
 
 
 class BaseNet(nn.Module):
@@ -252,6 +257,7 @@ class DERNet(nn.Module):
     def update_fc(self, nb_classes):
         logging.info(f"Convnet type is: {self.convnet_type}")
         logging.info(f"Convnet net is: {get_convnet(self.convnet_type)}")
+        logging.info(f"")
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:
