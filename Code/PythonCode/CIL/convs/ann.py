@@ -14,7 +14,7 @@ class ANN(nn.Module):
         self.out_dim = 10
 
     def forward(self, x: Tensor):
-        return self.layers(x)
+        return {"features": self.layers(x)}
 
 
 def get_ann(input_dim: int = 121):
