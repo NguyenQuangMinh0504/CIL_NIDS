@@ -3,6 +3,11 @@ import argparse
 from trainer import train
 
 
+# Handle too many open files ??
+import torch.multiprocessing
+torch.multiprocessing.set_sharing_strategy('file_system')
+
+
 def main():
     args = setup_parser().parse_args()
     args.config = f"./exps/{args.model_name}.json"
