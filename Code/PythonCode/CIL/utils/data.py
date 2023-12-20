@@ -270,9 +270,11 @@ class TON_IoT_Network(iData):
         path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/Train_Test_Network.csv"
         dataset = pd.read_csv(path)
         dataset.drop(columns=["ts", "src_ip", "dst_ip"], inplace=True)
+        dataset.drop(columns=["label"], inplace=True)
+        logging.info(dataset)
         logging.info(dataset.columns)
         for column in dataset.columns:
-            if column != "label":
+            if column != "type":
                 if dataset[column].dtype == "object":
                     encode_text_dummy(dataset, column)
                 else:
@@ -281,9 +283,8 @@ class TON_IoT_Network(iData):
                 encode_text_index(dataset, column)
                 dataset.dropna(axis=1, inplace=True)
 
-        y = dataset["label"].to_numpy()
-
-        dataset.drop(labels="label", axis=1)
+        y = dataset["type"].to_numpy()
+        dataset.drop(labels="type", axis=1)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)
