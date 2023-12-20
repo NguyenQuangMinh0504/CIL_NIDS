@@ -276,6 +276,7 @@ class TON_IoT_Network(iData):
             print(column, dataset[column].dtype)
         columns = dataset.columns
         for column in columns:
+            print(dataset.columns)
             if column != "type":
                 if dataset[column].dtype == "object":
                     encode_text_dummy(dataset, column)
