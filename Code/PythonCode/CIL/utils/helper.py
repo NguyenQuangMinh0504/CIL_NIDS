@@ -6,7 +6,7 @@ from sklearn import preprocessing
 
 # Encode text values to dummy variables(i.e. [1,0,0],[0,1,0],[0,0,1] for red,green,blue)
 def encode_text_dummy(df, name):
-    dummies = pd.get_dummies(df[name])
+    dummies = pd.get_dummies(df[name], dtype="float")
     for x in dummies.columns:
         dummy_name = f"{name}-{x}"
         df[dummy_name] = dummies[x]
