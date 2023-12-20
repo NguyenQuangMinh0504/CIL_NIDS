@@ -257,7 +257,6 @@ class DERNet(nn.Module):
     def update_fc(self, nb_classes):
         logging.info(f"Convnet type is: {self.convnet_type}")
         logging.info(f"Convnet net is: {get_convnet(self.convnet_type)}")
-        logging.info(f"")
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:
