@@ -19,7 +19,7 @@ class DataManager(object):
 
         self.dataset_name = dataset_name
 
-        if self.dataset_name not in ["kdd99", "cifar100"]:
+        if self.dataset_name not in ["kdd99", "cifar100", "cic-ids-2017"]:
             raise NotImplementedError(f"Dataset '{self.dataset_name}' has not been implemented yet!!!")
 
         if self.dataset_name == "kdd99":
