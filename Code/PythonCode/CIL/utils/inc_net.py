@@ -250,14 +250,14 @@ class DERNet(nn.Module):
         return out
 
     def update_fc(self, nb_classes):
-        logging.info(f"Convnet type is: {get_convnet(self.convnet_type)}")
+        logging.info(f"Convnet type is: {self.convnet_type}")
+        logging.info(f"Convnet net is: {get_convnet(self.convnet_type)}")
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:
             self.convnets.append(get_convnet(self.convnet_type))
             self.convnets[-1].load_state_dict(self.convnets[-2].state_dict())
 
-        print(self.convnets)
         if self.out_dim is None:
             self.out_dim = self.convnets[-1].out_dim
         fc = self.generate_fc(self.feature_dim, nb_classes)
