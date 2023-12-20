@@ -62,6 +62,8 @@ class FOSTERNet(nn.Module):
         return out
 
     def update_fc(self, nb_classes):
+        logging.info(f"convnets is: {get_convnet(self.convnet_type)}")
+        logging.info(f"self.convnets is: {self.convnets}")
         self.convnets.append(get_convnet(self.convnet_type))
         if self.out_dim is None:
             self.out_dim = self.convnets[-1].out_dim
@@ -248,6 +250,7 @@ class DERNet(nn.Module):
         return out
 
     def update_fc(self, nb_classes):
+        logging.info(f"Convnet type is: {get_convnet(self.convnet_type)}")
         if len(self.convnets) == 0:
             self.convnets.append(get_convnet(self.convnet_type))
         else:

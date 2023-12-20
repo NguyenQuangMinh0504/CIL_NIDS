@@ -61,7 +61,6 @@ class DER(BaseLearner):
             self._network = self._network.module
 
     def _train(self, train_loader, test_loader):
-        logging.info("Calling function _train ....")
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(filter(lambda p: p.requires_grad, self._network.parameters()),
@@ -96,7 +95,6 @@ class DER(BaseLearner):
                 self._network.weight_align(self._total_classes - self._known_classes)
 
     def train(self):
-        logging.info("Calling function train ...")
         self._network.train()
         if len(self._multiple_gpus) > 1:
             self._network_module_ptr = self._network.module
