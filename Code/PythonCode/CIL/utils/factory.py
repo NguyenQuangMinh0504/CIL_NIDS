@@ -1,6 +1,7 @@
 from models.memo import MEMO
 from models.memo_kdd import MEMO_KDD
 from models.der import DER
+from models.foster import FOSTER
 
 
 def get_model(model_name: str, args: dict):
@@ -11,3 +12,7 @@ def get_model(model_name: str, args: dict):
         return MEMO_KDD(args=args)
     elif name == "der":
         return DER(args)
+    elif name == "foster":
+        return FOSTER(args)
+    else:
+        raise NotImplementedError(f"Model '{model_name}' is not implement yet !!!")

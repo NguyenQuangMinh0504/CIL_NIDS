@@ -1,0 +1,1 @@
+python3.9 main.py -model foster -init 5 -incre 5  -p benchmark -d -1

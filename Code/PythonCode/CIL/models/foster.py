@@ -33,7 +33,7 @@ class FOSTER(BaseLearner):
         self._known_classes = self._total_classes
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
-    def increment_train(self, data_manager: DataManager):
+    def incremental_training(self, data_manager: DataManager):
         self.data_manager = data_manager
         self._cur_task += 1
         if self._cur_task > 1:
@@ -51,7 +51,6 @@ class FOSTER(BaseLearner):
 
         logging.info("All params: {}".format(count_parameters(self._network)))
         logging.info("Trainable params: {}".format(count_parameters(self._network, True)))
-
 
         train_dataset = data_manager.get_dataset(
             np.arange(self._known_classes, self._total_classes),
