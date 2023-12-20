@@ -234,6 +234,6 @@ class CIC_IDS_2017(iData):
     common_trsf = [ToTensor()]
 
     def download_data(self):
-        path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling /Wednesday-workingHours.pcap_ISCX.csv"
+        path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling/Wednesday-workingHours.pcap_ISCX.csv"
         data = pd.read_csv(path)
         logging.info(data)
