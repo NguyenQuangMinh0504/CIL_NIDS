@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from utils.data import iData, iCIFAR10, iCIFAR100, KDD99, CIC_IDS_2017
+from utils.data import iData, iCIFAR10, iCIFAR100, KDD99, CIC_IDS_2017, TON_IoT_Network
 
 
 class DataManager(object):
@@ -19,10 +19,10 @@ class DataManager(object):
 
         self.dataset_name = dataset_name
 
-        if self.dataset_name not in ["kdd99", "cifar100", "cic-ids-2017"]:
+        if self.dataset_name not in ["kdd99", "cifar100", "cic-ids-2017", "ton-iot-network"]:
             raise NotImplementedError(f"Dataset '{self.dataset_name}' has not been implemented yet!!!")
 
-        if self.dataset_name in ["kdd99", "cic-ids-2017"]:
+        if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network"]:
             self.is_image = False
         else:
             self.is_image = True
@@ -189,6 +189,8 @@ def _get_idata(dataset_name: str):
         return KDD99()
     elif name == "cic-ids-2017":
         return CIC_IDS_2017()
+    elif name == "ton-iot-network":
+        return TON_IoT_Network()
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 

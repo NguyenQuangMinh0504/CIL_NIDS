@@ -2,7 +2,7 @@
 
 ||KDD99|CIC-IDS-2017|Custom-Dataset|
 |---|---|---|---|
-|DER|v|X|X|
+|DER|v|v|X|
 |FOSTER|X|X|X|
 |MEMO|X|X|X|
 
@@ -17,9 +17,7 @@
 3. Experiment on KDD99 dataset (current doing)
 - Build a new network replacing Resnet32 for Der Model (done)
     - Testing on KDD99 dataset (done)
-    - Testing on CIC-IDS-2017 dataset (current doing)
-        - Create dataset CIC-IDS-2017 in the right format (current doing)
-        - Testing on CIC-IDS-2018 dataset
-    - Testing on TON_IOT dataset 
-        - Create dataset ToN_IOT in the right format
+    - Testing on CIC-IDS-2017 dataset (done)
+    - Testing on TON_IOT dataset (current doing)
+        - Create dataset ToN_IOT in the right format (current doing)
             - Testing on ToN_IOT dataset

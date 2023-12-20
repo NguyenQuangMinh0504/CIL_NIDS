@@ -95,44 +95,44 @@ class KDD99(iData):
                       'dst_host_srv_rerror_rate', 'outcome']
 
         # logging.info(df["protocol_type"].value_counts(normalize=False, sort=True))
-        smurf_df = df[df["outcome"] == "smurf."]
-        normal_df = df[df["outcome"] == "normal."]
+        # smurf_df = df[df["outcome"] == "smurf."]
+        # normal_df = df[df["outcome"] == "normal."]
         # neptune_df = df[df["outcome"] == "neptune."]
-        back_df = df[df["outcome"] == "back."]
-        pod_df = df[df["outcome"] == "pod."]
+        # back_df = df[df["outcome"] == "back."]
+        # pod_df = df[df["outcome"] == "pod."]
 
-        logging.info("Protocol type ....")
-        logging.info(df["protocol_type"].value_counts(normalize=False, sort=True))
-        logging.info("smurf protocol type ....")
-        logging.info(smurf_df["protocol_type"].value_counts(normalize=False, sort=True))
-        logging.info("normal protocol type ....")
-        logging.info(normal_df["protocol_type"].value_counts(normalize=False, sort=True))
+        # logging.info("Protocol type ....")
+        # logging.info(df["protocol_type"].value_counts(normalize=False, sort=True))
+        # logging.info("smurf protocol type ....")
+        # logging.info(smurf_df["protocol_type"].value_counts(normalize=False, sort=True))
+        # logging.info("normal protocol type ....")
+        # logging.info(normal_df["protocol_type"].value_counts(normalize=False, sort=True))
 
         # info of service attribute
-        logging.info(df["service"].unique())
-        logging.info("service value counts...")
-        logging.info(df["service"].value_counts(normalize=False, sort=True))
-        logging.info("service smurf ...")
-        logging.info(smurf_df["service"].value_counts(normalize=False, sort=True))
-        logging.info("service normal ...")
-        logging.info(normal_df["service"].value_counts(normalize=False, sort=True))
+        # logging.info(df["service"].unique())
+        # logging.info("service value counts...")
+        # logging.info(df["service"].value_counts(normalize=False, sort=True))
+        # logging.info("service smurf ...")
+        # logging.info(smurf_df["service"].value_counts(normalize=False, sort=True))
+        # logging.info("service normal ...")
+        # logging.info(normal_df["service"].value_counts(normalize=False, sort=True))
 
-        logging.info("outcome....")
-        logging.info(df["outcome"].value_counts(normalize=False, sort=True))
-        logging.info("src bytes...")
-        logging.info(df["src_bytes"].value_counts(normalize=False, sort=True))
-        logging.info("src bytes statistic ... ")
-        logging.info(df["src_bytes"].describe(percentiles=[0, 0.5, 0.99]))
-        logging.info("smurf src bytes ...")
-        logging.info(smurf_df["src_bytes"].value_counts(normalize=False, sort=True))
+        # logging.info("outcome....")
+        # logging.info(df["outcome"].value_counts(normalize=False, sort=True))
+        # logging.info("src bytes...")
+        # logging.info(df["src_bytes"].value_counts(normalize=False, sort=True))
+        # logging.info("src bytes statistic ... ")
+        # logging.info(df["src_bytes"].describe(percentiles=[0, 0.5, 0.99]))
+        # logging.info("smurf src bytes ...")
+        # logging.info(smurf_df["src_bytes"].value_counts(normalize=False, sort=True))
         # plt.scatter(df["src_bytes"], df["src_bytes"])
 
         # info of flag attribute
-        logging.info("Flag..................")
-        logging.info(df["flag"].unique())
-        logging.info(df["flag"].value_counts(normalize=False, sort=True))
-        logging.info(smurf_df["flag"].value_counts(normalize=False, sort=True))
-        logging.info(normal_df["flag"].value_counts(normalize=False, sort=True))
+        # logging.info("Flag..................")
+        # logging.info(df["flag"].unique())
+        # logging.info(df["flag"].value_counts(normalize=False, sort=True))
+        # logging.info(smurf_df["flag"].value_counts(normalize=False, sort=True))
+        # logging.info(normal_df["flag"].value_counts(normalize=False, sort=True))
 
         # # info of source bytes attribute
         # logging.info("Src byte.............")
@@ -148,12 +148,12 @@ class KDD99(iData):
         # logging.info(neptune_df["dst_bytes"].value_counts(normalize=False, sort=True))
 
         # info of back attack
-        logging.info(back_df["src_bytes"].value_counts(normalize=False, sort=True))
+        # logging.info(back_df["src_bytes"].value_counts(normalize=False, sort=True))
 
-        logging.info("Wrong fragment...")
-        logging.info(df["wrong_fragment"].value_counts(normalize=False, sort=True))
-        logging.info("Pod wrong fragment")
-        logging.info(pod_df["wrong_fragment"].value_counts(normalize=False, sort=True))
+        # logging.info("Wrong fragment...")
+        # logging.info(df["wrong_fragment"].value_counts(normalize=False, sort=True))
+        # logging.info("Pod wrong fragment")
+        # logging.info(pod_df["wrong_fragment"].value_counts(normalize=False, sort=True))
 
         encode_numeric_zscore(df, 'duration')
         encode_text_dummy(df, 'protocol_type')
@@ -202,15 +202,16 @@ class KDD99(iData):
         # corr = df.corr()
         # logging.info(corr['outcome'].sort_values(ascending=False))
         # logging.info(corr)
-        outcomes = encode_text_index(df, 'outcome')
+        # outcomes = encode_text_index(df, 'outcome')
+        encode_text_index(df, "outcome")
 
         df.dropna(inplace=True, axis=1)
 
-        corr = df.corr()
-        print(corr)
-        print(corr['outcome'].sort_values(ascending=False))
-        logging.info(df['outcome'])
-        logging.info(outcomes)
+        # corr = df.corr()
+        # print(corr)
+        # print(corr['outcome'].sort_values(ascending=False))
+        # logging.info(df['outcome'])
+        # logging.info(outcomes)
 
         y = df["outcome"].to_numpy()
 
@@ -239,18 +240,50 @@ class CIC_IDS_2017(iData):
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
         dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
-        logging.info(dataset.columns)
         for column in dataset.columns:
             if column != " Label":
                 encode_numeric_zscore(dataset, name=column)
             else:
                 encode_text_index(dataset, name=column)
+
         dataset.dropna(axis=1, inplace=True)
 
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1)
 
-        logging.info(dataset)
+        self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
+            dataset.to_numpy(), y, test_size=0.2, random_state=42)
+
+        self.train_data = self.train_data.astype(np.float32)
+        self.test_data = self.test_data.astype(np.float32)
+
+        del dataset
+
+
+class TON_IoT_Network(iData):
+    use_path = False
+    train_trsf = []
+    test_trsf = []
+    common_trsf = [ToTensor()]
+
+    def download_data(self):
+        path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/Train_Test_Network.csv"
+        dataset = pd.read_csv(path)
+        dataset.drop(columns=["ts", "src_ip", "dst_ip"], inplace=True)
+        logging.info(dataset.columns)
+        for column in dataset.columns:
+            if column != "label":
+                if dataset[column].dtype == "object":
+                    encode_text_dummy(dataset, column)
+                else:
+                    encode_numeric_zscore(dataset, column)
+            else:
+                encode_text_index(dataset, column)
+                dataset.dropna(axis=1, inplace=True)
+
+        y = dataset["label"].to_numpy()
+
+        dataset.drop(labels="label", axis=1)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)
