@@ -274,15 +274,15 @@ class TON_IoT_Network(iData):
 
         for column in dataset.columns:
             print(column, dataset[column].dtype)
-        # columns = dataset.columns
-        # for column in columns:
-        #     if column != "type":
-        #         if dataset[column].dtype == "object":
-        #             encode_text_dummy(dataset, column)
-        #         else:
-        #             encode_numeric_zscore(dataset, column)
-        #     else:
-        #         encode_text_index(dataset, column)
+        columns = dataset.columns
+        for column in columns:
+            if column != "type":
+                if dataset[column].dtype == "object":
+                    encode_text_dummy(dataset, column)
+                else:
+                    encode_numeric_zscore(dataset, column)
+            else:
+                encode_text_index(dataset, column)
 
         dataset.dropna(axis=1, inplace=True)
         y = dataset["type"].to_numpy()
