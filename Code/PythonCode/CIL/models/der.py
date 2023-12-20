@@ -25,7 +25,10 @@ lrate = 0.1
 milestones = [80, 120, 150]
 weight_decay = 2e-4
 lrate_decay = 0.1
-epochs = 170
+
+
+# epochs = 170
+epochs = 50
 
 
 class DER(BaseLearner):
