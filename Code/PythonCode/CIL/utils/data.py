@@ -5,7 +5,6 @@ import logging
 from sklearn.model_selection import train_test_split
 from utils.helper import encode_numeric_zscore, encode_text_dummy, encode_text_index
 from torchvision.transforms import RandomCrop, RandomHorizontalFlip, ColorJitter, ToTensor, Normalize
-import matplotlib.pyplot as plt
 
 
 class iData(object):
@@ -226,3 +225,15 @@ class KDD99(iData):
         # self.test_targets = self.test_targets.astype(np.float32)
 
         del df
+
+
+class CIC_IDS_2017(iData):
+    use_path = False
+    train_trsf = []
+    test_trsf = []
+    common_trsf = [ToTensor()]
+
+    def download_data(self):
+        path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling /Wednesday-workingHours.pcap_ISCX.csv"
+        data = pd.read_csv(path)
+        logging.info(data)

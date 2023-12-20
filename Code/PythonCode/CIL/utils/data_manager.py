@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
+from utils.data import iData, iCIFAR10, iCIFAR100, KDD99, CIC_IDS_2017
 
 
 class DataManager(object):
@@ -186,6 +186,8 @@ def _get_idata(dataset_name: str):
         return iCIFAR100()
     elif name == "kdd99":
         return KDD99()
+    elif name == "cic-ids-2017":
+        return CIC_IDS_2017()
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 

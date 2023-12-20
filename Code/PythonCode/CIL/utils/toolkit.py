@@ -3,7 +3,6 @@ import numpy as np
 from torch import nn
 import os
 import torch
-import logging
 
 
 class ConfigEncoder(json.JSONEncoder):
