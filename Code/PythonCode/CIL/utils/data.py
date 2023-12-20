@@ -245,11 +245,12 @@ class CIC_IDS_2017(iData):
                 encode_numeric_zscore(dataset, name=column)
             else:
                 encode_text_index(dataset, name=column)
-        logging.info(dataset)
         dataset.dropna(axis=1, inplace=True)
 
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1)
+
+        logging.info(dataset)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)

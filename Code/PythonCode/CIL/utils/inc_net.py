@@ -21,8 +21,10 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
         return get_memo_resnet32()
     elif name == "kdd_fc":
         return get_kdd_fc()
-    elif name == "ann":
+    elif name == "kdd_ann":
         return get_ann()
+    elif name == "cic_ids_ann":
+        return get_ann(input_dim=67)
     else:
         raise NotImplementedError(f"Convnet type : {name} has not been implemented yet!!!")
 
