@@ -4,6 +4,7 @@ from torch import Tensor
 
 class ANN(nn.Module):
     def __init__(self, input_dim: int):
+        super(ANN, self).__init__()
         self.layers = nn.Sequential(
             nn.Linear(input_dim, 128),
             nn.ReLU(),
