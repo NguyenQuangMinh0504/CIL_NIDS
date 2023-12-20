@@ -271,18 +271,20 @@ class TON_IoT_Network(iData):
         dataset = pd.read_csv(path)
         dataset.drop(columns=["ts", "src_ip", "dst_ip"], inplace=True)
         dataset.drop(columns=["label"], inplace=True)
-        logging.info(dataset)
-        logging.info(dataset.columns)
-        for column in dataset.columns:
-            if column != "type":
-                if dataset[column].dtype == "object":
-                    encode_text_dummy(dataset, column)
-                else:
-                    encode_numeric_zscore(dataset, column)
-            else:
-                encode_text_index(dataset, column)
-                dataset.dropna(axis=1, inplace=True)
 
+        for column in dataset.columns:
+            print(column, dataset[column].dtype)
+        # columns = dataset.columns
+        # for column in columns:
+        #     if column != "type":
+        #         if dataset[column].dtype == "object":
+        #             encode_text_dummy(dataset, column)
+        #         else:
+        #             encode_numeric_zscore(dataset, column)
+        #     else:
+        #         encode_text_index(dataset, column)
+
+        dataset.dropna(axis=1, inplace=True)
         y = dataset["type"].to_numpy()
         dataset.drop(labels="type", axis=1)
 
