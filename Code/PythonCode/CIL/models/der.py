@@ -12,7 +12,8 @@ from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
 
-init_epoch = 200
+# init_epoch = 200
+init_epoch = 50
 init_lr = 0.1
 
 batch_size = 128
