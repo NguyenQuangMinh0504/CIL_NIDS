@@ -179,6 +179,7 @@ def _map_new_class_index(y, order):
 
 
 def _get_idata(dataset_name: str):
+    """Return dataset name"""
     name = dataset_name.lower()
     if name == "cifar10":
         return iCIFAR10()
