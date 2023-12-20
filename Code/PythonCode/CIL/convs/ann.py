@@ -11,6 +11,7 @@ class ANN(nn.Module):
             nn.Linear(128, 64),
             nn.ReLU(),
         )
+        self.out_dim = 10
 
     def forward(self, x: Tensor):
         return self.layers(x)
