@@ -200,9 +200,9 @@ class KDD99(iData):
 
         # logging.info(df["outcome"].value_counts(normalize=False, sort=True))
         # logging.info((df[df["outcome"] == "smurf."]))
-        corr = df.corr()
+        # corr = df.corr()
         # logging.info(corr['outcome'].sort_values(ascending=False))
-        logging.info(corr)
+        # logging.info(corr)
         outcomes = encode_text_index(df, 'outcome')
 
         df.dropna(inplace=True, axis=1)
