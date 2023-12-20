@@ -270,13 +270,10 @@ class TON_IoT_Network(iData):
         path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/Train_Test_Network.csv"
         dataset = pd.read_csv(path)
         dataset.drop(columns=["ts", "src_ip", "dst_ip"], inplace=True)
+        dataset.drop(columns=["dns_query"], inplace=True)
         dataset.drop(columns=["label"], inplace=True)
 
         for column in dataset.columns:
-            print(column, dataset[column].dtype)
-        columns = dataset.columns
-        for column in columns:
-            print(dataset.columns)
             if column != "type":
                 if dataset[column].dtype == "object":
                     encode_text_dummy(dataset, column)
