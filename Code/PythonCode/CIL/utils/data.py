@@ -97,7 +97,7 @@ class KDD99(iData):
         # logging.info(df["protocol_type"].value_counts(normalize=False, sort=True))
         smurf_df = df[df["outcome"] == "smurf."]
         normal_df = df[df["outcome"] == "normal."]
-        neptune_df = df[df["outcome"] == "neptune."]
+        # neptune_df = df[df["outcome"] == "neptune."]
         back_df = df[df["outcome"] == "back."]
         pod_df = df[df["outcome"] == "pod."]
 
@@ -235,5 +235,26 @@ class CIC_IDS_2017(iData):
 
     def download_data(self):
         path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling/Wednesday-workingHours.pcap_ISCX.csv"
-        data = pd.read_csv(path)
-        logging.info(data)
+        dataset = pd.read_csv(path)
+        dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
+        # drop unnecessary data
+        dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
+        logging.info(dataset.columns)
+        for column in dataset.columns:
+            if column != " Label":
+                encode_numeric_zscore(dataset, name=column)
+            else:
+                encode_text_index(dataset, name=column)
+        logging.info(dataset)
+        dataset.dropna(axis=1, inplace=True)
+
+        y = dataset[" Label"].to_numpy()
+        dataset.drop(labels=" Label", axis=1)
+
+        self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
+            dataset.to_numpy(), y, test_size=0.2, random_state=42)
+
+        self.train_data = self.train_data.astype(np.float32)
+        self.test_data = self.test_data.astype(np.float32)
+
+        del dataset
