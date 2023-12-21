@@ -34,4 +34,4 @@ def get_kdd_fc() -> (nn.Module, nn.Module):
 
 
 def get_memo_ann(input_dim: int) -> (nn.Module, nn.Module):
-    return GeneralizedFC(input_dim=input_dim)
+    return GeneralizedFC(input_dim=input_dim), SpecializedFC()
