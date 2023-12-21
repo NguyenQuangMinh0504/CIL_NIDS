@@ -3,7 +3,7 @@ python3.9 main_memo.py \
     -init 5 \
     -incre 5 \
     -net ton_iot_network_memo_ann \
-    --dataset cic-ids-2017 \
+    --dataset ton-iot-network \
     --train_base \
     --scheduler steplr \
     --init_epoch 20 \
