@@ -1,0 +1,12 @@
+python3.9 main_memo.py \
+    -model memo_kdd \
+    -init 2 \
+    -incre 2 \
+    -net kdd_fc \
+    --dataset kdd99 \
+    --train_base \
+    --scheduler steplr \
+    --init_epoch 20 \
+    --epochs 20 \
+    --batch_size 512 \
+    -d -1

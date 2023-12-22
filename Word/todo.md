@@ -24,4 +24,6 @@
     TON_IoT
 5. Write about Evaluation Metric (done)
 6. Ploting result (current doing)
+7. Write about Experiment setup
+
 
