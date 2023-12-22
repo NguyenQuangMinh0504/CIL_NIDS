@@ -12,8 +12,8 @@ from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
 
-# init_epoch = 200
-init_epoch = 50
+init_epoch = 200
+# init_epoch = 50
 init_lr = 0.1
 
 batch_size = 128
@@ -27,8 +27,8 @@ weight_decay = 2e-4
 lrate_decay = 0.1
 
 
-# epochs = 170
-epochs = 50
+epochs = 170
+# epochs = 50
 
 
 class DER(BaseLearner):
