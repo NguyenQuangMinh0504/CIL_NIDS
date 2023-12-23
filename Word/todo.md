@@ -18,12 +18,9 @@
 - FOSTER:
 - MEMO (done)
 4. Write about Data Preprocessing (done)
- - Find percentage of missing data.
-    KDD99
-    CIC-IDS-2017
-    TON_IoT
 5. Write about Evaluation Metric (done)
 6. Ploting result (current doing)
+- Find about dataset that was training on each step
 7. Write about Experiment setup
 8. Write about testing on custom dataset(current doing)
 
