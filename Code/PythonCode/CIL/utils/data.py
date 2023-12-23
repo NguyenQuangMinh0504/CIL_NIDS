@@ -280,7 +280,7 @@ class TON_IoT_Network(iData):
                 else:
                     encode_numeric_zscore(dataset, column)
             else:
-                encode_text_index(dataset, column)
+                logging.info(encode_text_index(dataset, column))
 
         dataset.dropna(axis=1, inplace=True)
         y = dataset["type"].to_numpy()
