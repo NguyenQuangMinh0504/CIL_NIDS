@@ -30,6 +30,8 @@ def encode_text_single_dummy(df, name, target_values):
 def encode_text_index(df, name):
     le = preprocessing.LabelEncoder()
     df[name] = le.fit_transform(df[name])
+    label_dict = dict(zip(le.classes_, le.transform(le.classes_)))
+    print(label_dict)  # Output: {'apple': 0, 'banana': 1, 'orange': 2}
     return le.classes_
 
 
