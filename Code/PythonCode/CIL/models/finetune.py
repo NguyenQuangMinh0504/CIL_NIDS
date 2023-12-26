@@ -25,6 +25,7 @@ batch_size = 128
 lrate_decay = 0.1
 milestones = [40, 70]
 num_workers = 8
+weight_decay = 2e-4
 
 
 class FineTune(BaseLearner):
@@ -70,8 +71,8 @@ class FineTune(BaseLearner):
             else:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
-            optimizer = optim.SGD(self._network.parameters(), lr=lra)
-            optimizer = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
+            optimizer = optim.SGD(self._network.parameters(), lr=lrate, momentum=0.9, weight_decay=weight_decay)
+            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
