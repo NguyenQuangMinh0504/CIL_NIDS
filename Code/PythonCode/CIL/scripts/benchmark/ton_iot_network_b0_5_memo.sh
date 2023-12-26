@@ -6,7 +6,7 @@ python3.9 main_memo.py \
     --dataset ton-iot-network \
     --train_base \
     --scheduler steplr \
-    --init_epoch 20 \
-    --epochs 20 \
+    --init_epoch 200 \
+    --epochs 170 \
     --batch_size 512 \
     -d -1
