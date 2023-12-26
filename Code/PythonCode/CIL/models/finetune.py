@@ -48,7 +48,9 @@ class FineTune(BaseLearner):
 
         if len(self._multiple_gpus) > 1:
             self._network = nn.DataParallel(self._network, self._multiple_gpus)
-        pass
+        self._train(self.train_loader, self.test_loader)
+        if len(self._multiple_gpus) > 1:
+            self._network = self._network.module
 
     def _train(self, train_loader, test_loader):
         self._network.to(self._device)
