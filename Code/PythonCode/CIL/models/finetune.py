@@ -20,6 +20,7 @@ init_lr = 0.1
 init_weight_decay = 0.0005
 
 epochs = 80
+lrate = 0.1
 batch_size = 128
 lrate_decay = 0.1
 milestones = [40, 70]
@@ -69,6 +70,7 @@ class FineTune(BaseLearner):
             else:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
+            optimizer = optim.SGD(self._network.parameters(), lr=lra)
             optimizer = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 

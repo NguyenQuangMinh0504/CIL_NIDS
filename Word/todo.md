@@ -11,7 +11,7 @@
 1. Write about Dataset
 - Write opening (done)
 - Write about KDD99 dataset (done)
-- Write about CIC-IDS-2017 dataset
+- Write about CIC-IDS-2017 dataset (done)
 - Write about TON_IoT Network dataset
 2. Write about Method
 3. Experiment on models
