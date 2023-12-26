@@ -5,6 +5,7 @@
 |DER|v|v|v|
 |FOSTER|x|x|x|
 |MEMO|v|v|v|
+|Finetune|x|x|x|
 
 
 1. Write about Dataset
