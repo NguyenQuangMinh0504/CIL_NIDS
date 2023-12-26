@@ -17,6 +17,10 @@ batch_size = 64
 class BaseLearner(object):
     _network: [AdaptiveNet, DERNet]
     test_loader: DataLoader
+    _known_classes: int
+    """Total knowned classes"""
+    _total_classes: int
+    """Total class: Equal known_class + number of class trained in the current step"""
 
     def __init__(self, args: dict):
         self.args = args

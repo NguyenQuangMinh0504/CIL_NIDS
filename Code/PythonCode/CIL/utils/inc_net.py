@@ -41,6 +41,74 @@ class BaseNet(nn.Module):
         self.convnet = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
         self.fc = None
 
+    @property
+    def feature_dim(self):
+        return self.convnet.out_dim
+
+
+class IncrementalNet(BaseNet):
+    def __init__(self, convnet_type, pretrained, gradcam=False):
+        super().__init__(convnet_type, pretrained)
+        self.gradcam = gradcam
+        if hasattr(self, "gradcam") and self.gradcam:
+            self._gradcam_hooks = [None, None]
+            self.set_gradcam_hook()
+
+    def update_fc(self, nb_classes):
+        fc = self.generate_fc(self.feature_dim, nb_classes)
+        if self.fc is not None:
+            nb_output = self.fc.out_features
+            weight = copy.deepcopy(self.fc.weight.data)
+            bias = copy.deepcopy(self.fc.bias.data)
+            fc.weight.data[:nb_output] = weight
+            fc.bias.data[:nb_output] = bias
+        del self.fc
+        self.fc = fc
+
+    def weight_align(self, increment):
+        weights = self.fc.weight.data
+        newnorm = torch.norm(weights[-increment:, :], p=2, dim=1)
+        oldnorm = torch.norm(weights[:-increment, :], p=2, dim=1)
+        meannew = torch.mean(newnorm)
+        meanold = torch.mean(oldnorm)
+        gamma = meanold / meannew
+        print("align weights gamma = ", gamma)
+        self.fc.weight.data[:-increment, :] *= gamma
+
+    def generate_fc(self, in_dim, out_dim):
+        fc = SimpleLinear(in_dim, out_dim)
+        return fc
+
+    def forward(self, x):
+        x = self.convnet(x)
+        out = self.fc(x["features"])
+        out.update(x)
+        if hasattr(self, "gradcam") and self.gradcam:
+            out["gradcam_gradients"] = self._gradcam_gradients
+            out["gradcam_activations"] = self._gradcam_activations
+        return out
+
+    def unset_gradcam_hook(self):
+        self._gradcam_hooks[0].remove()
+        self._gradcam_hooks[1].remove()
+        self._gradcam_hooks[0] = None
+        self._gradcam_hooks[1] = None
+        self._gradcam_gradients, self._gradcam_activations = [None], [None]
+
+    def set_gradcam_hook(self):
+        self._gradcam_gradients, self._gradcam_activations = [None], [None]
+
+        def backward_hook(module, grad_input, grad_output):
+            self._gradcam_gradients[0] = grad_output[0]
+            return None
+
+        def forward_hook(module, input, output):
+            self._gradcam_activations[0] = output
+            return None
+
+        self._gradcam_hooks[0] = self.convnet.last_conv.register_backward_hook(backward_hook)
+        self._gradcam_hooks[1] = self.convnet.last_conv.register_forward_hook(forward_hook)
+
 
 class FOSTERNet(nn.Module):
     def __init__(self, convnet_type, pretrained):
