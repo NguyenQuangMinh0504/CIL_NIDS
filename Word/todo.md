@@ -13,18 +13,28 @@
 - Research Objective and Conceptual Framework (done)
 - Contributions (done)
 - Organization of Thesis (done)
-1. Write about Dataset
-- Write opening (done)
-- Write about KDD99 dataset (done)
-- Write about CIC-IDS-2017 dataset (done)
-- Write about TON_IoT Network dataset
+1. Write Literature Review
+- Scope of Research (done)
+- Related Works (done)
+- Tên của kiến thức nền tảng 1
+- Tên của kiến thức nền tảng 2
+2. Write Methodology
+- overview
+- Tên của nội dung chi tiết 1 (DER)
+- Tên của nội dung chi tiết 2 (MEMO)
+4. Write about experimental results
+    4.1. Write about Dataset
+    - Write opening (done)
+    - Write about KDD99 dataset (done)
+    - Write about CIC-IDS-2017 dataset (done)
+    - Write about TON_IoT Network dataset
+    4.2. Write about Data Preprocessing (done)
+    4.3 WRite about Evaluation Metric (done)
 2. Write about Method
 3. Experiment on models
 - DER: (done)
 - FOSTER:
 - MEMO (done)
-4. Write about Data Preprocessing (done)
-5. Write about Evaluation Metric (done)
 6. Ploting result (current doing)
 - Find about dataset that was training on each step
 - get statistic of each class in all dataset (done)
