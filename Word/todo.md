@@ -7,7 +7,12 @@
 |MEMO|v|v|v|
 |Finetune|x|x|x|
 
-
+0. Write Introduction
+- Problem statement
+- Background and Research Problems
+- Research Objective and Conceptual Framework (done)
+- Contributions (done)
+- Organization of Thesis (done)
 1. Write about Dataset
 - Write opening (done)
 - Write about KDD99 dataset (done)
