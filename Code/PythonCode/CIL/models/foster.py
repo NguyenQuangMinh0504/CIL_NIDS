@@ -19,7 +19,6 @@ class FOSTER(BaseLearner):
         super().__init__(args)
         self.args = args
         self._network = FOSTERNet(convnet_type=args["convnet_type"], pretrained=False)
-        logging.info(f"Network when calling init function is: {self._network}")
         self._snet = None
         self.beta1 = args["beta1"]
         self.beta2 = args["beta2"]
