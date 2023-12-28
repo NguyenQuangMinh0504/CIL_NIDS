@@ -130,6 +130,11 @@ class FOSTERNet(nn.Module):
     def extract_vector(self, x):
         features = [convnet(x)["features"] for convnet in self.convnets]
         features = torch.cat(features, 1)
+        return features
+
+    def forward(self, x):
+        features = [convnet(x)["features"] for convnet in self.convnets]
+        features = torch.cat(features, 1)
         out = self.fc(features)
         fe_logits = self.fe_fc(features[:, -self.out_dim:])["logits"]
 
