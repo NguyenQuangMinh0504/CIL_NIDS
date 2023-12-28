@@ -188,7 +188,7 @@ class FOSTER(BaseLearner):
                     test_acc
                 )
             prog_bar.set_description(info)
-            logging.info(info)
+            # logging.info(info)
 
     def _feature_boosting(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["boosting_epochs"]))
@@ -258,7 +258,7 @@ class FOSTER(BaseLearner):
                 )
 
             prog_bar.set_description(info)
-            logging.info(info)
+            # logging.info(info)
 
     def _feature_compression(self, train_loader, test_loader):
         self._snet = FOSTERNet(self.args["convnet_type"], False)
