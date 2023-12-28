@@ -241,7 +241,7 @@ class FOSTER(BaseLearner):
                     losses / len(train_loader),
                     losses_clf / len(train_loader),
                     losses_fe / len(train_loader),
-                    losses_kd . len(train_loader),
+                    losses_kd / len(train_loader),
                     train_acc,
                     test_acc
                 )
@@ -290,7 +290,7 @@ class FOSTER(BaseLearner):
                 dark_logits = self._snet(inputs)["logits"]
                 with torch.no_grad():
                     outputs = self._network(inputs)
-                    logits, old_logits, fe_logits= (
+                    logits, old_logits, fe_logits = (
                         outputs["logits"],
                         outputs["old_logits"],
                         outputs["fe_logits"],
@@ -341,7 +341,6 @@ class FOSTER(BaseLearner):
             logging.info("darknet eval: ")
             logging.info("CNN top1 curve: {}".format(cnn_accy["top1"]))
             logging.info("CNN top5 curve: {}".format(cnn_accy["top5"]))
-
 
     @property
     def samples_old_class(self):
