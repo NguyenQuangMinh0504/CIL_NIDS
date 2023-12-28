@@ -39,6 +39,7 @@ class FOSTER(BaseLearner):
         if self._cur_task > 1:
             self._network = self._snet
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
+        logging.info("Network is: {}".format(self._network))
         self._network.update_fc(self._total_classes)
         self._network_module_ptr = self._network
         logging.info("Learning on {}-{}".format(self._known_classes, self._total_classes))

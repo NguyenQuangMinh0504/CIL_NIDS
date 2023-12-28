@@ -150,7 +150,7 @@ class FOSTERNet(nn.Module):
     def update_fc(self, nb_classes):
         # logging.info(f"convnets is: {get_convnet(self.convnet_type)}")
         # logging.info(f"self.convnets is: {self.convnets}")
-        logging.info("Old fc is: ", self.fc)
+        logging.info("Old fc is: {}".format(self.fc))
         self.convnets.append(get_convnet(self.convnet_type))
         if self.out_dim is None:
             self.out_dim = self.convnets[-1].out_dim
@@ -165,7 +165,7 @@ class FOSTERNet(nn.Module):
 
         self.oldfc = self.fc
         self.fc = fc
-        logging.info("New fc is: ", self.fc)
+        logging.info("New fc is: {}".format(self.fc))
         new_task_size = nb_classes - sum(self.task_sizes)
         self.task_sizes.append(new_task_size)
         self.fe_fc = self.generate_fc(self.out_dim, nb_classes)
