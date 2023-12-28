@@ -70,6 +70,10 @@ class FOSTER(BaseLearner):
 
         if len(self._multiple_gpus) > 1:
             self._network = nn.DataParallel(self._network, self._multiple_gpus)
+        self._train(self.train_loader, self.test_loader)
+        self.build_rehearsal_memory(data_manager, self.samples_per_class)
+        if len(self._multiple_gpus) > 1:
+            self._network = self._network.module
 
     def train(self):
         self._network_module_ptr.train()
