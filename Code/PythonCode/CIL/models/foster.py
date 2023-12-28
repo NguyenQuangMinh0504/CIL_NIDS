@@ -191,6 +191,7 @@ class FOSTER(BaseLearner):
             # logging.info(info)
 
     def _feature_boosting(self, train_loader, test_loader, optimizer, scheduler):
+        logging.info("Calling function feature boosting ... ")
         prog_bar = tqdm(range(self.args["boosting_epochs"]))
         for _, epoch in enumerate(prog_bar):
             self.train()
