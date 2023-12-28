@@ -148,7 +148,39 @@ class FOSTER(BaseLearner):
             per_cls_weights = (per_cls_weights / np.sum(per_cls_weights) * len(cls_num_list))
             logging.info("per cls weights: {}".format(per_cls_weights))
             self.per_cls_weights = torch.FloatTensor(per_cls_weights).to(self._device)
-            pass
+
+            optimizer = optim.SGD(
+                filter(lambda p: p.requires_grad, self._network.parameters()),
+                lr=self.args["lr"],
+                momentum=0.9,
+                weight_decay=self.args["weight_decay"],
+            )
+
+            scheduler = optim.lr_scheduler.CosineAnnealingLR(
+                optimizer=optimizer, T_max=self.args["boosting_epochs"]
+            )
+
+            if self.oofc == "az":
+                for i, p in enumerate(self._network_module_ptr.fc.parameters()):
+                    if i == 0:
+                        p.data[self._known_classes:, :self._network_module_ptr.out_dim] = torch.tensor(0.0)
+            elif self.oofc != "ft":
+                assert 0, "not implemented"
+            self._feature_boosting(train_loader, test_loader, optimizer, scheduler)
+            if self.is_teacher_wa:
+                self._network_module_ptr.weight_align(
+                    self._known_classes, self._total_classes - self._known_classes, self.wa_value)
+            else:
+                logging.info("do not weight align teacher!")
+
+            cls_num_list = [self.samples_old_class] * self._known_classes + [
+                self.sample_new_class(i) for i in range(self._known_classes, self._total_classes)]
+            effective_num = 1.0 - np.power(self.beta2, cls_num_list)
+            per_cls_weights = (1.0 - self.beta2) / np.array(effective_num)
+            per_cls_weights = (per_cls_weights / np.sum(per_cls_weights) * len(cls_num_list))
+            logging.info("per cls weights : {}".format(per_cls_weights))
+            self.per_cls_weights = torch.Tensor(per_cls_weights).to(self._device)
+            self._feature_compression(train_loader, test_loader)
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["init_epochs"]))
