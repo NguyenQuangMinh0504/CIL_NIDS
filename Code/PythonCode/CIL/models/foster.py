@@ -261,6 +261,7 @@ class FOSTER(BaseLearner):
             # logging.info(info)
 
     def _feature_compression(self, train_loader, test_loader):
+        logging.info("Calling function feature compression ... ")
         self._snet = FOSTERNet(self.args["convnet_type"], False)
         self._snet.update_fc(self._total_classes)
         if len(self._multiple_gpus) > 1:
