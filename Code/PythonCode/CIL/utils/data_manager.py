@@ -87,6 +87,7 @@ class DataManager(object):
         data, targets = np.concatenate(data), np.concatenate(targets)
 
         logging.info("Data is : {}".format(data))
+        logging.info("Type of target is: {}".format(type(targets)))
         logging.info("Target is: {}".format(targets))
 
         if ret_data:
