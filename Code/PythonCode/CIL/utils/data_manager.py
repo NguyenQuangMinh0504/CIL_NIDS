@@ -89,10 +89,9 @@ class DataManager(object):
         logging.info("Data is : {}".format(data))
         # Get statistic of data
         uniques, counts = np.unique(targets, return_counts=True)
+
         for target, count in zip(uniques, counts):
             logging.info("Target: {}, Count: {}".format(target, count))
-        logging.info("Type of target is: {}".format(type(targets)))
-        logging.info("Target is: {}".format(targets))
 
         if ret_data:
             return data, targets, DummyDataset(data, targets, trsf, self.use_path, is_image=self.is_image)
