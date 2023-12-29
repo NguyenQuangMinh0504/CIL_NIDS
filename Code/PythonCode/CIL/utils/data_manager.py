@@ -54,9 +54,11 @@ class DataManager(object):
         """
         logging.info("Calling function get dateset from data manager ...")
         if source == "train":
+            logging.info("Source: Train")
             x, y = self._train_data, self._train_targets
         elif source == "test":
             x, y = self._test_data, self._test_targets
+            logging.info("Source: Test")
         else:
             raise ValueError("Unkown data source {}".format(source))
         if mode == "train":
@@ -86,7 +88,6 @@ class DataManager(object):
             targets.append(appendent_targets)
         data, targets = np.concatenate(data), np.concatenate(targets)
 
-        logging.info("Data is : {}".format(data))
         # Get statistic of data
         uniques, counts = np.unique(targets, return_counts=True)
 
