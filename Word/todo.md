@@ -36,8 +36,10 @@
 - FOSTER:
 - MEMO (done)
 6. Ploting result (current doing)
-- Find about dataset that was training on each step
 - get statistic of each class in all dataset (done)
 7. Write about Experiment setup
-- Get statistic of train and test dataset in instance 3 (current doing)
+- Get statistic of train and test dataset on each step in instance 3 (done)
 8. Write about testing on custom dataset(current doing)
+- write about reason creating dataset (done)
+- write about creating methodology (done)
+- write about experiment

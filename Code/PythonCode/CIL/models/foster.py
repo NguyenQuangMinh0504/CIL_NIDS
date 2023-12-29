@@ -358,7 +358,7 @@ class FOSTER(BaseLearner):
                     train_acc
                 )
             prog_bar.set_description(info)
-            logging.info(info)
+            # logging.info(info)
         self._snet.eval()
         y_pred, y_true = [], []
         for _, (_, inputs, targets) in enumerate(test_loader):
@@ -368,12 +368,12 @@ class FOSTER(BaseLearner):
             predicts = torch.topk(outputs, k=self.topk, dim=1, largest=True, sorted=True)[1]
             y_pred.append(predicts.cpu().numpy())
             y_true.append(targets.cpu().numpy())
-            y_pred = np.concatenate(y_pred)
-            y_true = np.concatenate(y_true)
-            cnn_accy = self._evaluate(y_pred, y_true)
-            logging.info("darknet eval: ")
-            logging.info("CNN top1 curve: {}".format(cnn_accy["top1"]))
-            logging.info("CNN top5 curve: {}".format(cnn_accy["top5"]))
+        y_pred = np.concatenate(y_pred)
+        y_true = np.concatenate(y_true)
+        cnn_accy = self._evaluate(y_pred, y_true)
+        logging.info("darknet eval: ")
+        logging.info("CNN top1 curve: {}".format(cnn_accy["top1"]))
+        logging.info("CNN top5 curve: {}".format(cnn_accy["top5"]))
 
     @property
     def samples_old_class(self):

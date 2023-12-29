@@ -164,6 +164,7 @@ class BaseLearner(object):
         return np.concatenate(vectors), np.concatenate(targets)
 
     def _reduce_exemplar(self, data_manager: DataManager, m):
+        logging.info("Calling function reduce exemplar ...")
         logging.info(f"Reducing exemplars...({m} per classes)")
         dummy_data, dummy_targets = copy.deepcopy(self._data_memory), copy.deepcopy(self._targets_memory)
         self._class_means = np.zeros((self._total_classes, self.feature_dim))
@@ -190,6 +191,7 @@ class BaseLearner(object):
             self._class_means[class_idx, :] = mean
 
     def _construct_exemplar(self, data_manager: DataManager, m):
+        logging.info("Calling function construct exemplar ... ")
         logging.info(f"Constructing exemplars...({m} per classes)")
         for class_idx in range(self._known_classes, self._total_classes):
             data, targets, idx_dataset = data_manager.get_dataset(
