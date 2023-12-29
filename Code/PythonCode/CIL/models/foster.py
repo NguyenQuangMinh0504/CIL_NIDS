@@ -319,8 +319,7 @@ class FOSTER(BaseLearner):
             losses = 0.0
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
-                inputs, targets = inputs.to(self._device, non_blocking=True),
-                targets.to(self._device, non_blocking=True)
+                inputs, targets = inputs.to(self._device, non_blocking=True), targets.to(self._device, non_blocking=True)
                 dark_logits = self._snet(inputs)["logits"]
                 with torch.no_grad():
                     outputs = self._network(inputs)
