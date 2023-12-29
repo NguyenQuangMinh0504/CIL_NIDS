@@ -52,6 +52,7 @@ class DataManager(object):
             appendent: Data adding to the dataset \n
             mode: ["train", "test"]. If mode is test, dont use train transform like crop, flip, zitter, ....
         """
+        logging.info("Calling function get dateset from data manager ...")
         if source == "train":
             x, y = self._train_data, self._train_targets
         elif source == "test":
@@ -84,6 +85,9 @@ class DataManager(object):
             data.append(appendent_data)
             targets.append(appendent_targets)
         data, targets = np.concatenate(data), np.concatenate(targets)
+
+        logging.info("Data is : {}".format(data))
+        logging.info("Target is: {}".format(targets))
 
         if ret_data:
             return data, targets, DummyDataset(data, targets, trsf, self.use_path, is_image=self.is_image)

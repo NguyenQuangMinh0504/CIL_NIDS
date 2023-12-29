@@ -39,4 +39,5 @@
 - Find about dataset that was training on each step
 - get statistic of each class in all dataset (done)
 7. Write about Experiment setup
+- Get statistic of train and test dataset in instance 3 (current doing)
 8. Write about testing on custom dataset(current doing)
