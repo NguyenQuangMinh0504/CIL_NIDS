@@ -87,6 +87,10 @@ class DataManager(object):
         data, targets = np.concatenate(data), np.concatenate(targets)
 
         logging.info("Data is : {}".format(data))
+        # Get statistic of data
+        uniques, counts = np.unique(targets, return_counts=True)
+        for target, count in zip(uniques, counts):
+            logging.info(target, count)
         logging.info("Type of target is: {}".format(type(targets)))
         logging.info("Target is: {}".format(targets))
 
