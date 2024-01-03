@@ -33,7 +33,7 @@
 2. Write about Method
 3. Experiment on models
 - DER: (done)
-- FOSTER:
+- FOSTER: (discard)
 - MEMO (done)
 6. Ploting result (current doing)
 - get statistic of each class in all dataset (done)
