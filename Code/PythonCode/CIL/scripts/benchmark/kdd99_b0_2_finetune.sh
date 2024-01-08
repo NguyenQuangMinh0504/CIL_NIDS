@@ -3,4 +3,4 @@ nohup python3.9 main.py \
     -init 2 -incre 2 \
     --dataset kdd99 \
     -net kdd_ann \
-     -p benchmark -d -1 &
+    -p benchmark -d -1 &
