@@ -12,6 +12,7 @@ import os
 
 EPSILON = 1e-8
 batch_size = 64
+TOP_K = 2
 
 
 class BaseLearner(object):
@@ -30,7 +31,7 @@ class BaseLearner(object):
         self._total_classes = 0
         self._network = None
         self._data_memory, self._targets_memory = np.array([]), np.array([])
-        self.topk = 5
+        self.topk = TOP_K
 
         self._memory_size = args["memory_size"]
         self._memory_per_class = args.get("memory_per_class", None)

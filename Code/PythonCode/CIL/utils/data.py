@@ -157,11 +157,12 @@ class KDD99(iData):
 
         logging.info(df["outcome"].value_counts())
 
+        # ---------------- Droping all value that has less than 200 records.
         y_drop = ["spy.", "perl.", "phf.", "multihop.",
                   "ftp_write.", "loadmodule.", "rootkit.", "imap.",
                   "warezmaster.", "land.", "buffer_overflow.", "guess_passwd."]
-
         df.drop(df[df["outcome"].isin(y_drop)].index, inplace=True)
+        # ----------------
 
         logging.info(df["outcome"].value_counts())
 
