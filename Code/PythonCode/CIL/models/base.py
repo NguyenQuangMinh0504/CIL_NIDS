@@ -66,7 +66,8 @@ class BaseLearner(object):
             self._reduce_exemplar(data_manager, per_class)
             self._construct_exemplar(data_manager, per_class)
 
-    def _evaluate(self, y_pred, y_true):
+    def _evaluate(self, y_pred, y_true) -> dict:
+        """Return grouped accy, top1 accy and top k accy (k is set)"""
         ret = {}
         grouped = accuracy(y_pred.T[0], y_true, self._known_classes)
         ret["grouped"] = grouped
@@ -75,11 +76,10 @@ class BaseLearner(object):
             (y_pred.T == np.tile(y_true, (self.topk, 1))).sum() * 100 / len(y_true),
             decimals=2,
         )
-
         return ret
 
     def eval_task(self, save_conf=False):
-        """Evaluating result"""
+        """Evaluating result. return cnn_accy and nme_accy"""
 
         # logging.info(f"Test loader is: {self.test_loader}")
 
