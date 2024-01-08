@@ -109,15 +109,19 @@ def _train(args: dict):
             logging.info("CNN: {}".format(cnn_accy["grouped"]))
             logging.info("NME: {}".format(nme_accy["grouped"]))
 
-            cnn_curve["top1"].append(cnn_accy["top1"])
             try:
+                cnn_curve["top1"].append(cnn_accy["top1"])
                 cnn_curve["top5"].append(cnn_accy["top5"])
                 cnn_curve["top2"].append(cnn_accy["top2"])
             except KeyError:
                 logging.info("Can not get key from cnn_curve !!!")
 
-            nme_curve["top1"].append(nme_accy["top1"])
-            nme_curve["top5"].append(nme_accy["top5"])
+            try:
+                nme_curve["top1"].append(nme_accy["top1"])
+                nme_curve["top2"].append(nme_accy["top2"])
+                nme_curve["top5"].append(nme_accy["top5"])
+            except KeyError:
+                logging.info("Can not get key from nme_curve !!!")
 
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}".format(cnn_curve["top5"]))
