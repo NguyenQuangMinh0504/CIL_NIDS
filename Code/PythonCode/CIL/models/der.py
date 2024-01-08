@@ -13,7 +13,6 @@ from utils.toolkit import count_parameters, tensor2numpy
 
 
 # init_epoch = 200
-init_epoch = 50
 init_lr = 0.1
 
 batch_size = 128
@@ -110,7 +109,7 @@ class DER(BaseLearner):
                 self._network_module_ptr.convnets[i].eval()
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
-        prog_bar = tqdm(range(init_epoch))
+        prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
@@ -136,7 +135,7 @@ class DER(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -145,7 +144,7 @@ class DER(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                 )

@@ -116,7 +116,7 @@ class FineTune(BaseLearner):
                     test_acc
                 )
             prog_bar.set_description(info)
-            logging.info(info)
+            # logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(epochs))
@@ -163,4 +163,4 @@ class FineTune(BaseLearner):
                     train_acc,
                 )
             prog_bar.set_description(info)
-            logging.info(info)
+            # logging.info(info)
