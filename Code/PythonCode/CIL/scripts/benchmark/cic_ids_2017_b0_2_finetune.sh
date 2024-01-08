@@ -4,4 +4,4 @@ python3.9 main.py \
     --dataset cic-ids-2017 \
     -net cic_ids_ann \
     -p benchmark -d -1 \
-    --init_poch 50
+    --init_epoch 50
