@@ -6,7 +6,7 @@ python3.9 main_memo.py \
     --dataset cic-ids-2017 \
     --train_base \
     --scheduler steplr \
-    --init_epoch 20 \
+    --init_epoch 50 \
     --epochs 20 \
     --batch_size 512 \
     -d -1
