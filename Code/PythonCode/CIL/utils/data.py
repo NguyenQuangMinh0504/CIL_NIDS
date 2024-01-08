@@ -157,6 +157,14 @@ class KDD99(iData):
 
         logging.info(df["outcome"].value_counts())
 
+        y_drop = ["spy.", "perl.", "phf.", "multihop.",
+                  "ftp_write.", "loadmodule.", "rootkit.", "imap.",
+                  "warezmaster.", "land.", "buffer_overflow.", "guess_passwd."]
+
+        df.drop(df[df["outcome"].isin(y_drop)].index, inplace=True)
+
+        logging.info(df["outcome"].value_counts())
+
         encode_numeric_zscore(df, 'duration')
         encode_text_dummy(df, 'protocol_type')
         encode_text_dummy(df, 'service')
