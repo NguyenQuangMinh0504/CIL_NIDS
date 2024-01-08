@@ -15,7 +15,7 @@ from utils.inc_net import IncrementalNet
 from utils.data_manager import DataManager
 from utils.toolkit import tensor2numpy
 
-init_epoch = 200
+# init_epoch = 200
 init_lr = 0.1
 init_weight_decay = 0.0005
 
@@ -58,7 +58,7 @@ class FineTune(BaseLearner):
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(self._network.parameters(), momentum=0.9, lr=init_lr, weight_decay=init_weight_decay)
-            scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=init_epoch)
+            scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.args["init_epoch"])
             if self.args["skip"]:
                 if len(self._multiple_gpus) > 1:
                     self._network = self._network.module
@@ -76,7 +76,7 @@ class FineTune(BaseLearner):
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
-        prog_bar = tqdm(range(init_epoch))
+        prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0.0
@@ -101,7 +101,7 @@ class FineTune(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc
                 )
@@ -110,7 +110,7 @@ class FineTune(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc
