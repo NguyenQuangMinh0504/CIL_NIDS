@@ -155,6 +155,8 @@ class KDD99(iData):
         # logging.info("Pod wrong fragment")
         # logging.info(pod_df["wrong_fragment"].value_counts(normalize=False, sort=True))
 
+        logging.info(df["outcome"].value_counts())
+
         encode_numeric_zscore(df, 'duration')
         encode_text_dummy(df, 'protocol_type')
         encode_text_dummy(df, 'service')
