@@ -5,4 +5,6 @@ python3.9 main.py \
     -init 5 \
     -incre 5 \
     -p benchmark \
-    -d -1
+    -d -1 \
+    --init_epoch 50 \
+    --epochs 50 \

@@ -36,7 +36,8 @@ def setup_parser():
     parser.add_argument('--device', '-d', nargs='+', type=int, default=[0, 1, 2, 3])
     parser.add_argument('--debug', action="store_true")
     parser.add_argument('--skip', action="store_true")
-    parser.add_argument("--init_epoch", type=int, default=200),
+    parser.add_argument("--init_epoch", type=int, default=200)
+    parser.add_argument("--epochs", type=int, default=170)
 
     return parser
 

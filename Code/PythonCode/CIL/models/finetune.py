@@ -19,7 +19,8 @@ from utils.toolkit import tensor2numpy
 init_lr = 0.1
 init_weight_decay = 0.0005
 
-epochs = 80
+# epochs = 80
+# epochs = 30
 lrate = 0.1
 batch_size = 128
 lrate_decay = 0.1
@@ -119,7 +120,7 @@ class FineTune(BaseLearner):
             # logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
-        prog_bar = tqdm(range(epochs))
+        prog_bar = tqdm(range(self.args["epochs"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0.0
@@ -149,7 +150,7 @@ class FineTune(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -158,7 +159,7 @@ class FineTune(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                 )
