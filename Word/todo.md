@@ -39,6 +39,9 @@
 - get statistic of each class in all dataset (done)
 7. Write about Experiment setup
 - Get statistic of train and test dataset on each step in instance 3 (done)
+    - Get statistic of which classes is training on.
+    - Get statistic of exemplar
+    - Get statistic of testing data
 8. Write about testing on custom dataset(current doing)
 - write about reason creating dataset (done)
 - write about creating methodology (done)

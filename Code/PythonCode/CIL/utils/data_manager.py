@@ -184,6 +184,7 @@ class DummyDataset(Dataset):
 
 
 def _map_new_class_index(y, order):
+    logging.info(f"type of order is: {type(order)}")
     return np.array(list(map(lambda x: order.index(x), y)))
 
 
