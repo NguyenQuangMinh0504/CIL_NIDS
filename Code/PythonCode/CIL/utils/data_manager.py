@@ -125,7 +125,7 @@ class DataManager(object):
 
         class_order_name = []
         for class_idx in self._class_order:
-            for name, idx in self._class_order:
+            for name, idx in idata.label_dict.items():
                 if class_idx == idx:
                     class_order_name.append(name)
 
