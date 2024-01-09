@@ -123,6 +123,7 @@ class DataManager(object):
             order = idata.class_order
         self._class_order = order
         logging.info(f"Class order is: {self._class_order}")
+        logging.info(f"Data is: {idata.label_dict}")
 
         # Map indices
         self._train_targets = _map_new_class_index(self._train_targets, self._class_order)
