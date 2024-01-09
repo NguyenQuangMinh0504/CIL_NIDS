@@ -244,7 +244,8 @@ class CIC_IDS_2017(iData):
     common_trsf = [ToTensor()]
 
     def download_data(self):
-        path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling/Wednesday-workingHours.pcap_ISCX.csv"
+        # path = "../../../Dataset/CICDataset/CIC-IDS-2017/TrafficLabelling/Wednesday-workingHours.pcap_ISCX.csv"
+        path = "../../../Dataset/CIC-IDS-2017/Wednesday-workingHours.pcap_ISCX.csv"
         dataset = pd.read_csv(path)
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
