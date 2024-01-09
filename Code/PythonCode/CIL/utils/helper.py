@@ -29,11 +29,12 @@ def encode_text_single_dummy(df, name, target_values):
 
 # Encode text values to indexes(i.e. [1],[2],[3] for red,green,blue).
 def encode_text_index(df, name):
+    """ Return a maping dict """
     le = preprocessing.LabelEncoder()
     df[name] = le.fit_transform(df[name])
     label_dict = dict(zip(le.classes_, le.transform(le.classes_)))
     logging.info(label_dict)  # Output: {'apple': 0, 'banana': 1, 'orange': 2}
-    return le.classes_
+    return label_dict
 
 
 # Encode a numeric column as zscores

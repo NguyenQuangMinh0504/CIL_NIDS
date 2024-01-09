@@ -212,7 +212,7 @@ class KDD99(iData):
         # logging.info(corr['outcome'].sort_values(ascending=False))
         # logging.info(corr)
         # outcomes = encode_text_index(df, 'outcome')
-        encode_text_index(df, "outcome")
+        self.label_dict = encode_text_index(df, "outcome")
 
         df.dropna(inplace=True, axis=1)
 
@@ -253,7 +253,7 @@ class CIC_IDS_2017(iData):
             if column != " Label":
                 encode_numeric_zscore(dataset, name=column)
             else:
-                encode_text_index(dataset, name=column)
+                self.label_dict = encode_text_index(dataset, name=column)
 
         dataset.dropna(axis=1, inplace=True)
 
@@ -289,7 +289,7 @@ class TON_IoT_Network(iData):
                 else:
                     encode_numeric_zscore(dataset, column)
             else:
-                logging.info(encode_text_index(dataset, column))
+                self.label_dict = encode_text_index(dataset, column)
 
         dataset.dropna(axis=1, inplace=True)
         y = dataset["type"].to_numpy()
