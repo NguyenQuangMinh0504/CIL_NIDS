@@ -6,4 +6,4 @@ python3.9 main.py \
     -incre 2 \
     -net kdd_ann \
     -p benchmark \
-    -d -1 \
+    -d -1
