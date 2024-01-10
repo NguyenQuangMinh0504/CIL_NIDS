@@ -1,11 +1,15 @@
 import copy
 import logging
 import numpy as np
+from typing import Union
+
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
+
 from utils.toolkit import tensor2numpy, accuracy
 from scipy.spatial.distance import cdist
+from sklearn.metrics import classification_report
 from utils.inc_net import AdaptiveNet, DERNet, FOSTERNet
 from utils.data_manager import DataManager
 import os
@@ -16,7 +20,7 @@ TOP_K = 2
 
 
 class BaseLearner(object):
-    _network: [AdaptiveNet, DERNet, FOSTERNet]
+    _network: Union[AdaptiveNet, DERNet, FOSTERNet]
     test_loader: DataLoader
     _known_classes: int
     """Total knowned classes"""
@@ -85,6 +89,9 @@ class BaseLearner(object):
 
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)
+
+        logging.info("Logging classification report using sklearn.metrics.classification_report")
+        logging.info(f"{classification_report(y_true, y_pred)}")
 
         if hasattr(self, "_class_means"):
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
