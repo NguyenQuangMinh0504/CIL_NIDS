@@ -85,17 +85,27 @@ class BaseLearner(object):
     def eval_task(self, save_conf=False):
         """Evaluating result. return cnn_accy and nme_accy"""
 
-        # logging.info(f"Test loader is: {self.test_loader}")
-
-        y_pred, y_true = self._eval_cnn(self.test_loader)
-        cnn_accy = self._evaluate(y_pred, y_true)
-
         logging.info("Logging classification report using sklearn.metrics.classification_report")
+        self._network.eval()
+        y_pred, y_true = [], []
+        for _, (_, inputs, targets) in enumerate(self.test_loader):
+            inputs = inputs.to(self._device)
+            with torch.no_grad():
+                outputs = self._network(inputs)["logits"]
+
+            predicts = torch.topk(outputs, k=1, dim=1, largest=True, sorted=True)[1]
+            y_pred.append(predicts.cpu().numpy())
+            y_true.append(targets.cpu().numpy())
+        y_pred = np.concatenate(y_pred)
+        y_true = np.concatenate(y_true)
         logging.info(y_pred)
         logging.info(type(y_pred))
         logging.info(y_true)
         logging.info(type(y_true))
-        # logging.info(f"{classification_report(y_true, y_pred)}")
+        logging.info(f"{classification_report(y_true, y_pred)}")
+
+        y_pred, y_true = self._eval_cnn(self.test_loader)
+        cnn_accy = self._evaluate(y_pred, y_true)
 
         if hasattr(self, "_class_means"):
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
