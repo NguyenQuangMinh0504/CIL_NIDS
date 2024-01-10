@@ -91,7 +91,11 @@ class BaseLearner(object):
         cnn_accy = self._evaluate(y_pred, y_true)
 
         logging.info("Logging classification report using sklearn.metrics.classification_report")
-        logging.info(f"{classification_report(y_true, y_pred)}")
+        logging.info(y_pred)
+        logging.info(type(y_pred))
+        logging.info(y_true)
+        logging.info(type(y_true))
+        # logging.info(f"{classification_report(y_true, y_pred)}")
 
         if hasattr(self, "_class_means"):
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
