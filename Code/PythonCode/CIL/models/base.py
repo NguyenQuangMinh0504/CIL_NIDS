@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from utils.toolkit import tensor2numpy, accuracy
 from scipy.spatial.distance import cdist
 from sklearn.metrics import classification_report
-from utils.inc_net import AdaptiveNet, DERNet, FOSTERNet
+from utils.inc_net import AdaptiveNet, DERNet, FOSTERNet, IncrementalNet
 from utils.data_manager import DataManager
 import os
 
@@ -20,7 +20,7 @@ TOP_K = 2
 
 
 class BaseLearner(object):
-    _network: Union[AdaptiveNet, DERNet, FOSTERNet]
+    _network: Union[AdaptiveNet, DERNet, FOSTERNet, IncrementalNet]
     test_loader: DataLoader
     _known_classes: int
     """Total knowned classes"""
