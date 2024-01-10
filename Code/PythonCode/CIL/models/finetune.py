@@ -6,6 +6,7 @@ import torch
 from torch import nn, optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 
 from tqdm import tqdm
 
@@ -78,6 +79,7 @@ class FineTune(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
+        writer = SummaryWriter()
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0.0
@@ -97,7 +99,8 @@ class FineTune(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
-
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", losses, epoch)
             if epoch % 5 != 0:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
@@ -118,6 +121,7 @@ class FineTune(BaseLearner):
                 )
             prog_bar.set_description(info)
             # logging.info(info)
+        writer.close()
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
