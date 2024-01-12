@@ -26,7 +26,7 @@ weight_decay = 2e-4
 lrate_decay = 0.1
 
 
-epochs = 170
+# epochs = 170
 # epochs = 50
 
 
@@ -153,7 +153,7 @@ class DER(BaseLearner):
         # logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
-        prog_bar = tqdm(range(epochs))
+        prog_bar = tqdm(range(self.args["epochs"]))
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
@@ -189,7 +189,7 @@ class DER(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     losses_clf / len(train_loader),
                     loss_aux / len(train_loader),
@@ -200,7 +200,7 @@ class DER(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     loss_clf / len(train_loader),
                     losses_aux / len(train_loader),
