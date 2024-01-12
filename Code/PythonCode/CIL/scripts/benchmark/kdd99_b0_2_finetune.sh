@@ -4,5 +4,5 @@ python3.9 main.py \
     --dataset kdd99 \
     -net kdd_ann \
     -p benchmark -d -1 \
-    --init_epoch 30 \
-    --epoch 30
+    --init_epoch 200 \
+    --epoch 150
