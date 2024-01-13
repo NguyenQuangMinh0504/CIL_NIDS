@@ -6,5 +6,6 @@ python3.9 main.py \
     -incre 2 \
     -p benchmark \
     -d -1 \
-    --init_epoch 50 \
+    --init_epoch 200 \
+    --epochs 150 \
     
