@@ -237,36 +237,7 @@ class KDD99(iData):
         del df
 
 
-class CIC_IDS_2017(iData):
-    use_path = False
-    train_trsf = []
-    test_trsf = []
-    common_trsf = [ToTensor()]
 
-    def download_data(self):
-        path = "../../../Dataset/CIC-IDS-2017/Wednesday-workingHours.pcap_ISCX.csv"
-        dataset = pd.read_csv(path)
-        dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
-        # drop unnecessary data
-        dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
-        for column in dataset.columns:
-            if column != " Label":
-                encode_numeric_zscore(dataset, name=column)
-            else:
-                self.label_dict = encode_text_index(dataset, name=column)
-
-        dataset.dropna(axis=1, inplace=True)
-
-        y = dataset[" Label"].to_numpy()
-        dataset.drop(labels=" Label", axis=1)
-
-        self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
-            dataset.to_numpy(), y, test_size=0.2, random_state=42)
-
-        self.train_data = self.train_data.astype(np.float32)
-        self.test_data = self.test_data.astype(np.float32)
-
-        del dataset
 
 
 class TON_IoT_Network(iData):
