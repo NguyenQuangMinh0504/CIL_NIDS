@@ -28,7 +28,8 @@ class CIC_IDS_2017(iData):
         monday_table = pd.read_csv(monday_working_path)
         tuesday_table = pd.read_csv(tuesday_working_hours_path)
         wednesday_table = pd.read_csv(wednesday_working_hours_path)
-        thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path)
+        # thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path) Got error UnicodeDecodeError: 'utf-8' codec can't decode byte 0x96 in position 22398: invalid start byte
+        thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path, encoding="cp1252")
         thurdays_afternoon_table = pd.read_csv(thursday_working_hours_afternoon_infilteration_path)
         friday_morning_table = pd.read_csv(friday_working_hours_morning_path)
         friday_afternoon_ddos_table = pd.read_csv(friday_working_hours_afternoon_ddos_path)
