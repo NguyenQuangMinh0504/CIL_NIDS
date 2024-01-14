@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from data import iData
+from utils.data import iData
 from torchvision.transforms import ToTensor
 from utils.helper import encode_text_index, encode_numeric_zscore
 
