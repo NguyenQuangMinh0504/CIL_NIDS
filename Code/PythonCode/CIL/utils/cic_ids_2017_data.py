@@ -16,14 +16,14 @@ class CIC_IDS_2017(iData):
     def download_data(self):
         # path = "../../../Dataset/CIC-IDS-2017/Wednesday-workingHours.pcap_ISCX.csv"
 
-        monday_working_path = "../../Dataset/CIC-IDS-2017/Monday-WorkingHours.pcap_ISCX.csv"
-        tuesday_working_hours_path = "../Dataset/CIC-IDS-2017/Tuesday-WorkingHours.pcap_ISCX.csv"
+        monday_working_path = "../../../Dataset/CIC-IDS-2017/Monday-WorkingHours.pcap_ISCX.csv"
+        tuesday_working_hours_path = "../../../Dataset/CIC-IDS-2017/Tuesday-WorkingHours.pcap_ISCX.csv"
         wednesday_working_hours_path = "../../../Dataset/CIC-IDS-2017/Wednesday-workingHours.pcap_ISCX.csv"
-        thursday_working_hours_morning_web_attacks_path = "../../Dataset/CIC-IDS-2017/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
-        thursday_working_hours_afternoon_infilteration_path = "../../Dataset/CIC-IDS-2017/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
-        friday_working_hours_morning_path = "../../Dataset/CIC-IDS-2017/Friday-WorkingHours-Morning.pcap_ISCX.csv"
+        thursday_working_hours_morning_web_attacks_path = "../../../Dataset/CIC-IDS-2017/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv"
+        thursday_working_hours_afternoon_infilteration_path = "../../../Dataset/CIC-IDS-2017/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv"
+        friday_working_hours_morning_path = "../../../Dataset/CIC-IDS-2017/Friday-WorkingHours-Morning.pcap_ISCX.csv"
         friday_working_hours_afternoon_ddos_path = "../../../Dataset/CIC-IDS-2017/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv"
-        friday_working_hours_afternoon_port_scan_path = "../../Dataset/CIC-IDS-2017/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"
+        friday_working_hours_afternoon_port_scan_path = "../../../Dataset/CIC-IDS-2017/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv"
 
         monday_table = pd.read_csv(monday_working_path)
         tuesday_table = pd.read_csv(tuesday_working_hours_path)
