@@ -47,7 +47,7 @@ class CIC_IDS_2017(iData):
             else:
                 self.label_dict = encode_text_index(dataset, name=column)
 
-        dataset.dropna(axis=0, inplace=True)
+        dataset.dropna(axis=1, inplace=True)
         dataset.drop(labels=dataset[dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])].index, inplace=True)
         logging.info(dataset[" Label"].value_counts())
         y = dataset[" Label"].to_numpy()
