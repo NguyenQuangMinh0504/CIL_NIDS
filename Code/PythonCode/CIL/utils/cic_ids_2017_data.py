@@ -41,6 +41,9 @@ class CIC_IDS_2017(iData):
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
+        dataset.drop(labels=dataset[dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])].index, inplace=True)
+        logging.info(dataset[" Label"].value_counts())
+
         for column in dataset.columns:
             if column != " Label":
                 encode_numeric_zscore(dataset, name=column)
@@ -48,8 +51,7 @@ class CIC_IDS_2017(iData):
                 self.label_dict = encode_text_index(dataset, name=column)
 
         dataset.dropna(axis=1, inplace=True)
-        dataset.drop(labels=dataset[dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])].index, inplace=True)
-        logging.info(dataset[" Label"].value_counts())
+
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1)
 
