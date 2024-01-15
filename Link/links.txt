@@ -15,3 +15,4 @@ CICFlowMeter: Tool for generating dataset from pcap file
 https://www.unb.ca/cic/research/applications.html#CICFlowMeter
 -------------------------------------------------------------
 UNSW Dataset
+http://205.174.165.80/CICDataset/CIC-IDS-2017/Dataset/

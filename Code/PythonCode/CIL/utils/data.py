@@ -237,9 +237,6 @@ class KDD99(iData):
         del df
 
 
-
-
-
 class TON_IoT_Network(iData):
     use_path = False
     train_trsf = []

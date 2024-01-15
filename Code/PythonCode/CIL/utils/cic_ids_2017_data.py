@@ -28,8 +28,9 @@ class CIC_IDS_2017(iData):
         monday_table = pd.read_csv(monday_working_path)
         tuesday_table = pd.read_csv(tuesday_working_hours_path)
         wednesday_table = pd.read_csv(wednesday_working_hours_path)
-        # thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path) Got error UnicodeDecodeError: 'utf-8' codec can't decode byte 0x96 in position 22398: invalid start byte
-        thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path, encoding="cp1252")
+        thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path) 
+        # Got error UnicodeDecodeError: 'utf-8' codec can't decode byte 0x96 in position 22398: invalid start byte
+        # thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path, encoding="cp1252")
         thurdays_afternoon_table = pd.read_csv(thursday_working_hours_afternoon_infilteration_path)
         friday_morning_table = pd.read_csv(friday_working_hours_morning_path)
         friday_afternoon_ddos_table = pd.read_csv(friday_working_hours_afternoon_ddos_path)
@@ -40,7 +41,7 @@ class CIC_IDS_2017(iData):
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
-        dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
+        # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
         for column in dataset.columns:
             if column != " Label":
                 encode_numeric_zscore(dataset, name=column)
