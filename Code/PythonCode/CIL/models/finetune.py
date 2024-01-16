@@ -79,7 +79,7 @@ class FineTune(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
-        writer = SummaryWriter()
+        writer = SummaryWriter(log_dir="runs/Task{}".format(self._cur_task))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
             losses = 0.0
@@ -100,7 +100,7 @@ class FineTune(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
             writer.add_scalar("Loss/train", losses, epoch)
-            writer.add_scalar("Accuracy/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
             if epoch % 5 != 0:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
@@ -124,6 +124,7 @@ class FineTune(BaseLearner):
         writer.close()
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
+        writer = SummaryWriter(log_dir="runs/Task{}".format(self._cur_task))
         prog_bar = tqdm(range(self.args["epochs"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
@@ -149,6 +150,10 @@ class FineTune(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
