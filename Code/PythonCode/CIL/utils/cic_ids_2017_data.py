@@ -1,4 +1,5 @@
 import logging
+from math import log
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -44,10 +45,11 @@ class CIC_IDS_2017(iData):
         benign_dataset = dataset[dataset[" Label"] == "BENIGN"].sample(n=200000)
         dataset = dataset[dataset[" Label"] != "BENIGN"].copy()
         dataset = pd.concat([dataset, benign_dataset])
+        logging.info(dataset.columns)
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
-        dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
+        # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
         logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
