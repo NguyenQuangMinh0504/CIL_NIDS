@@ -37,6 +37,9 @@ class CIC_IDS_2017(iData):
 
         dataset = pd.concat(objs=[monday_table, tuesday_table, wednesday_table, thursday_morning_table, thurdays_afternoon_table,
                                   friday_morning_table, friday_afternoon_ddos_table, friday_afternoon_port_scan_table])
+        
+        # Drop 90% of benign traffic
+        dataset.drop(dataset[dataset[" Label"] == "BENIGN"].sample(frac=0.9).index)
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
