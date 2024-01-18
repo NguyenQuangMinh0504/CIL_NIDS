@@ -38,6 +38,7 @@ class CIC_IDS_2017(iData):
         logging.info("Boo")
         dataset = pd.concat(objs=[monday_table, tuesday_table, wednesday_table, thursday_morning_table, thurdays_afternoon_table,
                                   friday_morning_table, friday_afternoon_ddos_table, friday_afternoon_port_scan_table])
+        del monday_table, tuesday_table, wednesday_table, thursday_morning_table, thurdays_afternoon_table, friday_morning_table, friday_afternoon_ddos_table, friday_afternoon_port_scan_table
 
         # Drop 90% of benign traffic
         logging.info(dataset[" Label"].value_counts())
