@@ -17,7 +17,7 @@ class DataManager(object):
     """_increments[i]: Number of classes at training iterator i"""
 
     def __init__(self, dataset_name: str, shuffle: bool, seed: int, init_cls: int, increment: int):
-
+        logging.info("Initialize Data Manager ...")
         self.dataset_name = dataset_name
 
         if self.dataset_name not in ["kdd99", "cifar100", "cic-ids-2017", "ton-iot-network"]:
