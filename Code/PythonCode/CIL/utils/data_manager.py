@@ -102,6 +102,7 @@ class DataManager(object):
 
     def _setup_data(self, dataset_name: str, shuffle: bool, seed):
         """Downloading data -> Set up train and test data"""
+        logging.info("Set up data ...")
         idata: iData = _get_idata(dataset_name)
         idata.download_data()
 
@@ -200,6 +201,7 @@ def _map_new_class_index(y, order: list):
 
 def _get_idata(dataset_name: str):
     """Return dataset name"""
+    logging.info("Get idata ...")
     name = dataset_name.lower()
     if name == "cifar10":
         return iCIFAR10()
