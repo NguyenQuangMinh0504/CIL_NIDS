@@ -42,6 +42,7 @@ class CIC_IDS_2017(iData):
         logging.info(dataset[" Label"].value_counts())
         # logging.info(len(dataset[dataset[" Label"] == "BENIGN"].index))
         # dataset.drop(labels=dataset[dataset[" Label"].isin(["BENIGN"])].index, inplace=True)
+        logging.info(type(dataset[dataset[" Label"].isin(["BENIGN"])].index))
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
