@@ -40,6 +40,7 @@ class CIC_IDS_2017(iData):
         
         # Drop 90% of benign traffic
         dataset.drop(dataset[dataset[" Label"] == "BENIGN"].sample(frac=0.9).index, inplace=True)
+        logging.info(dataset[dataset[" Label"] == "BENIGN"].sample(frac=0.9).index)
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
