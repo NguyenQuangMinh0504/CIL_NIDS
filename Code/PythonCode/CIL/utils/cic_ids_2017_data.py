@@ -47,8 +47,7 @@ class CIC_IDS_2017(iData):
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
-        # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
-        # dataset.drop(labels=dataset[dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])].index, inplace=True)
+        dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
         logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
