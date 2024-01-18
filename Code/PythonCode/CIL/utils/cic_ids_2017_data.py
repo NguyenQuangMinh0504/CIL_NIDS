@@ -28,25 +28,26 @@ class CIC_IDS_2017(iData):
 
         monday_table = pd.read_csv(monday_working_path)
         tuesday_table = pd.read_csv(tuesday_working_hours_path)
-
+        dataset = pd.concat([monday_table, tuesday_table])
+        del monday_table, tuesday_table
         wednesday_table = pd.read_csv(wednesday_working_hours_path)
+        dataset = pd.concat([dataset, wednesday_table])
+        del wednesday_table
         thursday_morning_table = pd.read_csv(thursday_working_hours_morning_web_attacks_path)
-
-        dataset = pd.concat(objs=[monday_table, tuesday_table, wednesday_table, thursday_morning_table]).copy()
-        del monday_table, tuesday_table, wednesday_table, thursday_morning_table
-
+        dataset = pd.concat([dataset, thursday_morning_table])
+        del thursday_morning_table
         thurdays_afternoon_table = pd.read_csv(thursday_working_hours_afternoon_infilteration_path)
+        dataset = pd.concat([dataset, thurdays_afternoon_table])
+        del thurdays_afternoon_table
         friday_morning_table = pd.read_csv(friday_working_hours_morning_path)
-
-        dataset = pd.concat(objs=[dataset, thurdays_afternoon_table, friday_morning_table]).copy()
-        del thurdays_afternoon_table, friday_morning_table
-
+        dataset = pd.concat([dataset, friday_morning_table])
+        del friday_morning_table
         friday_afternoon_ddos_table = pd.read_csv(friday_working_hours_afternoon_ddos_path)
+        dataset = pd.concat([dataset, friday_afternoon_ddos_table])
+        del friday_afternoon_ddos_table
         friday_afternoon_port_scan_table = pd.read_csv(friday_working_hours_afternoon_port_scan_path)
-
-        logging.info("Boo")
-        dataset = pd.concat(objs=[dataset, friday_afternoon_ddos_table, friday_afternoon_port_scan_table]).copy()
-        del friday_afternoon_ddos_table, friday_afternoon_port_scan_table
+        dataset = pd.concat([dataset, friday_afternoon_port_scan_table])
+        del friday_afternoon_port_scan_table
 
         # Drop 90% of benign traffic
         logging.info(dataset[" Label"].value_counts())
