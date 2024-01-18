@@ -35,6 +35,7 @@ class CIC_IDS_2017(iData):
         friday_afternoon_ddos_table = pd.read_csv(friday_working_hours_afternoon_ddos_path)
         friday_afternoon_port_scan_table = pd.read_csv(friday_working_hours_afternoon_port_scan_path)
 
+        logging.info("Boo")
         dataset = pd.concat(objs=[monday_table, tuesday_table, wednesday_table, thursday_morning_table, thurdays_afternoon_table,
                                   friday_morning_table, friday_afternoon_ddos_table, friday_afternoon_port_scan_table])
 
