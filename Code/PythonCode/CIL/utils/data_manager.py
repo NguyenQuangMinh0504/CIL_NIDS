@@ -120,6 +120,8 @@ class DataManager(object):
         if shuffle:
             np.random.seed(seed=seed)
             order = np.random.permutation(len(order)).tolist()
+            if dataset_name == "cic-ids-2017":
+                order = [4, 0, 8, 2, 3, 7, 9, 6, 5, 1, 10, 11]
         else:
             order = idata.class_order
         self._class_order = order
