@@ -113,6 +113,7 @@ class FineTune(BaseLearner):
                 )
             else:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
@@ -158,6 +159,7 @@ class FineTune(BaseLearner):
 
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
