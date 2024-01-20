@@ -17,12 +17,14 @@ from utils.data_manager import DataManager
 from utils.toolkit import tensor2numpy
 
 # init_epoch = 200
-init_lr = 0.1
+# init_lr = 0.1
+init_lr = 0.01
 init_weight_decay = 0.0005
 
 # epochs = 80
 # epochs = 30
-lrate = 0.1
+lrate = 0.01
+# lrate = 0.1
 batch_size = 128
 lrate_decay = 0.1
 milestones = [40, 70]

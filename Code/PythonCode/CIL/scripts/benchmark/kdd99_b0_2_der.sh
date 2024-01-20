@@ -7,4 +7,4 @@ python3.9 main.py \
     -p benchmark \
     -d -1 \
     --init_epoch 200 \
-    --epochs 150 
+    --epochs 150

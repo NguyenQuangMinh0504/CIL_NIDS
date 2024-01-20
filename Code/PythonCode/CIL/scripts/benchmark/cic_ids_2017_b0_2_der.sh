@@ -8,4 +8,3 @@ python3.9 main.py \
     -d -1 \
     --init_epoch 200 \
     --epochs 150 \
-    
