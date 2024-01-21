@@ -5,6 +5,9 @@ import torch
 from torch import nn
 from torch import optim
 from torch.nn import functional as F
+from torch.utils.tensorboard.writer import SummaryWriter
+
+
 from models.base import BaseLearner
 from torch.utils.data import DataLoader
 from utils.inc_net import AdaptiveNet
@@ -175,6 +178,7 @@ class MEMO(BaseLearner):
                 self._network.weight_align(self._total_classes - self._known_classes)
 
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
+        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
         prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
@@ -198,9 +202,14 @@ class MEMO(BaseLearner):
 
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
+            # Log to tensorboard
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
             # Generate info message
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = 'Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}'.format(
                     self._cur_task, epoch + 1,
                     self.args["init_epoch"],
