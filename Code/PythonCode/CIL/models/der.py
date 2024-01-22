@@ -8,6 +8,7 @@ from torch import optim
 from models.base import BaseLearner
 from utils.inc_net import DERNet
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard.writer import SummaryWriter
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
@@ -110,6 +111,7 @@ class DER(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
+        writer = SummaryWriter(log_dir="runs/Der/Task{}".format(self._cur_task))
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
@@ -130,8 +132,12 @@ class DER(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
@@ -154,6 +160,7 @@ class DER(BaseLearner):
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
+        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
