@@ -160,7 +160,7 @@ class DER(BaseLearner):
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
-        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
+        writer = SummaryWriter(log_dir="runs/Der/Task{}".format(self._cur_task))
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
@@ -190,6 +190,8 @@ class DER(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
 
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
@@ -203,6 +205,7 @@ class DER(BaseLearner):
                     train_acc,
                     test_acc
                 )
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
