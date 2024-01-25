@@ -9,7 +9,7 @@ from convs.linears import SimpleLinear
 from convs.cifar_resnet import resnet32
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
 from convs.memo_kdd_fc import get_kdd_fc, get_memo_ann
-from convs.ann import get_ann
+from convs.ann import get_ann, get_dnn
 
 
 def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.Module):
@@ -31,6 +31,10 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
         return get_memo_ann(input_dim=68)
     elif name == "ton_iot_network_memo_ann":
         return get_memo_ann(input_dim=240)
+    elif name == "cic_ids_dnn":
+        return get_dnn(input_dim=68)
+    elif name == "ton_iot_network_dnn":
+        return get_dnn(input_dim=240)
     else:
         raise NotImplementedError(f"Convnet type : {name} has not been implemented yet!!!")
 
