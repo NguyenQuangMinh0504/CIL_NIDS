@@ -38,6 +38,7 @@ def setup_parser():
     parser.add_argument('--skip', action="store_true")
     parser.add_argument("--init_epoch", type=int, default=200)
     parser.add_argument("--epochs", type=int, default=170)
+    parser.add_argument("--batch_size", type=int, default=128)
 
     return parser
 
