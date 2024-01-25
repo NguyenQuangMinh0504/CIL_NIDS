@@ -185,7 +185,8 @@ class MEMO_KDD(BaseLearner):
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
 
         logging.info("Initialize training.........................")
-        writer = SummaryWriter(log_dir="runs/{}Memo/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}Memo_{}/Task{}".format(
+            self.args["batch_size"],
             datetime.now().strftime("%Y-%m-%d"),
             self._cur_task)
             )
@@ -232,7 +233,8 @@ class MEMO_KDD(BaseLearner):
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
-        writer = SummaryWriter(log_dir="runs/{}/Memo/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/Memo_{}/Task{}".format(
+            self.args["batch_size"],
             datetime.now().strftime("%Y-%m-%d"),
             self._cur_task)
         )
