@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import logging
 import numpy as np
 from tqdm import tqdm
@@ -15,11 +17,13 @@ from utils.inc_net import AdaptiveKDDNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
+from typing import Union
+
 num_workers = 8
 
 
 class MEMO_KDD(BaseLearner):
-    _network: AdaptiveKDDNet
+    _network: Union[AdaptiveKDDNet, nn.DataParallel]
 
     def __init__(self, args):
         super().__init__(args)
@@ -181,7 +185,10 @@ class MEMO_KDD(BaseLearner):
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
 
         logging.info("Initialize training.........................")
-        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
+        writer = SummaryWriter(log_dir="runs/{}Memo/Task{}".format(
+            datetime.now().strftime("%Y-%m-%d"),
+            self._cur_task)
+            )
         prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
@@ -225,7 +232,10 @@ class MEMO_KDD(BaseLearner):
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
-        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
+        writer = SummaryWriter(log_dir="runs/{}/Memo/Task{}".format(
+            datetime.now().strftime("%Y-%m-%d"),
+            self._cur_task)
+        )
         for _, epoch in enumerate(prog_bar):
             self.set_network()
             losses = 0.
