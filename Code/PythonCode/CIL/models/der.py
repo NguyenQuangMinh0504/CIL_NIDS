@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 import numpy as np
 from tqdm import tqdm
 from torch import nn
@@ -111,7 +112,12 @@ class DER(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
-        writer = SummaryWriter(log_dir="runs/Der/Task{}".format(self._cur_task))
+        writer = SummaryWriter(log_dir="runs/{}/{}_{}/Task{}".format(
+            datetime.now().strftime("%Y-%m-%d"),
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0
@@ -160,7 +166,12 @@ class DER(BaseLearner):
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
-        writer = SummaryWriter(log_dir="runs/Der/Task{}".format(self._cur_task))
+        writer = SummaryWriter(log_dir="runs/{}/{}_{}/Task{}".format(
+            datetime.now().strftime("%Y-%m-%d"),
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+        )
         for _, epoch in enumerate(prog_bar):
             self.train()
             losses = 0.0

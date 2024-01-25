@@ -185,9 +185,10 @@ class MEMO_KDD(BaseLearner):
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
 
         logging.info("Initialize training.........................")
-        writer = SummaryWriter(log_dir="runs/{}Memo_{}/Task{}".format(
-            self.args["batch_size"],
+        writer = SummaryWriter(log_dir="runs/{}/{}_{}/Task{}".format(
             datetime.now().strftime("%Y-%m-%d"),
+            self.args["convnet_type"],
+            self.args["batch_size"],
             self._cur_task)
             )
         prog_bar = tqdm(range(self.args["init_epoch"]))
@@ -233,11 +234,14 @@ class MEMO_KDD(BaseLearner):
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
-        writer = SummaryWriter(log_dir="runs/{}/Memo_{}/Task{}".format(
-            self.args["batch_size"],
+
+        writer = SummaryWriter(log_dir="runs/{}/{}_{}/Task{}".format(
             datetime.now().strftime("%Y-%m-%d"),
+            self.args["convnet_type"],
+            self.args["batch_size"],
             self._cur_task)
-        )
+            )
+
         for _, epoch in enumerate(prog_bar):
             self.set_network()
             losses = 0.
