@@ -6,6 +6,8 @@ import logging
 import time
 
 import torch
+from torch.utils.tensorboard.writer import SummaryWriter
+
 from utils import factory
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, save_fc, save_model
@@ -140,6 +142,15 @@ def _train(args: dict):
 
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
+
+            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy curve".format(
+                args["dataset"],
+                datetime.datetime.now().strftime("%Y-%m-%d"),
+                args["convnet_type"],
+                args["batch_size"],)
+            )
+            for i, accy in enumerate(cnn_curve["top1"]):
+                writer.add_scalar("Accuracy_Curve", accy, i)
 
     end_time = time.time()
     cost_time = end_time - start_time
