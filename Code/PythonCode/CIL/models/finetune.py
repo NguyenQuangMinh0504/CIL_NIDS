@@ -82,9 +82,10 @@ class FineTune(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["init_epoch"]))
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             datetime.now().strftime("%Y-%m-%d"),
+            self.args["model"],
             self.args["convnet_type"],
             self.args["batch_size"],
             self._cur_task)
@@ -134,9 +135,10 @@ class FineTune(BaseLearner):
         writer.close()
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             datetime.now().strftime("%Y-%m-%d"),
+            self.args["model"],
             self.args["convnet_type"],
             self.args["batch_size"],
             self._cur_task)

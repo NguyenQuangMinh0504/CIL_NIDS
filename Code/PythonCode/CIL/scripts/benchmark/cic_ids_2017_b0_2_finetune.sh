@@ -4,5 +4,5 @@ python3.9 main.py \
     --dataset cic-ids-2017 \
     -net cic_ids_ann \
     -p benchmark -d -1 \
-    --init_epoch 200 \
-    --epochs 150
+    --init_epoch 300 \
+    --epochs 250
