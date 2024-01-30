@@ -154,6 +154,8 @@ def _train(args: dict):
                 writer.add_scalar("Accuracy_Curve", accy, i)
             writer.close()
 
+    send_telegram_notification()
+
     end_time = time.time()
     cost_time = end_time - start_time
     logging.info(f"End Time: {end_time}")
@@ -165,7 +167,7 @@ def _train(args: dict):
     else:
         save_model(args, model)
 
-    send_telegram_notification()
+
 
 
 def _set_device(args: dict):
