@@ -24,6 +24,7 @@ def train(args: dict):
 
 
 def _train(args: dict):
+    send_telegram_notification(text="Start training")
     time_str = datetime.datetime.now().strftime('%m%d-%H-%M-%S-%f')[:-3]
     args["time_str"] = time_str
     init_cls = 0 if args["init_cls"] == args["increment"] else args["init_cls"]
@@ -156,7 +157,7 @@ def _train(args: dict):
 
             writer.close()
 
-    send_telegram_notification()
+    send_telegram_notification(text="Finish training")
 
     end_time = time.time()
     cost_time = end_time - start_time

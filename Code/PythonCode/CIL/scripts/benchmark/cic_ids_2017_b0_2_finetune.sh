@@ -6,4 +6,4 @@ python3.9 main.py \
     -p benchmark -d -1 \
     --init_epoch 300 \
     --epochs 300 \
-    --batch_size = 128
+    --batch_size 128
