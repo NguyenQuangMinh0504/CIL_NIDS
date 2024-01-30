@@ -151,7 +151,7 @@ def _train(args: dict):
                 args["batch_size"],)
             )
             for i, accy in enumerate(cnn_curve["top1"]):
-                writer.add_scalar("Accuracy_Curve", accy, i)
+                writer.add_scalar("Accuracy_Curve", accy, i + 1)
             writer.close()
 
     send_telegram_notification()
@@ -166,8 +166,6 @@ def _train(args: dict):
         save_fc(args, model)
     else:
         save_model(args, model)
-
-
 
 
 def _set_device(args: dict):
