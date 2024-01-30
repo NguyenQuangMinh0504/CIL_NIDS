@@ -151,6 +151,7 @@ def _train(args: dict):
             )
             for i, accy in enumerate(cnn_curve["top1"]):
                 writer.add_scalar("Accuracy_Curve", accy, i)
+            writer.close()
 
     end_time = time.time()
     cost_time = end_time - start_time
