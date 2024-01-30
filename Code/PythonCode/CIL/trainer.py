@@ -150,8 +150,10 @@ def _train(args: dict):
                 args["convnet_type"],
                 args["batch_size"],)
             )
+
             for i, accy in enumerate(cnn_curve["top1"]):
-                writer.add_scalar("Accuracy_Curve", accy, i + 1)
+                writer.add_scalar("Accuracy_Curve", accy, i)
+
             writer.close()
 
     send_telegram_notification()
