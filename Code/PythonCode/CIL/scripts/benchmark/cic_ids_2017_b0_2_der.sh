@@ -7,5 +7,5 @@
         -p benchmark \
         -d -1 \
         --init_epoch 300 \
-        --epochs 200 \
+        --epochs 300 \
         --batch_size 512

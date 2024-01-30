@@ -11,6 +11,7 @@ from torch.utils.tensorboard.writer import SummaryWriter
 from utils import factory
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, save_fc, save_model
+from utils.notify import send_telegram_notification
 
 
 def train(args: dict):
@@ -162,6 +163,8 @@ def _train(args: dict):
         save_fc(args, model)
     else:
         save_model(args, model)
+
+    send_telegram_notification()
 
 
 def _set_device(args: dict):
