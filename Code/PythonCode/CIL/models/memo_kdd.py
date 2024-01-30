@@ -189,7 +189,7 @@ class MEMO_KDD(BaseLearner):
         writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             datetime.now().strftime("%Y-%m-%d"),
-            self.args["model"],
+            self.args["model_name"],
             self.args["convnet_type"],
             self.args["batch_size"],
             self._cur_task)
@@ -242,7 +242,7 @@ class MEMO_KDD(BaseLearner):
         writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             datetime.now().strftime("%Y-%m-%d"),
-            self.args["model"],
+            self.args["model_name"],
             self.args["convnet_type"],
             self.args["batch_size"],
             self._cur_task)
