@@ -186,9 +186,8 @@ class MEMO_KDD(BaseLearner):
 
         logging.info("Initialize training.........................")
 
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
-            datetime.now().strftime("%Y-%m-%d"),
             self.args["model_name"],
             self.args["convnet_type"],
             self.args["batch_size"],
@@ -239,9 +238,8 @@ class MEMO_KDD(BaseLearner):
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
 
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
-            datetime.now().strftime("%Y-%m-%d"),
             self.args["model_name"],
             self.args["convnet_type"],
             self.args["batch_size"],

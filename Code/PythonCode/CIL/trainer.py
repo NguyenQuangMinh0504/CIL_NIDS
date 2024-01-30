@@ -143,9 +143,8 @@ def _train(args: dict):
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
 
-            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
+            writer = SummaryWriter(log_dir="runs/{}/{}_{}/Accuracy_curve".format(
                 args["dataset"],
-                datetime.datetime.now().strftime("%Y-%m-%d"),
                 args["convnet_type"],
                 args["batch_size"],)
             )
