@@ -143,7 +143,7 @@ def _train(args: dict):
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
 
-            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy curve".format(
+            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
                 args["dataset"],
                 datetime.datetime.now().strftime("%Y-%m-%d"),
                 args["convnet_type"],
@@ -186,6 +186,7 @@ def _set_random():
 
 
 def print_args(args: dict):
+    logging.info("Calling function print args ....")
     for key, value in args.items():
         logging.info("{}: {}".format(key, value))
 
