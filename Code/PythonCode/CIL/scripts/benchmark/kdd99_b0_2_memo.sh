@@ -6,7 +6,7 @@ python3.9 main_memo.py \
     --dataset kdd99 \
     --train_base \
     --scheduler steplr \
-    --init_epoch 200 \
-    --epochs 150 \
+    --init_epoch 300 \
+    --epochs 300 \
     --batch_size 512 \
     -d -1

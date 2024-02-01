@@ -142,7 +142,6 @@ def _train(args: dict):
                 writer.add_scalar("Accuracy_Curve", accy, i)
             writer.close()
 
-
         else:
             logging.info("No NME accuracy.")
             logging.info("CNN: {}".format(cnn_accy["grouped"]))
