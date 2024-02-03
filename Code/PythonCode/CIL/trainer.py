@@ -285,11 +285,11 @@ def save_results(args, cnn_curve, nme_curve, no_nme=False):
                 f.write(f"{args['time_str']},{args['model_name']},")
                 for _acc in nme_top5[:-1]:
                     f.write(f"{_acc},")
-                f.write(f"{nme_top5[-1]} \n")
+                # f.write(f"{nme_top5[-1]} \n")
         else:
             assert args['prefix'] in ['auc', 'fair']
             with open(_log_path, "a+") as f:
                 f.write(f"{args['time_str']},{args['model_name']},{args['memory_size']},")
                 for _acc in nme_top5[:-1]:
                     f.write(f"{_acc},")
-                f.write(f"{nme_top5[-1]} \n")
+                # f.write(f"{nme_top5[-1]} \n")
