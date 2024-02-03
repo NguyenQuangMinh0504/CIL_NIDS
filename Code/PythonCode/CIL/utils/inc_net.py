@@ -252,6 +252,7 @@ class AdaptiveKDDNet(nn.Module):
         self.AdaptiveExtractors = nn.ModuleList()
         self.out_dim = None
         self.fc = None
+        self.aux_fc = None
         self.task_sizes = []
 
     @property
@@ -287,6 +288,9 @@ class AdaptiveKDDNet(nn.Module):
             fc.bias.data[:nb_output] = bias
         del self.fc
         self.fc = fc
+        new_task_size = nb_classes - sum(self.task_sizes)
+        self.task_sizes.append(new_task_size)
+        self.aux_fc = self.generate_fc(self.out_dim, new_task_size + 1)
 
     def weight_align(self, increment):
         weights = self.fc.weight.data
@@ -303,7 +307,8 @@ class AdaptiveKDDNet(nn.Module):
         features = [extractor(base_feature_map) for extractor in self.AdaptiveExtractors]
         features = torch.cat(tensors=features, dim=1)
         out = self.fc(features)
-        out.update({"features": features})
+        aux_logits = self.aux_fc(features[:, -self.out_dim:])["logits"]
+        out.update({"aux_logits": aux_logits, "features": features})
         out.update({"base_features": base_feature_map})
         return out
 
