@@ -255,21 +255,21 @@ class MEMO_KDD(BaseLearner):
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
                 outputs = self._network(inputs)
-                # logits, aux_logits = outputs["logits"], outputs["aux_logits"]
-                # loss_clf = F.cross_entropy(logits, targets)
-                # aux_targets = targets.clone()
-                # aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
-                #                           input=aux_targets - self._known_classes + 1, other=0)
-                # loss_aux = F.cross_entropy(aux_logits, aux_targets)
-                # loss = loss_clf + self.args["alpha_aux"] * loss_aux
+                logits, aux_logits = outputs["logits"], outputs["aux_logits"]
+                loss_clf = F.cross_entropy(logits, targets)
+                aux_targets = targets.clone()
+                aux_targets = torch.where(condition=aux_targets-self._known_classes + 1 > 0,
+                                          input=aux_targets - self._known_classes + 1, other=0)
+                loss_aux = F.cross_entropy(aux_logits, aux_targets)
+                loss = loss_clf + self.args["alpha_aux"] * loss_aux
                 logits = outputs["logits"]
                 loss = F.cross_entropy(logits, targets)
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
-                # losses_aux += loss_aux.item()
-                # losses_clf += loss_clf.item()
+                losses_aux += loss_aux.item()
+                losses_clf += loss_clf.item()
 
                 _, preds = torch.max(logits, dim=1)
                 correct += preds.eq(targets.expand_as(preds)).cpu().sum()
@@ -288,8 +288,8 @@ class MEMO_KDD(BaseLearner):
                     epoch + 1,
                     self.args["epochs"],
                     losses/len(train_loader),
-                    # losses_clf/len(train_loader),
-                    # losses_aux/len(train_loader),
+                    losses_clf/len(train_loader),
+                    losses_aux/len(train_loader),
                     train_acc,
                     test_acc
                 )
@@ -299,8 +299,8 @@ class MEMO_KDD(BaseLearner):
                     epoch + 1,
                     self.args["epochs"],
                     losses/len(train_loader),
-                    # losses_clf/len(train_loader),
-                    # loss_aux/len(train_loader),
+                    losses_clf/len(train_loader),
+                    loss_aux/len(train_loader),
                     train_acc,
                 )
             # prog_bar.set_description(info)
