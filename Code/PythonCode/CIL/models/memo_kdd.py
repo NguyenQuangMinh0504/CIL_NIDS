@@ -283,7 +283,7 @@ class MEMO_KDD(BaseLearner):
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
@@ -294,7 +294,7 @@ class MEMO_KDD(BaseLearner):
                     test_acc
                 )
             else:
-                info = "Task {}, Epoch {}/{} => Loss {:.3f} Train_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],

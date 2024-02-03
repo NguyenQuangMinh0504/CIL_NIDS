@@ -9,4 +9,4 @@ python3.9 main_memo.py \
     --init_epoch 300 \
     --epochs 300 \
     --batch_size 512 \
-    -d -1
+    -d -1   
