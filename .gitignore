@@ -8,3 +8,4 @@ Code/PythonCode/CIL/data
 Code/PythonCode/CIL/logs
 Code/PythonCode/CIL/utils/__pycache__/**
 *.pyc
+venv
