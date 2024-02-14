@@ -32,7 +32,8 @@ class DNN(nn.Module):
             nn.ReLU(),
             nn.Linear(in_features=128, out_features=128),
             nn.ReLU(),
-            nn.Linear(in_features=128, out_features=64)
+            nn.Linear(in_features=128, out_features=64),
+            nn.ReLU(),
         )
         self.out_dim = 64
 
