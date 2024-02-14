@@ -6,7 +6,7 @@ torchvision
 tensorboard
 tqdm
 POT
-quadprog
+# quadprog
 numpy
 scipy
 telebot

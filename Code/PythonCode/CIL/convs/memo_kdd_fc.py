@@ -69,4 +69,4 @@ def get_memo_ann(input_dim: int) -> (nn.Module, nn.Module):
 
 
 def get_memo_dnn(input_dim: int) -> (nn.Module, nn.Module):
-    return DeepGeneralizedFC(input_dim=input_dim), SpecializedFC()
+    return DeepGeneralizedFC(input_dim=input_dim), DeepSpecializedFC()
