@@ -23,7 +23,7 @@ def get_ann(input_dim: int = 121):
 
 
 class DNN(nn.Module):
-    def __init__(self, input_dim):
+    def __init__(self, input_dim: int):
         super(DNN, self).__init__()
         self.layers = nn.Sequential(
             nn.Linear(input_dim, out_features=128),

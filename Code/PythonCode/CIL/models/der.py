@@ -115,6 +115,7 @@ class DER(BaseLearner):
                 self._network_module_ptr.convnets[i].eval()
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
+        logging.info("Calling function _init_train ...")
         prog_bar = tqdm(range(self.args["init_epoch"]))
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],

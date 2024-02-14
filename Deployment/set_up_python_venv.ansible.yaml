@@ -5,11 +5,11 @@
   tasks: 
     - name: Create the virtual environment
       ansible.builtin.command:
-        chdir: /home/nguyenquangminh
+        chdir: /home/minhnguyenquang
         cmd: python3 -m venv ./venv
     - name: Create the virtual environment 
       ansible.builtin.pip:
         requirements: /opt/Thesis/Code/requirements.txt
-        virtualenv: /home/nguyenquangminh/venv
+        virtualenv: /home/minhnguyenquang/venv
         virtualenv_python: python3
         extra_args: --no-cache-dir
