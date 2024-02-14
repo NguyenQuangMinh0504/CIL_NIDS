@@ -28,15 +28,15 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
     elif name == "cic_ids_ann":
         return get_ann(input_dim=68)
     elif name == "ton_iot_network_ann":
-        return get_ann(input_dim=240)
+        return get_ann(input_dim=248)
     elif name == "cic_ids_memo_ann":
         return get_memo_ann(input_dim=68)
     elif name == "ton_iot_network_memo_ann":
-        return get_memo_ann(input_dim=240)
+        return get_memo_ann(input_dim=248)
     elif name == "cic_ids_dnn":
         return get_dnn(input_dim=68)
     elif name == "ton_iot_network_dnn":
-        return get_dnn(input_dim=240)
+        return get_dnn(input_dim=248)
     elif name == "cic_ids_memo_dnn":
         return get_memo_dnn(input_dim=68)
     else:
