@@ -3,8 +3,9 @@ import numpy as np
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from utils.data import iData, iCIFAR10, iCIFAR100, KDD99, TON_IoT_Network
+from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
 from utils.cic_ids_2017_data import CIC_IDS_2017
+from utils.ton_iot_network_data import TON_IoT_Network
 
 
 class DataManager(object):
