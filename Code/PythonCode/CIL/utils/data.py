@@ -244,7 +244,7 @@ class TON_IoT_Network(iData):
     common_trsf = [ToTensor()]
 
     def download_data(self):
-        path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/Train_Test_Network.csv"
+        path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/train_test_network.csv"
         dataset = pd.read_csv(path)
         dataset.drop(columns=["ts", "src_ip", "dst_ip"], inplace=True)
         dataset.drop(columns=["dns_query"], inplace=True)
