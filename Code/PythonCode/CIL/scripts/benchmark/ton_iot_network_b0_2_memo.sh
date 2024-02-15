@@ -2,11 +2,11 @@ python3 main_memo.py \
     -model memo_kdd \
     -init 2 \
     -incre 2 \
-    -net ton_iot_network_memo_ann \
+    -net ton_iot_network_memo_dnn \
     --dataset ton-iot-network \
     --train_base \
     --scheduler steplr \
     --init_epoch 300 \
     --epochs 300 \
-    --batch_size 128 \
+    --batch_size 512 \
     -d -1
