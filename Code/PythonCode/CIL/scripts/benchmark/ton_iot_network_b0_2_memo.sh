@@ -1,4 +1,4 @@
-python3.9 main_memo.py \
+python3 main_memo.py \
     -model memo_kdd \
     -init 2 \
     -incre 2 \
@@ -6,7 +6,7 @@ python3.9 main_memo.py \
     --dataset ton-iot-network \
     --train_base \
     --scheduler steplr \
-    --init_epoch 50 \
-    --epochs 50 \
+    --init_epoch 300 \
+    --epochs 300 \
     --batch_size 128 \
     -d -1
