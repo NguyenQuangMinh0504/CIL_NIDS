@@ -6,6 +6,7 @@ from torchvision import transforms
 from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
 from utils.cic_ids_2017_data import CIC_IDS_2017
 from utils.ton_iot_network_data import TON_IoT_Network
+from utils.image_net_100_data import iImageNet100
 
 
 class DataManager(object):
@@ -214,6 +215,8 @@ def _get_idata(dataset_name: str):
         return CIC_IDS_2017()
     elif name == "ton-iot-network":
         return TON_IoT_Network()
+    elif name == "imagenet100":
+        return iImageNet100()
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 
