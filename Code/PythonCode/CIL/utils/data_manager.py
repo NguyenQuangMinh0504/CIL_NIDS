@@ -22,9 +22,6 @@ class DataManager(object):
         logging.info("Initialize Data Manager ...")
         self.dataset_name = dataset_name
 
-        if self.dataset_name not in ["kdd99", "cifar100", "cic-ids-2017", "ton-iot-network"]:
-            raise NotImplementedError(f"Dataset '{self.dataset_name}' has not been implemented yet!!!")
-
         if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network"]:
             self.is_image = False
         else:
