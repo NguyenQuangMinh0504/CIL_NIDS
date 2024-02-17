@@ -1,4 +1,4 @@
-    python3.9 main.py \
+    python3 main.py \
         -model der \
         --dataset cic-ids-2017 \
         -net cic_ids_dnn \
@@ -8,4 +8,4 @@
         -d -1 \
         --init_epoch 300 \
         --epochs 300 \
-        --batch_size 512
+        --batch_size 128
