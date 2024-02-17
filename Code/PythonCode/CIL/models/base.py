@@ -10,7 +10,8 @@ from torch.utils.data import DataLoader
 from utils.toolkit import tensor2numpy, accuracy
 from scipy.spatial.distance import cdist
 from sklearn.metrics import classification_report
-from utils.inc_net import AdaptiveNet, DERNet, FOSTERNet, IncrementalNet
+from utils.inc_net import DERNet, FOSTERNet, IncrementalNet
+from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 import os
 

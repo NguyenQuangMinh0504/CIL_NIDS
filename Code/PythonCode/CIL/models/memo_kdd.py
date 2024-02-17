@@ -1,5 +1,3 @@
-from datetime import datetime
-
 import logging
 import numpy as np
 from tqdm import tqdm
@@ -12,8 +10,7 @@ from models.base import BaseLearner
 
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard.writer import SummaryWriter
-
-from utils.inc_net import AdaptiveKDDNet
+from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
@@ -23,12 +20,12 @@ num_workers = 8
 
 
 class MEMO_KDD(BaseLearner):
-    _network: Union[AdaptiveKDDNet, nn.DataParallel]
+    _network: Union[AdaptiveNet, nn.DataParallel]
 
     def __init__(self, args):
         super().__init__(args)
         self.args = args
-        self._network = AdaptiveKDDNet(convnet_type=args["convnet_type"], pretrained=False)
+        self._network = AdaptiveNet(convnet_type=args["convnet_type"], pretrained=False)
         logging.info(
             f">>> train generalized blocks:{self.args['train_base']} train_adaptive: {self.args['train_adaptive']}")
 

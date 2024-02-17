@@ -10,7 +10,7 @@ from torch.utils.tensorboard.writer import SummaryWriter
 
 from models.base import BaseLearner
 from torch.utils.data import DataLoader
-from utils.inc_net import AdaptiveNet
+from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 
