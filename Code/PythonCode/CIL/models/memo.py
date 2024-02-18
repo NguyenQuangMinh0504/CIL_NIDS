@@ -6,19 +6,18 @@ from torch import nn
 from torch import optim
 from torch.nn import functional as F
 from torch.utils.tensorboard.writer import SummaryWriter
-
-
 from models.base import BaseLearner
 from torch.utils.data import DataLoader
 from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
+from typing import Union
 
 num_workers = 8
 
 
 class MEMO(BaseLearner):
-    _network: AdaptiveNet
+    _network: Union[AdaptiveNet, nn.DataParallel]
 
     def __init__(self, args):
         super().__init__(args)
@@ -178,7 +177,17 @@ class MEMO(BaseLearner):
                 self._network.weight_align(self._total_classes - self._known_classes)
 
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
-        writer = SummaryWriter(log_dir="runs/Memo/Task{}".format(self._cur_task))
+
+        logging.info("Initialize training.........................")
+
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
+
         prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(prog_bar):
             self._network.train()
@@ -224,6 +233,15 @@ class MEMO(BaseLearner):
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
         prog_bar = tqdm(range(self.args["epochs"]))
+
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
+
         for _, epoch in enumerate(prog_bar):
             self.set_network()
             losses = 0.
@@ -240,7 +258,8 @@ class MEMO(BaseLearner):
                                           input=aux_targets - self._known_classes + 1, other=0)
                 loss_aux = F.cross_entropy(aux_logits, aux_targets)
                 loss = loss_clf + self.args["alpha_aux"] * loss_aux
-
+                logits = outputs["logits"]
+                loss = F.cross_entropy(logits, targets)
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
@@ -255,8 +274,11 @@ class MEMO(BaseLearner):
             scheduler.step()
 
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
@@ -268,7 +290,7 @@ class MEMO(BaseLearner):
                     test_acc
                 )
             else:
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f} Train_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
