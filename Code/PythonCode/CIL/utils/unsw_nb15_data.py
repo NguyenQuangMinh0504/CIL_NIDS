@@ -25,7 +25,7 @@ class UNSW_NB15(iData):
                 encode_numeric_zscore(dataset, column)
         x, y = to_xy(dataset, 'label')
 
-        dataset.drop(labels=" Label", axis=1)
+        dataset.drop(labels="label", axis=1)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             x, y, test_size=0.2, random_state=42)
