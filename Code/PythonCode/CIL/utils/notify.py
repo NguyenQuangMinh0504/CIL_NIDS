@@ -1,6 +1,5 @@
+from setting import BOT_API_TOKEN, CHAT_ROOM_ID
 import telebot
-BOT_API_TOKEN = "6127832852:AAFbDMjHN8zed9uZjVodmWn4hO3sdS6Pi-U"
-CHAT_ROOM_ID = "-4083757988"
 
 
 def send_telegram_notification(text: str):

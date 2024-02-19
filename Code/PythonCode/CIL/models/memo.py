@@ -1,6 +1,5 @@
 import logging
 import numpy as np
-from tqdm import tqdm
 from tqdm.contrib.telegram import trange
 import torch
 from torch import nn
@@ -13,6 +12,7 @@ from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 from typing import Union
+from setting import CHAT_ROOM_ID, BOT_API_TOKEN
 
 num_workers = 8
 
@@ -189,10 +189,9 @@ class MEMO(BaseLearner):
             self._cur_task)
             )
 
-        # prog_bar = tqdm(range(self.args["init_epoch"]))
         for _, epoch in enumerate(trange(self.args["init_epoch"],
-                                         token="6127832852:AAFbDMjHN8zed9uZjVodmWn4hO3sdS6Pi-U",
-                                         chat_id="-4083757988")):
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID)):
             self._network.train()
             losses = 0
             correct, total = 0, 0
@@ -235,7 +234,6 @@ class MEMO(BaseLearner):
 
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
-        prog_bar = tqdm(range(self.args["epochs"]))
 
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
@@ -245,7 +243,9 @@ class MEMO(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(prog_bar):
+        for _, epoch in enumerate(trange(self.args["init_epoch"],
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID)):
             self.set_network()
             losses = 0.
             losses_clf = 0.

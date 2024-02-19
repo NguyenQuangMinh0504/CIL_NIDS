@@ -1,12 +1,12 @@
-python3.9 main_memo.py \
-    -model memo_kdd \
+python3 main_memo.py \
+    -model memo \
     -init 5 \
     -incre 5 \
     -net cic_ids_memo_ann \
     --dataset cic-ids-2017 \
     --train_base \
     --scheduler steplr \
-    --init_epoch 200 \
-    --epochs 150 \
+    --init_epoch 10 \
+    --epochs 10 \
     --batch_size 512 \
     -d -1

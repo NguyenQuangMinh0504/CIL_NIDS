@@ -82,7 +82,7 @@ class KDD99(iData):
         path = "../../../Dataset/KDD99/kddcup.data_10_percent"
 
         # Pre processing
-        df = pd.read_csv(path, header=None)
+        df = pd.read_csv(path, header=None, low_memory=True)
 
         df.columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes', 'dst_bytes', 'land',
                       'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised',

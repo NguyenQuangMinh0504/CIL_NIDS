@@ -1,5 +1,5 @@
-python3.9 main_memo.py \
-    -model memo_kdd \
+python3 main_memo.py \
+    -model memo \
     -init 5 \
     -incre 5 \
     -net kdd_fc \
