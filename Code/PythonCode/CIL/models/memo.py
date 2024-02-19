@@ -1,4 +1,6 @@
 import logging
+import socket
+
 import numpy as np
 from tqdm.contrib.telegram import trange
 import torch
@@ -11,6 +13,7 @@ from torch.utils.data import DataLoader
 from utils.adaptive_net import AdaptiveNet
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
+from utils.notify import send_telegram_notification
 from typing import Union
 from setting import CHAT_ROOM_ID, BOT_API_TOKEN
 
@@ -189,6 +192,14 @@ class MEMO(BaseLearner):
             self._cur_task)
             )
 
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
         for _, epoch in enumerate(trange(self.args["init_epoch"],
                                          token=BOT_API_TOKEN,
                                          chat_id=CHAT_ROOM_ID)):
@@ -234,6 +245,14 @@ class MEMO(BaseLearner):
 
     def _update_representation(self, train_loader: DataLoader,
                                test_loader: DataLoader, optimizer: optim.SGD, scheduler):
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
 
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
