@@ -202,7 +202,8 @@ class MEMO(BaseLearner):
 
         for _, epoch in enumerate(trange(self.args["init_epoch"],
                                          token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID)):
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
             self._network.train()
             losses = 0
             correct, total = 0, 0
@@ -264,7 +265,8 @@ class MEMO(BaseLearner):
 
         for _, epoch in enumerate(trange(self.args["init_epoch"],
                                          token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID)):
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
             self.set_network()
             losses = 0.
             losses_clf = 0.
