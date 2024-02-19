@@ -23,7 +23,7 @@ class DataManager(object):
         logging.info("Initialize Data Manager ...")
         self.dataset_name = dataset_name
 
-        if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network"]:
+        if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network", "unsw-nb15"]:
             self.is_image = False
         else:
             self.is_image = True
