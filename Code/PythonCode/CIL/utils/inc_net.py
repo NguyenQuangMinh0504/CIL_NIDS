@@ -40,6 +40,14 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.M
         return get_dnn(input_dim=248)
     elif name == "cic_ids_memo_dnn":
         return get_memo_dnn(input_dim=68)
+    elif name == "unsw_nb15_ann":
+        return get_ann(input_dim=194)
+    elif name == "unsw_nb15_dnn":
+        return get_dnn(input_dim=194)
+    elif name == "unsw_nb15_memo_ann":
+        return get_memo_ann(input_dim=194)
+    elif name == "unsw_nb15_memo_dnn":
+        return get_memo_dnn(input_dim=194)
     else:
         raise NotImplementedError(f"Convnet type : {name} has not been implemented yet!!!")
 
