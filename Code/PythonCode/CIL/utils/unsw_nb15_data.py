@@ -15,7 +15,6 @@ class UNSW_NB15(iData):
     def download_data(self):
         path = "../../../Dataset/UNSW-NB15/UNSW_NB15_training-set.csv"
         dataset = pd.read_csv(path)
-        dataset.drop(columns=["id", "attack_cat"], inplace=True)
         dataset.drop(columns=["id", "label"], inplace=True)
         for column in dataset.columns:
             if column in ["proto", "service", "state"]:
