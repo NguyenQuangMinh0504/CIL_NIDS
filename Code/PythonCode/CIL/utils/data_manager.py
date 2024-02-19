@@ -117,8 +117,6 @@ class DataManager(object):
         self._common_trsf = idata.common_trsf
 
         # Order
-        print(len(np.unique(self._train_targets)))
-        print(len(np.unique(self._test_targets)))
         order = [i for i in range(len(np.unique(self._train_targets)))]
         if shuffle:
             np.random.seed(seed=seed)
@@ -138,7 +136,6 @@ class DataManager(object):
                         class_order_name.append(name)
             logging.info(f"Class order is: {class_order_name}")
         logging.info(f"Class order is: {self._class_order}")
-
 
         # Map indices
         self._train_targets = _map_new_class_index(self._train_targets, self._class_order)

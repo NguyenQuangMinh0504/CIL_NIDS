@@ -24,7 +24,8 @@ class UNSW_NB15(iData):
             else:
                 encode_numeric_zscore(dataset, column)
         x, y = to_xy(dataset, 'attack_cat')
-        print(y)
+        y = dataset["attack_cat"].to_numpy()
+        dataset.drop(labels="attack_cat", axis=1)
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             x, y, test_size=0.2, random_state=42)
 
