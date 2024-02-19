@@ -3,5 +3,8 @@ import telebot
 
 
 def send_telegram_notification(text: str):
-    bot = telebot.TeleBot(BOT_API_TOKEN)
-    bot.send_message(chat_id=CHAT_ROOM_ID, text=text)
+    try:
+        bot = telebot.TeleBot(BOT_API_TOKEN)
+        bot.send_message(chat_id=CHAT_ROOM_ID, text=text)
+    except telebot.apihelper.ApiTelegramException:
+        print("Error when sending telegram message")
