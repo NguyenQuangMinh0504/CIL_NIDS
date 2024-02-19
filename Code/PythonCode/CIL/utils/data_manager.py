@@ -117,6 +117,7 @@ class DataManager(object):
         self._common_trsf = idata.common_trsf
 
         # Order
+        print(len(np.unique(self._train_targets)))
         order = [i for i in range(len(np.unique(self._train_targets)))]
         if shuffle:
             np.random.seed(seed=seed)
