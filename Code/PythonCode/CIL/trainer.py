@@ -4,6 +4,7 @@ import os
 import json
 import logging
 import time
+import socket
 
 import torch
 from torch.utils.tensorboard.writer import SummaryWriter
@@ -25,6 +26,7 @@ def train(args: dict):
 
 def _train(args: dict):
     send_telegram_notification(text="Start training")
+    send_telegram_notification(text=f"Training on instance {socket.gethostname()}")
     time_str = datetime.datetime.now().strftime('%m%d-%H-%M-%S-%f')[:-3]
     args["time_str"] = time_str
     init_cls = 0 if args["init_cls"] == args["increment"] else args["init_cls"]
