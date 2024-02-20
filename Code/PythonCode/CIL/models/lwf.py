@@ -185,7 +185,6 @@ class LwF(BaseLearner):
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
 
-
         message = ""
         message += f"Instance: {socket.gethostname()} \n"
         message += f"Dataset: {self.args['dataset']} \n"

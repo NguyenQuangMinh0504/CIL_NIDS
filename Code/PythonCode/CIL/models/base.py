@@ -291,7 +291,7 @@ class BaseLearner(object):
             vectors, _ = self._extract_vectors(class_loader)
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
             mean = np.mean(vectors, axis=0)
-            mean = np / np.linalg.norm(mean)
+            mean = mean / np.linalg.norm(mean)
             _class_means[class_idx, :] = mean
 
         # Construct exemplars for new classes and calculate the means
