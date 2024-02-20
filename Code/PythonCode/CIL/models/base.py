@@ -214,7 +214,8 @@ class BaseLearner(object):
             mean = mean / np.linalg.norm(mean)
             self._class_means[class_idx, :] = mean
 
-    def _construct_exemplar(self, data_manager: DataManager, m):
+    def _construct_exemplar(self, data_manager: DataManager, m: int):
+        """m: number of exemplars"""
         logging.info("Calling function construct exemplar ... ")
         logging.info(f"Constructing exemplars...({m} per classes)")
         for class_idx in range(self._known_classes, self._total_classes):
@@ -227,9 +228,9 @@ class BaseLearner(object):
 
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
-            logging.info(f"Type of vectors is: {type(vectors)}")
+            logging.info(f"Shape of vector is: {vectors.shape}")
 
-            # Normalize vector
+            # Normalize vector according to row
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
 
             class_mean = np.mean(vectors, axis=0)
