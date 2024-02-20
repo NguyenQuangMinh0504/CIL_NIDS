@@ -1,7 +1,7 @@
-python3.9 main.py \
+python3 main.py \
     -model lwf \
     --dataset kdd99 \
-    -ms 20000 \
+    -ms 2000 \
     -init 2 \
     -incre 2 \
     -net kdd_ann \

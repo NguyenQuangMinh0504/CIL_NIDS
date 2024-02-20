@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 import numpy as np
 from tqdm import tqdm
 from torch import nn

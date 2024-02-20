@@ -1,14 +1,23 @@
+# Default
 import logging
+import socket
 import numpy as np
+
+# Torch
 import torch
 from torch import nn
-from tqdm import tqdm
+from torch.utils.tensorboard.writer import SummaryWriter
 from torch import optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
+
+from tqdm import tqdm
+from tqdm.contrib.telegram import trange
 from utils.inc_net import IncrementalNet
 from models.base import BaseLearner
 from utils.toolkit import tensor2numpy
+from utils.notify import send_telegram_notification
+from setting import CHAT_ROOM_ID, BOT_API_TOKEN
 
 init_epoch = 200
 init_lr = 0.1
@@ -107,8 +116,28 @@ class LwF(BaseLearner):
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
-        prog_bar = tqdm(range(init_epoch))
-        for _, epoch in enumerate(prog_bar):
+
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
+        for _, epoch in enumerate(trange(self.args["init_epoch"],
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
+
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
@@ -129,7 +158,11 @@ class LwF(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
-            if epoch % 5 == 0:
+            # Log to tensorboard
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
+            if epoch % 5 != 0:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
@@ -147,14 +180,34 @@ class LwF(BaseLearner):
                     train_acc,
                     test_acc,
                 )
-            prog_bar.set_description(info)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
 
         logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
 
-        prog_bar = tqdm(range(epochs))
-        for _, epoch in enumerate(prog_bar):
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
+
+        for _, epoch in enumerate(trange(self.args["init_epoch"],
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
+
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
@@ -186,8 +239,12 @@ class LwF(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+
+            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
@@ -204,7 +261,7 @@ class LwF(BaseLearner):
                     losses / len(train_loader),
                     train_acc,
                 )
-            prog_bar.set_description(info)
+
         logging.info(info)
 
 

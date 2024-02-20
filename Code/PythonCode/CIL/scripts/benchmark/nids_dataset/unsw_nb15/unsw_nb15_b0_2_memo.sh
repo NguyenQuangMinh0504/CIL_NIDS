@@ -1,0 +1,12 @@
+python3 main_memo.py \
+    -model memo \
+    -init 2 \
+    -incre 2 \
+    -net unsw_nb15_memo_ann \
+    --dataset unsw-nb15 \
+    --train_base \
+    --scheduler steplr \
+    --init_epoch 300 \
+    --epochs 300 \
+    --batch_size 128 \
+    -d -1   
