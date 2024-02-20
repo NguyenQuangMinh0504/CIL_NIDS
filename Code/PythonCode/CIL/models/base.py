@@ -227,6 +227,7 @@ class BaseLearner(object):
 
             idx_loader = DataLoader(dataset=idx_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(idx_loader)
+            logging.info(f"Type of vectors is: {type(vectors)}")
 
             # Normalize vector
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
