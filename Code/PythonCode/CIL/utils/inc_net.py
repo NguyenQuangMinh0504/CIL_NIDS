@@ -62,6 +62,9 @@ class BaseNet(nn.Module):
     def feature_dim(self):
         return self.convnet.out_dim
 
+    def copy(self):
+        return copy.deepcopy(self)
+
 
 class IncrementalNet(BaseNet):
     def __init__(self, convnet_type, pretrained, gradcam=False):
