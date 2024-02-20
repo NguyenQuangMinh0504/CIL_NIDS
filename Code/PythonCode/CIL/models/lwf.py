@@ -11,7 +11,6 @@ from torch import optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 
-from tqdm import tqdm
 from tqdm.contrib.telegram import trange
 from utils.inc_net import IncrementalNet
 from models.base import BaseLearner
