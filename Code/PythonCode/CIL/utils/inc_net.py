@@ -65,6 +65,12 @@ class BaseNet(nn.Module):
     def copy(self):
         return copy.deepcopy(self)
 
+    def freeze(self):
+        for param in self.parameters():
+            param.requires_grad = False
+        self.eval()
+        return self
+
 
 class IncrementalNet(BaseNet):
     def __init__(self, convnet_type, pretrained, gradcam=False):
