@@ -1,8 +1,9 @@
 import logging
 import numpy as np
-from tqdm import tqdm
 from torch import nn
 import torch
+import socket
+from tqdm.contrib.telegram import trange
 from torch.nn import functional as F
 from torch import optim
 from models.base import BaseLearner
@@ -11,7 +12,8 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard.writer import SummaryWriter
 from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
-
+from setting import CHAT_ROOM_ID, BOT_API_TOKEN
+from utils.notify import send_telegram_notification
 
 # init_epoch = 200
 init_lr = 0.1
@@ -115,7 +117,15 @@ class DER(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
         logging.info("Calling function _init_train ...")
-        prog_bar = tqdm(range(self.args["init_epoch"]))
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
@@ -124,7 +134,11 @@ class DER(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(prog_bar):
+        for _, epoch in enumerate(trange(self.args["init_epoch"],
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
+
             self.train()
             losses = 0.0
             correct, total = 0, 0
@@ -166,12 +180,18 @@ class DER(BaseLearner):
                     losses / len(train_loader),
                     train_acc,
                 )
-            prog_bar.set_description(info)
 
-        # logging.info(info)
+        logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
-        prog_bar = tqdm(range(self.args["epochs"]))
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
 
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
@@ -181,7 +201,10 @@ class DER(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(prog_bar):
+        for _, epoch in enumerate(trange(self.args["init_epoch"],
+                                         token=BOT_API_TOKEN,
+                                         chat_id=CHAT_ROOM_ID,
+                                         mininterval=2)):
             self.train()
             losses = 0.0
             losses_clf = 0.0
@@ -236,5 +259,4 @@ class DER(BaseLearner):
                     losses_aux / len(train_loader),
                     train_acc,
                 )
-            prog_bar.set_description(info)
-        # logging.info(info)
+        logging.info(info)
