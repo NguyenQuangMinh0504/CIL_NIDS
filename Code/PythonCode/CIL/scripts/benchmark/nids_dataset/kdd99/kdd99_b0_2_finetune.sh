@@ -1,4 +1,4 @@
-python3.9 main.py \
+python3 main.py \
     -model finetune \
     -init 2 -incre 2 \
     --dataset kdd99 \

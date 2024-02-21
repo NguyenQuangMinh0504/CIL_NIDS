@@ -6,6 +6,6 @@ python3 main.py \
     -incre 2 \
     -p benchmark \
     -d -1 \
-    --init_epoch 10 \
-    --epochs 10 \
+    --init_epoch 300 \
+    --epochs 300 \
     --batch_size 128
