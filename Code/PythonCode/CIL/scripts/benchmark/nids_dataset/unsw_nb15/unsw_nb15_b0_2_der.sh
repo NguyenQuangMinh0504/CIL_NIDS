@@ -1,7 +1,7 @@
 python3 main.py \
     -model der \
     --dataset unsw-nb15 \
-    -net unsw_nb15_dnn \
+    -net unsw_nb15_ann \
     -init 2 \
     -incre 2 \
     -p benchmark \
