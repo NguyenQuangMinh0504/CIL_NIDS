@@ -107,7 +107,7 @@ class FineTune(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
-            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
             writer.add_scalar("Accuracy/train", train_acc, epoch)
             if epoch % 5 != 0:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
@@ -166,7 +166,7 @@ class FineTune(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
-            writer.add_scalar("Loss/train", losses, epoch)
+            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
             writer.add_scalar("Accuracy/train", train_acc, epoch)
 
             if epoch % 5 == 0:
