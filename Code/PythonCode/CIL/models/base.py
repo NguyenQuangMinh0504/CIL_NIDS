@@ -307,6 +307,7 @@ class BaseLearner(object):
             class_loader = DataLoader(class_dset, batch_size=batch_size, shuffle=False, num_workers=4)
             vectors, _ = self._extract_vectors(class_loader)
             vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
+            logging.info(f"Vector size is: {vectors.shape}")
             class_mean = np.mean(vectors, axis=0)
 
             # Select
