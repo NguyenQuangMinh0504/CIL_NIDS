@@ -6,7 +6,7 @@ python3 main.py \
     -incre 2 \
     -net kdd_ann \
     -p benchmark \
-    --init_epoch 10 \
-    --epochs 10 \
+    --init_epoch 300 \
+    --epochs 300 \
     --batch_size 128 \
     -d -1
