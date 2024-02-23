@@ -48,6 +48,12 @@ def encode_numeric_zscore(df, name, mean=None, sd=None):
     df[name] = (df[name] - mean) / sd
 
 
+def encode_numeric_min_max_scale(df, name):
+    min_value = df[name].min()
+    max_value = df[name].max()
+    df[name] = (df[name] - min_value) / (max_value - min_value)
+
+
 # Convert all missing values in the specified column to the median
 def missing_median(df, name):
     med = df[name].median()
