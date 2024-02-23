@@ -10,13 +10,11 @@ from torch.utils.tensorboard.writer import SummaryWriter
 from torch import optim
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
-
-from tqdm.contrib.telegram import trange
 from utils.inc_net import IncrementalNet
 from models.base import BaseLearner
 from utils.toolkit import tensor2numpy
 from utils.notify import send_telegram_notification
-from setting import CHAT_ROOM_ID, BOT_API_TOKEN
+from utils.prog_bar import prog_bar
 
 init_epoch = 200
 init_lr = 0.1
@@ -133,11 +131,7 @@ class LwF(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        for _, epoch in enumerate(trange(self.args["init_epoch"],
-                                         token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID,
-                                         mininterval=2)):
-
+        for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
@@ -202,11 +196,7 @@ class LwF(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(trange(self.args["init_epoch"],
-                                         token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID,
-                                         mininterval=2)):
-
+        for _, epoch in enumerate(prog_bar(self.args["epochs"])):
             self._network.train()
             losses = 0.0
             correct, total = 0, 0

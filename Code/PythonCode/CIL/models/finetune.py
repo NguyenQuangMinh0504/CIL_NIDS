@@ -8,13 +8,12 @@ from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard.writer import SummaryWriter
 
-from tqdm import tqdm
-
 from models.base import BaseLearner
 
 from utils.inc_net import IncrementalNet
 from utils.data_manager import DataManager
 from utils.toolkit import tensor2numpy
+from utils.prog_bar import prog_bar
 
 # init_epoch = 200
 # init_lr = 0.1
@@ -80,7 +79,7 @@ class FineTune(BaseLearner):
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
-        prog_bar = tqdm(range(self.args["init_epoch"]))
+
         writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
@@ -88,7 +87,8 @@ class FineTune(BaseLearner):
             self.args["batch_size"],
             self._cur_task)
             )
-        for _, epoch in enumerate(prog_bar):
+
+        for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
@@ -128,8 +128,7 @@ class FineTune(BaseLearner):
                     train_acc,
                     test_acc
                 )
-            prog_bar.set_description(info)
-            # logging.info(info)
+            logging.info(info)
         writer.close()
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
@@ -140,8 +139,8 @@ class FineTune(BaseLearner):
             self.args["batch_size"],
             self._cur_task)
             )
-        prog_bar = tqdm(range(self.args["epochs"]))
-        for _, epoch in enumerate(prog_bar):
+
+        for _, epoch in enumerate(prog_bar(self.args["epochs"])):
             self._network.train()
             losses = 0.0
             correct, total = 0, 0
@@ -188,5 +187,4 @@ class FineTune(BaseLearner):
                     losses / len(train_loader),
                     train_acc,
                 )
-            prog_bar.set_description(info)
-            # logging.info(info)
+            logging.info(info)
