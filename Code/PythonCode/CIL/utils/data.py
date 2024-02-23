@@ -72,6 +72,10 @@ class KDD99(iData):
     test_trsf = []
     common_trsf = [ToTensor()]
 
+    def __init__(self, **kwargs):
+        print(**kwargs)
+        super().__init__()
+
     def download_data(self):
         super().download_data()
         # try:

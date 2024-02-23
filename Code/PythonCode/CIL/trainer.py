@@ -81,7 +81,8 @@ def _train(args: dict):
                                shuffle=args["shuffle"],
                                seed=args["seed"],
                                init_cls=args["init_cls"],
-                               increment=args["increment"])
+                               increment=args["increment"],
+                               pre_processing=args["pre_processing"])
     model = factory.get_model(model_name=args["model_name"], args=args)
 
     logging.info(f"Type of model is: {type(model)}")

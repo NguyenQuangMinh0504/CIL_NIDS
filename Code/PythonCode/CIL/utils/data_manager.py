@@ -28,7 +28,7 @@ class DataManager(object):
         else:
             self.is_image = True
 
-        self._setup_data(dataset_name, shuffle, seed)
+        self._setup_data(dataset_name, shuffle, seed, **kwargs)
 
         assert init_cls <= len(self._class_order), "Not enough classes."
         self._increments = [init_cls]
@@ -100,10 +100,10 @@ class DataManager(object):
         else:
             return DummyDataset(data, targets, trsf, self.use_path, is_image=self.is_image)
 
-    def _setup_data(self, dataset_name: str, shuffle: bool, seed):
+    def _setup_data(self, dataset_name: str, shuffle: bool, seed, **kwargs):
         """Downloading data -> Set up train and test data"""
         logging.info("Set up data ...")
-        idata: iData = _get_idata(dataset_name)
+        idata: iData = _get_idata(dataset_name, **kwargs)
         idata.download_data()
 
         # Data
@@ -200,24 +200,24 @@ def _map_new_class_index(y, order: list):
     return np.array(list(map(lambda x: order.index(x), y)))
 
 
-def _get_idata(dataset_name: str):
+def _get_idata(dataset_name: str, **kwargs):
     """Return dataset name"""
     logging.info("Get idata ...")
     name = dataset_name.lower()
     if name == "cifar10":
-        return iCIFAR10()
+        return iCIFAR10(kwargs)
     elif name == "cifar100":
-        return iCIFAR100()
+        return iCIFAR100(kwargs)
     elif name == "kdd99":
-        return KDD99()
+        return KDD99(kwargs)
     elif name == "cic-ids-2017":
-        return CIC_IDS_2017()
+        return CIC_IDS_2017(kwargs)
     elif name == "ton-iot-network":
-        return TON_IoT_Network()
+        return TON_IoT_Network(kwargs)
     elif name == "imagenet100":
-        return iImageNet100()
+        return iImageNet100(kwargs)
     elif name == "unsw-nb15":
-        return UNSW_NB15()
+        return UNSW_NB15(kwargs)
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 
