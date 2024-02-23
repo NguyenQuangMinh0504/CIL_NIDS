@@ -8,4 +8,4 @@ python3 main.py \
     -d -1 \
     --init_epoch 300 \
     --epochs 300 \
-    --batch_size 512
+    --batch_size 128
