@@ -74,6 +74,7 @@ class KDD99(iData):
 
     def __init__(self, **kwargs):
         print(type(kwargs))
+        print(kwargs)
         print(kwargs["pre_processing"])
 
     def download_data(self):
