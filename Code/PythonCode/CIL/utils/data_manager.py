@@ -19,7 +19,7 @@ class DataManager(object):
     _increments: list
     """_increments[i]: Number of classes at training iterator i"""
 
-    def __init__(self, dataset_name: str, shuffle: bool, seed: int, init_cls: int, increment: int):
+    def __init__(self, dataset_name: str, shuffle: bool, seed: int, init_cls: int, increment: int, **kwargs):
         logging.info("Initialize Data Manager ...")
         self.dataset_name = dataset_name
 
