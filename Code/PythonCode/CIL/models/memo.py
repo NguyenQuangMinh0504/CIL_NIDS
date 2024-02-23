@@ -2,7 +2,6 @@ import logging
 import socket
 
 import numpy as np
-from tqdm.contrib.telegram import trange
 import torch
 from torch import nn
 from torch import optim
@@ -15,7 +14,7 @@ from utils.data_manager import DataManager
 from utils.toolkit import count_parameters, tensor2numpy
 from utils.notify import send_telegram_notification
 from typing import Union
-from setting import CHAT_ROOM_ID, BOT_API_TOKEN
+from utils.prog_bar import prog_bar
 
 num_workers = 8
 
@@ -200,10 +199,7 @@ class MEMO(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        for _, epoch in enumerate(trange(self.args["init_epoch"],
-                                         token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID,
-                                         mininterval=2)):
+        for _, epoch in enumerate(prog_bar(self.args["init_epochs"])):
             self._network.train()
             losses = 0
             correct, total = 0, 0
@@ -263,10 +259,7 @@ class MEMO(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(trange(self.args["init_epoch"],
-                                         token=BOT_API_TOKEN,
-                                         chat_id=CHAT_ROOM_ID,
-                                         mininterval=2)):
+        for _, epoch in enumerate(prog_bar(self.args["init_epochs"])):
             self.set_network()
             losses = 0.
             losses_clf = 0.
