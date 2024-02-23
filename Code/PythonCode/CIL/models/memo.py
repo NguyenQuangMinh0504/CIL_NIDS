@@ -199,7 +199,7 @@ class MEMO(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        for _, epoch in enumerate(prog_bar(self.args["init_epochs"])):
+        for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0
             correct, total = 0, 0
@@ -259,7 +259,7 @@ class MEMO(BaseLearner):
             self._cur_task)
             )
 
-        for _, epoch in enumerate(prog_bar(self.args["init_epochs"])):
+        for _, epoch in enumerate(prog_bar(self.args["epochs"])):
             self.set_network()
             losses = 0.
             losses_clf = 0.
