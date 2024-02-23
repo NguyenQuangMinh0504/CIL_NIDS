@@ -205,19 +205,19 @@ def _get_idata(dataset_name: str, **kwargs):
     logging.info("Get idata ...")
     name = dataset_name.lower()
     if name == "cifar10":
-        return iCIFAR10(kwargs)
+        return iCIFAR10(**kwargs)
     elif name == "cifar100":
-        return iCIFAR100(kwargs)
+        return iCIFAR100(**kwargs)
     elif name == "kdd99":
-        return KDD99(kwargs)
+        return KDD99(**kwargs)
     elif name == "cic-ids-2017":
-        return CIC_IDS_2017(kwargs)
+        return CIC_IDS_2017(**kwargs)
     elif name == "ton-iot-network":
-        return TON_IoT_Network(kwargs)
+        return TON_IoT_Network(**kwargs)
     elif name == "imagenet100":
-        return iImageNet100(kwargs)
+        return iImageNet100(**kwargs)
     elif name == "unsw-nb15":
-        return UNSW_NB15(kwargs)
+        return UNSW_NB15(**kwargs)
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 
