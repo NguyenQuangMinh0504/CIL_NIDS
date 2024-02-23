@@ -1,8 +1,8 @@
 python3 main_memo.py \
-    -model memo_kdd \
+    -model memo \
     -init 2 \
     -incre 2 \
-    -net cic_ids_memo_dnn \
+    -net cic_ids_memo_ann \
     --dataset cic-ids-2017 \
     --train_base \
     --scheduler steplr \

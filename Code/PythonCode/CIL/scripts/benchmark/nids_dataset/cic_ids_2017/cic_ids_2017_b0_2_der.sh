@@ -1,7 +1,7 @@
     python3 main.py \
         -model der \
         --dataset cic-ids-2017 \
-        -net cic_ids_dnn \
+        -net cic_ids_ann \
         -init 2 \
         -incre 2 \
         -p benchmark \
