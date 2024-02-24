@@ -11,7 +11,7 @@ from convs.memo_kdd_fc import get_kdd_fc, get_memo_ann, get_memo_dnn
 from convs.ann import get_ann, get_dnn
 
 
-def get_convnet(convnet_type: str, pretrained: bool = False) -> (nn.Module, nn.Module):
+def get_convnet(convnet_type: str, pretrained: bool = False) -> tuple[nn.Module, nn.Module]:
     """Return generalize block + specialize block"""
     name = convnet_type.lower()
     if name == "resnet32":
