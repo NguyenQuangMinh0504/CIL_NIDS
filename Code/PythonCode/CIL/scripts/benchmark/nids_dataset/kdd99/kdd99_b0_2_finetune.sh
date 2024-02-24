@@ -6,4 +6,7 @@ python3 main.py \
     -p benchmark -d -1 \
     --init_epoch 300 \
     --epoch 300 \
-    --batch_size 128
+    --batch_size 128 \
+    --lrate 0.001 \
+    --init_lr 0.001 \
+    
