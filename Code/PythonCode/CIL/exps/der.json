@@ -11,5 +11,6 @@
     "convnet_type": "resnet32",
     "device": ["0","1","2","3"],
     "seed": [1993],
-    "init_lr": 0.001
+    "init_lr": 0.001,
+    "lrate": 0.001
 }
