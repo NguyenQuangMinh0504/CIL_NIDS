@@ -43,6 +43,8 @@ class LwF(BaseLearner):
         self._old_network = None
 
     def after_task(self):
+        """After task, LwF copy all weight from old model to new model"""
+        logging.info("Calling function after task of model LwF ...")
         self._old_network = self._network.copy().freeze()
         self._known_classes = self._total_classes
 
