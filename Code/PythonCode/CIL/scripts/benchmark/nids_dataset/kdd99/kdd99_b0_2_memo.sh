@@ -9,4 +9,5 @@ python3 main_memo.py \
     --init_epoch 300 \
     --epochs 300 \
     --batch_size 128 \
-    -d -1
+    -d -1 \
+    --lrate 0.001
