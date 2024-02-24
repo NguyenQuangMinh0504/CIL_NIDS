@@ -55,6 +55,7 @@ def setup_parser() -> argparse.ArgumentParser:
     parser.add_argument("--weight_decay", type=float, default=2e-4)
 
     parser.add_argument("--alpha_aux", type=float, default=1.0)
+    parser.add_argument("--pre_processing", type=str, default="min_max_scale")
 
     return parser
 
