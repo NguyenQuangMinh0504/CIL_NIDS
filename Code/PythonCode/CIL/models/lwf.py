@@ -16,18 +16,13 @@ from utils.toolkit import tensor2numpy
 from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 
-init_epoch = 200
-init_lr = 0.1
 init_milestones = [60, 120, 160]
 init_lr_decay = 0.1
 init_weight_decay = 0.0005
 
 
-epochs = 250
-lrate = 0.1
 milestones = [60, 120, 180, 220]
 lrate_decay = 0.1
-batch_size = 128
 weight_decay = 2e-4
 num_workers = 8
 T = 2
@@ -64,13 +59,13 @@ class LwF(BaseLearner):
             mode="train",
         )
         self.train_loader = DataLoader(
-            train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
+            train_dataset, batch_size=self.args["batch_size"], shuffle=True, num_workers=num_workers
         )
         test_dataset = data_manager.get_dataset(
             np.arange(0, self._total_classes), source="test", mode="test"
         )
         self.test_loader = DataLoader(
-            test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
+            test_dataset, batch_size=self.args["batch_size"], shuffle=False, num_workers=num_workers
         )
 
         if len(self._multiple_gpus) > 1:
@@ -88,7 +83,7 @@ class LwF(BaseLearner):
             optimizer = optim.SGD(
                 self._network.parameters(),
                 momentum=0.9,
-                lr=init_lr,
+                lr=self.args["init_lr"],
                 weight_decay=init_weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
@@ -108,7 +103,7 @@ class LwF(BaseLearner):
         else:
             optimizer = optim.SGD(
                 self._network.parameters(),
-                lr=lrate,
+                lr=self.args["lrate"],
                 momentum=0.9,
                 weight_decay=weight_decay,
             )
@@ -164,7 +159,7 @@ class LwF(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                 )
@@ -173,7 +168,7 @@ class LwF(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -241,7 +236,7 @@ class LwF(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -250,7 +245,7 @@ class LwF(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                 )
