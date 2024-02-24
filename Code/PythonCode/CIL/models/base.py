@@ -85,7 +85,7 @@ class BaseLearner(object):
         return ret
 
     def eval_task(self, save_conf=False):
-        """Evaluating result. return cnn_accy and nme_accy"""
+        """Evaluating result after each task. return cnn_accy and nme_accy"""
 
         logging.info("Logging classification report using sklearn.metrics.classification_report")
         self._network.eval()
@@ -94,7 +94,6 @@ class BaseLearner(object):
             inputs = inputs.to(self._device)
             with torch.no_grad():
                 outputs = self._network(inputs)["logits"]
-
             predicts = torch.topk(outputs, k=1, dim=1, largest=True, sorted=True)[1]
             y_pred.append(predicts.cpu().numpy())
             y_true.append(targets.cpu().numpy())
@@ -157,9 +156,6 @@ class BaseLearner(object):
 
             with torch.no_grad():
                 outputs = self._network(inputs)["logits"]
-
-            # logging.info(f"Outputs is: {outputs}")
-
             predicts = torch.topk(outputs, k=self.topk, dim=1, largest=True, sorted=True)[1]
             y_pred.append(predicts.cpu().numpy())
             y_true.append(targets.cpu().numpy())

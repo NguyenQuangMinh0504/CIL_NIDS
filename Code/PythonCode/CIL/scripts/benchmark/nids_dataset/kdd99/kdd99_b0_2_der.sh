@@ -9,4 +9,5 @@ python3 main.py \
     --init_epoch 300 \
     --epochs 300 \
     --batch_size 128 \
-    --pre_processing min_max_scale
+    --pre_processing min_max_scale \
+    --lrate 0.001
