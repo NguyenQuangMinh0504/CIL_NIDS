@@ -15,7 +15,6 @@ from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 
 # init_epoch = 200
-init_lr = 0.1
 
 batch_size = 128
 num_workers = 8
