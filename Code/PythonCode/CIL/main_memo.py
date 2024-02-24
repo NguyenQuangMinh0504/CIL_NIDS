@@ -13,7 +13,6 @@ def main():
     param: dict = load_json(args.config)
     args = vars(args)
     param.update(args)
-    print("Arsgs is: ", param)
     train(args=param)
 
 

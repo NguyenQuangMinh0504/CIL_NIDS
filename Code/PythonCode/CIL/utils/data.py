@@ -117,7 +117,6 @@ class KDD99(iData):
                      "dst_host_srv_serror_rate", "dst_host_rerror_rate", "dst_host_srv_rerror_rate"]:
 
             if self.pre_processing == "min_max_scale":
-                logging.info("min_max_scale")
                 encode_numeric_min_max_scale(df, name=name)
             else:
                 encode_numeric_zscore(df, name=name)
