@@ -258,8 +258,10 @@ class LwF(BaseLearner):
         logging.info(info)
 
 
-def _KD_loss(pred, soft, T):
-    """Formula of knowledge distilation loss"""
+def _KD_loss(pred, soft, T: int):
+    """Formula of knowledge distilation loss. \n
+    T is a temperature that is normally set to 1. Using a higher value of T produces a softer probability distribution over classes.
+    Reference: Distilling the Knowledge in a Neural network"""
     pred = torch.log_softmax(pred / T, dim=1)
     soft = torch.softmax(soft / T, dim=1)
     return -1 * torch.mul(soft, pred).sum() / pred.shape[0]
