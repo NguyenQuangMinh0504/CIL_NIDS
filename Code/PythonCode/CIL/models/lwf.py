@@ -35,6 +35,8 @@ lamda = 3
 
 
 class LwF(BaseLearner):
+    _network: IncrementalNet
+
     def __init__(self, args):
         super().__init__(args)
         self._network = IncrementalNet(args["convnet_type"], False)
@@ -255,6 +257,7 @@ class LwF(BaseLearner):
 
 
 def _KD_loss(pred, soft, T):
+    """Formula of knowledge distilation loss"""
     pred = torch.log_softmax(pred / T, dim=1)
     soft = torch.softmax(soft / T, dim=1)
     return -1 * torch.mul(soft, pred).sum() / pred.shape[0]
