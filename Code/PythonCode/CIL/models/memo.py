@@ -25,6 +25,7 @@ class MEMO(BaseLearner):
     def __init__(self, args):
         super().__init__(args)
         self.args = args
+        logging.info(f"Arguments is: {args}")
         self._network = AdaptiveNet(convnet_type=args["convnet_type"], pretrained=False)
         logging.info(
             f">>> train generalized blocks:{self.args['train_base']} train_adaptive: {self.args['train_adaptive']}")

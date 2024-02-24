@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import logging
 from sklearn.model_selection import train_test_split
-from utils.helper import encode_numeric_zscore, encode_text_dummy, encode_text_index
+from utils.helper import encode_numeric_zscore, encode_text_dummy, encode_text_index, encode_numeric_min_max_scale
 from torchvision.transforms import RandomCrop, RandomHorizontalFlip, ColorJitter, ToTensor, Normalize
 
 
@@ -115,7 +115,12 @@ class KDD99(iData):
                      "dst_host_same_srv_rate", "dst_host_diff_srv_rate", "dst_host_same_src_port_rate",
                      "dst_host_srv_diff_host_rate", "dst_host_serror_rate",
                      "dst_host_srv_serror_rate", "dst_host_rerror_rate", "dst_host_srv_rerror_rate"]:
-            encode_numeric_zscore(df, name=name)
+
+            if self.pre_processing == "min_max_scale":
+                logging.info("min_max_scale")
+                encode_numeric_min_max_scale(df, name=name)
+            else:
+                encode_numeric_zscore(df, name=name)
 
         encode_text_dummy(df, 'protocol_type')
         encode_text_dummy(df, 'service')
