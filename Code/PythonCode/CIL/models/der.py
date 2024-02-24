@@ -22,7 +22,6 @@ num_workers = 8
 init_weight_decay = 0.0005
 init_milestones = [60, 120, 170]
 init_lr_decay = 0.1
-lrate = 0.1
 milestones = [80, 120, 150]
 weight_decay = 2e-4
 lrate_decay = 0.1
@@ -74,7 +73,7 @@ class DER(BaseLearner):
         if self._cur_task == 0:
             optimizer = optim.SGD(filter(lambda p: p.requires_grad, self._network.parameters()),
                                   momentum=0.9,
-                                  lr=init_lr,
+                                  lr=self.args["init_lr"],
                                   weight_decay=init_weight_decay)
             scheduler = optim.lr_scheduler.MultiStepLR(
                 optimizer=optimizer, milestones=init_milestones, gamma=init_lr_decay
@@ -88,7 +87,7 @@ class DER(BaseLearner):
         else:
             optimizer = optim.SGD(
                 filter(lambda p: p.requires_grad, self._network.parameters()),
-                lr=lrate,
+                lr=self.args["lrate"],
                 momentum=0.9,
                 weight_decay=weight_decay
             )
