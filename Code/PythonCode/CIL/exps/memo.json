@@ -3,5 +3,6 @@
     "fixed_memory": false,
     "shuffle": true,
     "model_name": "memo",
-    "seed": [1993]
+    "seed": [1993],
+    "pre_processing": "min_max_scale"
 }
