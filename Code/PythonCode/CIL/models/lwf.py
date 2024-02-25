@@ -175,7 +175,7 @@ class LwF(BaseLearner):
                 )
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
 
-        logging.info(info)
+            logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
 
@@ -250,7 +250,7 @@ class LwF(BaseLearner):
                     train_acc,
                 )
 
-        logging.info(info)
+            logging.info(info)
 
 
 def _KD_loss(pred, soft, T: int):
