@@ -217,7 +217,7 @@ def _get_idata(dataset_name: str, **kwargs):
     elif name == "imagenet100":
         return iImageNet100(**kwargs)
     elif name == "unsw-nb15":
-        return UNSW_NB15(**kwargs)
+        return UNSW_NB15()
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 
