@@ -6,7 +6,7 @@ python3 main.py \
     -incre 2 \
     -net ton_iot_network_ann \
     -p benchmark \
-    --init_epoch 2 \
-    --epochs 2 \
+    --init_epoch 300 \
+    --epochs 300 \
     --batch_size 128 \
     -d -1
