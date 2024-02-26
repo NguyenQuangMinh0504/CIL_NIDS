@@ -258,5 +258,7 @@ def _KD_loss(pred, soft, T: int):
     T is a temperature that is normally set to 1. Using a higher value of T produces a softer probability distribution over classes.
     Reference: Distilling the Knowledge in a Neural network"""
     pred = torch.log_softmax(pred / T, dim=1)
+    logging.info(f"Size of pred is: {pred.shape}")
     soft = torch.softmax(soft / T, dim=1)
+    logging.info(f"Size of soft is: {soft.shape}")
     return -1 * torch.mul(soft, pred).sum() / pred.shape[0]
