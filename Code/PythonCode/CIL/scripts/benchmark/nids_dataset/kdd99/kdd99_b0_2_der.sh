@@ -1,7 +1,7 @@
 python3 main.py \
     -model der \
     --dataset kdd99 \
-    -net kdd_ann \
+    -net kdd_dnn \
     -init 2 \
     -incre 2 \
     -p benchmark \

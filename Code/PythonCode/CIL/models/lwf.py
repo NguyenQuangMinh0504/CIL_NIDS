@@ -208,9 +208,9 @@ class LwF(BaseLearner):
                     logits[:, self._known_classes:], fake_targets
                 )
                 loss_kd = _KD_loss(
-                    logits[:, : self._known_classes],
-                    self._old_network(inputs)["logits"],
-                    T,
+                    pred=logits[:, : self._known_classes],
+                    soft=self._old_network(inputs)["logits"],
+                    T=T,
                 )
 
                 loss = lamda * loss_kd + loss_clf

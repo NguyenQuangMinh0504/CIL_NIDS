@@ -142,8 +142,8 @@ class FineTune(BaseLearner):
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
-                logits = self._network(inputs)["logits"]
 
+                logits = self._network(inputs)["logits"]
                 fake_targets = targets - self._known_classes
                 loss_clf = F.cross_entropy(logits[:, self._known_classes:], fake_targets)
 

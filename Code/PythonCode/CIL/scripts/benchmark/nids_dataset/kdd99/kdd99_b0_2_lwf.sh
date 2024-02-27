@@ -4,7 +4,7 @@ python3 main.py \
     -ms 2000 \
     -init 2 \
     -incre 2 \
-    -net kdd_ann \
+    -net kdd_dnn \
     -p benchmark \
     --init_epoch 300 \
     --epochs 300 \
