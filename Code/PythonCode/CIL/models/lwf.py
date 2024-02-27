@@ -204,6 +204,7 @@ class LwF(BaseLearner):
                 logits = self._network(inputs)["logits"]
 
                 fake_targets = targets - self._known_classes
+                # Default of F.cross_entropy reducion is mean.
                 loss_clf = F.cross_entropy(
                     logits[:, self._known_classes:], fake_targets
                 )
@@ -258,7 +259,5 @@ def _KD_loss(pred, soft, T: int):
     T is a temperature that is normally set to 1. Using a higher value of T produces a softer probability distribution over classes.
     Reference: Distilling the Knowledge in a Neural network"""
     pred = torch.log_softmax(pred / T, dim=1)
-    logging.info(f"Size of pred is: {pred.shape}")
     soft = torch.softmax(soft / T, dim=1)
-    logging.info(f"Size of soft is: {soft.shape}")
     return -1 * torch.mul(soft, pred).sum() / pred.shape[0]
