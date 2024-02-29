@@ -123,7 +123,7 @@ class DER(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/1000/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
             self.args["convnet_type"],
@@ -186,7 +186,7 @@ class DER(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/1000/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
             self.args["convnet_type"],

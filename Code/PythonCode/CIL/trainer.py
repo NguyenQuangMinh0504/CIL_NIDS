@@ -135,7 +135,7 @@ def _train(args: dict):
             logging.info("NME top1 curve: {}".format(nme_curve["top1"]))
             logging.info("NME top5 curve: {}\n".format(nme_curve["top5"]))
 
-            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
+            writer = SummaryWriter(log_dir="runs/1000/{}/{}/{}_{}/Accuracy_curve".format(
                 args["dataset"],
                 args["model_name"],
                 args["convnet_type"],
@@ -159,7 +159,7 @@ def _train(args: dict):
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
 
-            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
+            writer = SummaryWriter(log_dir="runs/1000/{}/{}/{}_{}/Accuracy_curve".format(
                 args["dataset"],
                 args["model_name"],
                 args["convnet_type"],
