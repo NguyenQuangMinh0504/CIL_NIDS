@@ -4,6 +4,7 @@ from utils.data import iData
 from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy
 from sklearn.model_selection import train_test_split
 import numpy as np
+import logging
 
 
 class UNSW_NB15(iData):
@@ -16,6 +17,7 @@ class UNSW_NB15(iData):
         path = "../../../Dataset/UNSW-NB15/UNSW_NB15_training-set.csv"
         dataset = pd.read_csv(path)
         dataset.drop(columns=["id", "label"], inplace=True)
+        logging.info(dataset["attack_cat"].value_counts())
         for column in dataset.columns:
             if column in ["proto", "service", "state"]:
                 encode_text_dummy(dataset, column)
