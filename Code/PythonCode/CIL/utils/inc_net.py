@@ -83,6 +83,7 @@ class IncrementalNet(BaseNet):
             self.set_gradcam_hook()
 
     def update_fc(self, nb_classes):
+        logging.info(self.feature_dim)
         fc = self.generate_fc(self.feature_dim, nb_classes)
         if self.fc is not None:
             nb_output = self.fc.out_features
