@@ -8,4 +8,6 @@ python3 main.py \
     -d -1 \
     --init_epoch 300 \
     --epochs 300 \
-    --batch_size 128
+    --batch_size 128 \
+    --memory_size 1000 \
+    --lrate 0.001

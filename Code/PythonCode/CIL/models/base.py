@@ -65,6 +65,7 @@ class BaseLearner(object):
             return self._network.feature_dim
 
     def build_rehearsal_memory(self, data_manager, per_class):
+        """Building rehearsal memory"""
         logging.info("Calling function build rehearsal memory ...")
         if self._fixed_memory:
             self._construct_exemplar_unified(data_manager, per_class)

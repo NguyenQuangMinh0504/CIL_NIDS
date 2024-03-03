@@ -146,7 +146,6 @@ class FineTune(BaseLearner):
                 logits = self._network(inputs)["logits"]
                 fake_targets = targets - self._known_classes
                 loss_clf = F.cross_entropy(logits[:, self._known_classes:], fake_targets)
-
                 loss = loss_clf
 
                 optimizer.zero_grad()

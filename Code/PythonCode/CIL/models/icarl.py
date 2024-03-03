@@ -77,7 +77,7 @@ class iCaRL(BaseLearner):
                 cur_test_acc = self._compute_accuracy(self._network, self.test_loader)
                 logging.info(f"Loaded_Test_Acc:{load_acc} Cur_Test_Acc:{cur_test_acc}")
             else:
-                self._train(self.train_loader, self.test_loader) 
+                self._train(self.train_loader, self.test_loader)
                 self._compute_accuracy(self._network, self.test_loader)
         else:
             self._train(self.train_loader, self.test_loader)
