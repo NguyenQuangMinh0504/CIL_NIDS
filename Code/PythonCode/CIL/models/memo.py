@@ -184,7 +184,7 @@ class MEMO(BaseLearner):
 
         logging.info("Initialize training.........................")
 
-        writer = SummaryWriter(log_dir="runs/foo/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
             self.args["convnet_type"],
@@ -252,7 +252,7 @@ class MEMO(BaseLearner):
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
 
-        writer = SummaryWriter(log_dir="runs/foo/{}/{}/{}_{}/Task{}".format(
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
             self.args["dataset"],
             self.args["model_name"],
             self.args["convnet_type"],
