@@ -59,8 +59,6 @@ class BaseNet(nn.Module):
         super(BaseNet, self).__init__()
         self.convnet = get_convnet(convnet_type=convnet_type, pretrained=pretrained)
         self.fc = None
-        logging.info(f"Convnet output is: {self.convnet.out_dim}")
-        logging.info(f"Feature dime is: {self.feature_dim}")
 
     @property
     def feature_dim(self):
