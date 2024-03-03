@@ -76,7 +76,7 @@ class BaseNet(nn.Module):
 
 class IncrementalNet(BaseNet):
     def __init__(self, convnet_type, pretrained, gradcam=False):
-        super().__init__(convnet_type, pretrained)
+        super(IncrementalNet).__init__(convnet_type, pretrained)
         self.gradcam = gradcam
         if hasattr(self, "gradcam") and self.gradcam:
             self._gradcam_hooks = [None, None]
