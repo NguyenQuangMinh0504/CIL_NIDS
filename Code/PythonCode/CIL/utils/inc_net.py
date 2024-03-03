@@ -64,6 +64,9 @@ class BaseNet(nn.Module):
     def feature_dim(self):
         return self.convnet.out_dim
 
+    def extract_vector(self, x):
+        return self.convnet(x)["features"]
+
     def copy(self):
         return copy.deepcopy(self)
 
