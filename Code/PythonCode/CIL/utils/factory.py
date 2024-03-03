@@ -3,6 +3,7 @@ from models.der import DER
 from models.foster import FOSTER
 from models.finetune import FineTune
 from models.lwf import LwF
+from models.icarl import iCaRL
 
 
 def get_model(model_name: str, args: dict):
@@ -17,5 +18,7 @@ def get_model(model_name: str, args: dict):
         return FineTune(args)
     elif name == "lwf":
         return LwF(args)
+    elif name == "icarl":
+        return iCaRL(args)
     else:
         raise NotImplementedError(f"Model '{model_name}' is not implement yet !!!")
