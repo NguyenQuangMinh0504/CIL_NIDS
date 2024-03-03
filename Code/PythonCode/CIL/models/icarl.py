@@ -33,6 +33,7 @@ class iCaRL(BaseLearner):
     def __init__(self, args):
         super().__init__(args)
         self._network = IncrementalNet(args["convnet_type"], False)
+        self._old_network = None
 
     def after_task(self):
         self._old_network = self._network.copy().freeze()
