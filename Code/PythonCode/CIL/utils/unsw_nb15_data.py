@@ -6,6 +6,9 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import logging
 
+import warnings
+warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
+
 
 class UNSW_NB15(iData):
     use_path = False
