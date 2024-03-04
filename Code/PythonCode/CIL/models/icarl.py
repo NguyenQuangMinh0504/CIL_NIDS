@@ -1,4 +1,5 @@
 import logging
+import socket
 import numpy as np
 import torch
 from torch import nn
@@ -8,6 +9,7 @@ from torch.utils.data import DataLoader
 from models.base import BaseLearner
 from utils.inc_net import IncrementalNet
 from utils.toolkit import tensor2numpy
+from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 
 EPSILON = 1e-8
@@ -116,6 +118,15 @@ class iCaRL(BaseLearner):
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
         for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0.0
@@ -159,6 +170,15 @@ class iCaRL(BaseLearner):
             logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer, scheduler):
+
+        message = ""
+        message += f"Instance: {socket.gethostname()} \n"
+        message += f"Dataset: {self.args['dataset']} \n"
+        message += f"Convnet type: {self.args['convnet_type']} \n"
+        message += f"Model: {self.args['model_name']} \n"
+        message += f"Current task: {self._cur_task} \n"
+        send_telegram_notification(text=message)
+
         for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0.0
