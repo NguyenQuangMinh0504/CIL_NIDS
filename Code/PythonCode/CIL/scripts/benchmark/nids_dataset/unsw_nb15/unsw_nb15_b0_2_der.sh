@@ -6,8 +6,8 @@ python3 main.py \
     -incre 2 \
     -p benchmark \
     -d -1 \
-    --init_epoch 300 \
-    --epochs 300 \
+    --init_epoch 100 \
+    --epochs 100 \
     --batch_size 128 \
-    --memory_size 1000 \
+    --memory_size 2000 \
     --lrate 0.001

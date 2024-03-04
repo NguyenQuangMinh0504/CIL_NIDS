@@ -4,6 +4,6 @@ python3 main.py \
     --dataset unsw-nb15 \
     -net unsw_nb15_ann \
     -p benchmark -d -1 \
-    --init_epoch 300 \
-    --epochs 300 \
+    --init_epoch 100 \
+    --epochs 100 \
     --batch_size 128

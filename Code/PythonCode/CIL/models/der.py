@@ -17,7 +17,7 @@ from utils.prog_bar import prog_bar
 # init_epoch = 200
 
 batch_size = 128
-num_workers = 8
+num_workers = 4
 init_weight_decay = 0.0005
 init_milestones = [60, 120, 170]
 init_lr_decay = 0.1
