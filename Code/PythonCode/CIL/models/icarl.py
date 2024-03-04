@@ -4,6 +4,7 @@ import numpy as np
 import torch
 from torch import nn
 from torch import optim
+from torch.utils.tensorboard.writer import SummaryWriter
 from torch.nn import functional as F
 from torch.utils.data import DataLoader
 from models.base import BaseLearner
@@ -119,6 +120,14 @@ class iCaRL(BaseLearner):
 
     def _init_train(self, train_loader, test_loader, optimizer, scheduler):
 
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
+
         message = ""
         message += f"Instance: {socket.gethostname()} \n"
         message += f"Dataset: {self.args['dataset']} \n"
@@ -148,6 +157,10 @@ class iCaRL(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
+            # Log to tensorboard
+            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
@@ -158,6 +171,7 @@ class iCaRL(BaseLearner):
                     train_acc,
                     test_acc,
                 )
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
@@ -178,6 +192,14 @@ class iCaRL(BaseLearner):
         message += f"Model: {self.args['model_name']} \n"
         message += f"Current task: {self._cur_task} \n"
         send_telegram_notification(text=message)
+
+        writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Task{}".format(
+            self.args["dataset"],
+            self.args["model_name"],
+            self.args["convnet_type"],
+            self.args["batch_size"],
+            self._cur_task)
+            )
 
         for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
@@ -207,8 +229,13 @@ class iCaRL(BaseLearner):
 
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
+
+            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
+            writer.add_scalar("Accuracy/train", train_acc, epoch)
+
             if epoch % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
+                writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
