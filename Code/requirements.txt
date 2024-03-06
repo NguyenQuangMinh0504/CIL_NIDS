@@ -10,3 +10,4 @@ POT
 numpy
 scipy
 telebot
+kaggle

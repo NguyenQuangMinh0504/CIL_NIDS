@@ -3,7 +3,7 @@ python3 main_memo.py \
     -init 2 \
     -incre 2 \
     -net unsw_nb15_ann \
-    --dataset unsw-nb-15 \
+    --dataset unsw-nb15 \
     --train_base \
     --scheduler steplr \
     --init_epoch 300 \
