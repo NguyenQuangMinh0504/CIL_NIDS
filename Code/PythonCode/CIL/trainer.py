@@ -159,17 +159,16 @@ def _train(args: dict):
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
 
-            writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
-                args["dataset"],
-                args["model_name"],
-                args["convnet_type"],
-                args["batch_size"],)
-            )
-
-            for i, accy in enumerate(cnn_curve["top1"]):
-                writer.add_scalar("Accuracy_Curve", accy, i)
-
-            writer.close()
+    # Logging to tensorboard
+    writer = SummaryWriter(log_dir="runs/{}/{}/{}_{}/Accuracy_curve".format(
+        args["dataset"],
+        args["model_name"],
+        args["convnet_type"],
+        args["batch_size"],)
+    )
+    for i, accy in enumerate(cnn_curve["top1"]):
+        writer.add_scalar("Accuracy_Curve", accy, i)
+    writer.close()
 
     send_telegram_notification(text="Finish training")
 
