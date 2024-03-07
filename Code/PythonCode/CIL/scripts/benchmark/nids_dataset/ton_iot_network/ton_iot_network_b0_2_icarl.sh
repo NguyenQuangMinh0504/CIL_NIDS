@@ -6,4 +6,6 @@ python main.py \
     -incre 2 \
     -net ton_iot_network_ann \
     -p benchmark \
-    -d -1 
+    -d -1 \
+    --init_epoch 300 \
+    --epochs 300
