@@ -1,12 +1,11 @@
-python3 main.py \
-    -model lwf \
+python main.py \
+    -model icarl \
     --dataset kdd99 \
     -ms 2000 \
     -init 2 \
     -incre 2 \
     -net kdd_ann \
     -p benchmark \
+    -d -1 \
     --init_epoch 300 \
-    --epochs 300 \
-    --batch_size 128 \
-    -d -1
+    --epochs 300

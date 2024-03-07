@@ -2,11 +2,10 @@ python3 main.py \
     -model finetune \
     -init 2 -incre 2 \
     --dataset kdd99 \
-    -net kdd_dnn \
+    -net kdd_ann \
     -p benchmark -d -1 \
     --init_epoch 300 \
     --epoch 300 \
     --batch_size 128 \
     --lrate 0.001 \
     --init_lr 0.001 \
-    
