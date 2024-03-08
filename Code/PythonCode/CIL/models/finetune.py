@@ -23,7 +23,7 @@ init_weight_decay = 0.0005
 # batch_size = 128
 lrate_decay = 0.1
 milestones = [40, 70]
-num_workers = 8
+num_workers = 4
 weight_decay = 2e-4
 
 
