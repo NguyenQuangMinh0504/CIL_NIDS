@@ -60,11 +60,8 @@ class CIC_IDS_2017(iData):
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
-        logging.info(dataset[" Label"].value_counts())
-        print("Missing value ...")
-        print(dataset.columns[dataset.isna().any()])
-        print("Flow packets/s")
-        print(dataset[" Flow Packets/s"].value_counts())
+
+        dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         # Dropping missing columns
         dataset.dropna(axis=1, inplace=True)
 
