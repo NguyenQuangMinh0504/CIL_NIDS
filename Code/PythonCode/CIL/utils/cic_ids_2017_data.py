@@ -63,7 +63,7 @@ class CIC_IDS_2017(iData):
 
         dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         # Dropping missing columns
-        dataset.dropna(axis=1, inplace=True)
+        dataset.dropna(axis=0, inplace=True)
         logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
@@ -73,7 +73,7 @@ class CIC_IDS_2017(iData):
                 self.label_dict = encode_text_index(dataset, name=column)
 
         y = dataset[" Label"].to_numpy()
-        dataset.drop(labels=" Label", axis=1)
+        dataset.drop(labels=" Label", axis=1, inplace=True)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)
