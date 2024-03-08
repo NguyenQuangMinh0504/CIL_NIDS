@@ -66,7 +66,8 @@ def _train(args: dict):
     logging.basicConfig(level=logging.INFO,
                         format="%(asctime)s [%(filename)s] => %(message)s",
                         handlers=[logging.FileHandler(filename=log_path),
-                                  logging.StreamHandler()]
+                                  logging.StreamHandler()],
+                        force=True
                         )
     logging.info(f"Time Str >>> {args['time_str']}")
     # save config
