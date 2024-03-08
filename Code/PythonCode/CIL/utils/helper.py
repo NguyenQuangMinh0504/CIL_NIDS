@@ -39,9 +39,11 @@ def encode_text_index(df, name):
 
 # Encode a numeric column as zscores
 def encode_numeric_zscore(df, name: str, mean=None, sd=None):
-    print(name)
+
     if mean is None:
         mean = df[name].mean()
+        if mean == np.inf:
+            raise Exception(f"Mean of column {name} is infinity")
 
     if sd is None:
         sd = df[name].std()

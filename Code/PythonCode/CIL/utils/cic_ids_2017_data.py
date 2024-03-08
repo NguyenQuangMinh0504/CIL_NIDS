@@ -8,11 +8,6 @@ from torchvision.transforms import ToTensor
 from utils.helper import encode_text_index, encode_numeric_zscore
 
 
-# Debug stuff
-import warnings
-warnings.simplefilter('error')
-
-
 class CIC_IDS_2017(iData):
     use_path = False
     train_trsf = []
