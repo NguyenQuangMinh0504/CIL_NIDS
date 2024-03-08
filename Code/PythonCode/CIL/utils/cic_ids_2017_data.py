@@ -64,7 +64,7 @@ class CIC_IDS_2017(iData):
         dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         # Dropping missing columns
         dataset.dropna(axis=1, inplace=True)
-        logging.info(dataset.value_counts())
+        logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
             if column != " Label":
