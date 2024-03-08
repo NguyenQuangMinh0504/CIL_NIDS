@@ -24,7 +24,7 @@ init_weight_decay = 0.0005
 milestones = [60, 120, 180, 220]
 lrate_decay = 0.1
 weight_decay = 2e-4
-num_workers = 8
+num_workers = 4
 T = 2
 lamda = 3
 

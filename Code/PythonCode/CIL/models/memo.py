@@ -16,7 +16,7 @@ from utils.notify import send_telegram_notification
 from typing import Union
 from utils.prog_bar import prog_bar
 
-num_workers = 8
+num_workers = 4
 
 
 class MEMO(BaseLearner):
