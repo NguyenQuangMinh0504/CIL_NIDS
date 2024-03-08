@@ -62,14 +62,16 @@ class CIC_IDS_2017(iData):
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
         logging.info(dataset[" Label"].value_counts())
         print("Missing value: .....")
+        dataset.dropna(axis=1, inplace=True)
         print(dataset.columns[dataset.isna().any()])
+
         for column in dataset.columns:
             if column != " Label":
                 encode_numeric_zscore(dataset, name=column)
             else:
                 self.label_dict = encode_text_index(dataset, name=column)
 
-        dataset.dropna(axis=1, inplace=True)
+
 
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1)
