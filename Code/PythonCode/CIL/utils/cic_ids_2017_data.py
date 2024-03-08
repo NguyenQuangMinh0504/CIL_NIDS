@@ -61,7 +61,7 @@ class CIC_IDS_2017(iData):
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
 
-        dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
+        # dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         # Dropping missing columns
         dataset.dropna(axis=0, inplace=True)
         logging.info(dataset[" Label"].value_counts())
