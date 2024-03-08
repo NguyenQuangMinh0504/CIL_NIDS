@@ -61,9 +61,9 @@ class CIC_IDS_2017(iData):
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
         logging.info(dataset[" Label"].value_counts())
-        print("Missing value: .....")
+
+        # Dropping missing columns
         dataset.dropna(axis=1, inplace=True)
-        print(dataset.columns[dataset.isna().any()])
 
         for column in dataset.columns:
             if column != " Label":
