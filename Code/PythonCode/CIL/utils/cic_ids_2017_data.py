@@ -71,8 +71,6 @@ class CIC_IDS_2017(iData):
             else:
                 self.label_dict = encode_text_index(dataset, name=column)
 
-
-
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1)
 
