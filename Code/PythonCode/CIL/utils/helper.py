@@ -39,7 +39,8 @@ def encode_text_index(df, name):
 
 # Encode a numeric column as zscores
 def encode_numeric_zscore(df, name: str, mean=None, sd=None):
-
+    """Zscore normalizing a column of pandas Dataframe"""
+    logging.info(f"Zscore normalizing feature {name} ...")
     if mean is None:
         mean = df[name].mean()
         if mean == np.inf:
