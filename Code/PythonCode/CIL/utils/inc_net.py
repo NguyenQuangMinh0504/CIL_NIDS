@@ -27,7 +27,7 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> tuple[nn.Module,
     elif name == "kdd_dnn":
         return get_dnn()
     elif name == "cic_ids_ann":
-        return get_ann(input_dim=6)
+        return get_ann(input_dim=76)
     elif name == "ton_iot_network_ann":
         return get_ann(input_dim=248)
     elif name == "cic_ids_memo_ann":
