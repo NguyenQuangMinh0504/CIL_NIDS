@@ -48,7 +48,8 @@ def encode_numeric_zscore(df, name: str, mean=None, sd=None):
 
     if sd is None:
         sd = df[name].std()
-    logging.info(f"Standard deviation is {sd}")
+        if sd == 0:
+            raise Exception(f"Standard Deviation of column {name} is 0")
 
     df[name] = (df[name] - mean) / sd
 
