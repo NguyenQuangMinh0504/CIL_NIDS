@@ -28,7 +28,7 @@ def encode_text_single_dummy(df, name, target_values):
 
 
 # Encode text values to indexes(i.e. [1],[2],[3] for red,green,blue).
-def encode_text_index(df, name):
+def encode_text_index(df: pd.DataFrame, name: str):
     """ Return a maping dict """
     le = preprocessing.LabelEncoder()
     df[name] = le.fit_transform(df[name])
@@ -38,7 +38,7 @@ def encode_text_index(df, name):
 
 
 # Encode a numeric column as zscores
-def encode_numeric_zscore(df, name: str, mean=None, sd=None):
+def encode_numeric_zscore(df: pd.DataFrame, name: str, mean=None, sd=None):
     """Zscore normalizing a column of pandas Dataframe"""
     logging.info(f"Zscore normalizing feature {name} ...")
     if mean is None:
@@ -51,6 +51,7 @@ def encode_numeric_zscore(df, name: str, mean=None, sd=None):
         sd = df[name].std()
         logging.info(f"Standard Deviation is: {sd}")
         if sd == 0:
+            logging.info(f"Number of unique value of column {name}: {df[name].unique()}")
             raise Exception(f"Standard Deviation of column {name} is 0")
 
     df[name] = (df[name] - mean) / sd
