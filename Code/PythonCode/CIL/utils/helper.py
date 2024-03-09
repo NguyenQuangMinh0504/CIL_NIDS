@@ -55,8 +55,11 @@ def encode_numeric_zscore(df, name: str, mean=None, sd=None):
 
 
 def encode_numeric_min_max_scale(df, name):
+    """Min Max Scaling a column of pandas Dataframe"""
     min_value = df[name].min()
     max_value = df[name].max()
+    if max_value == min_value:
+        raise Exception("Max value equal Min value")
     df[name] = (df[name] - min_value) / (max_value - min_value)
 
 
