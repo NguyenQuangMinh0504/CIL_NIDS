@@ -54,6 +54,7 @@ def encode_numeric_zscore(df: pd.DataFrame, name: str, mean=None, sd=None):
             logging.info(f"Number of unique value of column {name}: {df[name].nunique()}")
             logging.info(f"Dropping column {name}")
             df.drop(labels=name, axis=1, inplace=True)
+            return None
             # raise Exception(f"Standard Deviation of column {name} is 0")
 
     df[name] = (df[name] - mean) / sd
