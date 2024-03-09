@@ -43,11 +43,13 @@ def encode_numeric_zscore(df, name: str, mean=None, sd=None):
     logging.info(f"Zscore normalizing feature {name} ...")
     if mean is None:
         mean = df[name].mean()
+        logging.info(f"Mean is: {mean}")
         if mean == np.inf:
             raise Exception(f"Mean of column {name} is infinity")
 
     if sd is None:
         sd = df[name].std()
+        logging.info(f"Standard Deviation is: {sd}")
         if sd == 0:
             raise Exception(f"Standard Deviation of column {name} is 0")
 
