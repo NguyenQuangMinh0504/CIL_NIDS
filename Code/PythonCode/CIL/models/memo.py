@@ -33,6 +33,13 @@ class MEMO(BaseLearner):
     def after_task(self):
         """After task"""
         logging.info("Running after task....")
+
+        # Weight align
+        if len(self._multiple_gpus) > 1:
+            self._network.module.weight_align(self._total_classes - self._known_classes)
+        else:
+            self._network.weight_align(self._total_classes - self._known_classes)
+
         self._known_classes = self._total_classes
         if self._cur_task == 0:
             if self.args["train_base"]:
@@ -46,12 +53,6 @@ class MEMO(BaseLearner):
                 for param in self._network.TaskAgnosticExtractor.parameters():
                     param.requires_grad = False
         logging.info("Exemplar size: {}".format(self.exemplar_size))
-
-        # Weight align
-        if len(self._multiple_gpus) > 1:
-            self._network.module.weight_align(self._total_classes - self._known_classes)
-        else:
-            self._network.weight_align(self._total_classes - self._known_classes)
 
     def incremental_training(self, data_manager: DataManager):
         """Training model for current task"""
