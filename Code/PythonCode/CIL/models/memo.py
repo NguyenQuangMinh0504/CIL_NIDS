@@ -48,7 +48,7 @@ class MEMO(BaseLearner):
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
     def incremental_training(self, data_manager: DataManager):
-        """Training model"""
+        """Training model for current task"""
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
 

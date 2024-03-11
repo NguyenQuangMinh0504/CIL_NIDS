@@ -86,7 +86,7 @@ class BaseLearner(object):
         return ret
 
     def eval_task(self, save_conf=False):
-        """Evaluating result after each task. return cnn_accy and nme_accy"""
+        """Evaluating result after each task. return cnn_accy and nme_accy. This function is called after training finish"""
 
         logging.info("Logging classification report using sklearn.metrics.classification_report")
         self._network.eval()
@@ -139,6 +139,7 @@ class BaseLearner(object):
         model.eval()
         correct, total = 0, 0
         for i, (_, inputs, targets) in enumerate(loader):
+            logging.info(f"target is: {targets}")
             inputs = inputs.to(self._device)
             with torch.no_grad():
                 outputs = model(inputs)["logits"]
@@ -152,7 +153,7 @@ class BaseLearner(object):
         """Returning y prediction and y true"""
         self._network.eval()
         y_pred, y_true = [], []
-        for _, (_, inputs, targets) in enumerate(loader):
+        for i, (_, inputs, targets) in enumerate(loader):
             inputs = inputs.to(self._device)
 
             with torch.no_grad():
