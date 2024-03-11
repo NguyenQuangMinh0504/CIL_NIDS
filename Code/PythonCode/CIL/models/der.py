@@ -174,7 +174,7 @@ class DER(BaseLearner):
                     train_acc,
                 )
 
-        logging.info(info)
+            logging.info(info)
 
     def _update_representation(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):
 
@@ -249,4 +249,4 @@ class DER(BaseLearner):
                     losses_aux / len(train_loader),
                     train_acc,
                 )
-        logging.info(info)
+            logging.info(info)
