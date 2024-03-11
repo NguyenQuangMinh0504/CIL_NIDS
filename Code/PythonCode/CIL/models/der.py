@@ -37,8 +37,16 @@ class DER(BaseLearner):
         self._network = DERNet(convnet_type=args["convnet_type"], pretrained=False)
 
     def after_task(self):
+        logging.info("Calling function after task ...")
         self._known_classes = self._total_classes
         logging.info("Exemplar size: {}".format(self.exemplar_size))
+
+        if len(self._multiple_gpus) > 1:
+            self._network.module.weight_align(
+                    self._total_classes - self._known_classes
+                )
+        else:
+            self._network.weight_align(self._total_classes - self._known_classes)
 
     def incremental_training(self, data_manager: DataManager):
         self._cur_task += 1
@@ -94,12 +102,6 @@ class DER(BaseLearner):
                 optimizer=optimizer, milestones=milestones, gamma=lrate_decay
             )
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
-            if len(self._multiple_gpus) > 1:
-                self._network.module.weight_align(
-                    self._total_classes - self._known_classes
-                )
-            else:
-                self._network.weight_align(self._total_classes - self._known_classes)
 
     def train(self):
         self._network.train()

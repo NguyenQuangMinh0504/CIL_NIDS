@@ -47,6 +47,12 @@ class MEMO(BaseLearner):
                     param.requires_grad = False
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
+        # Weight align
+        if len(self._multiple_gpus) > 1:
+            self._network.module.weight_align(self._total_classes - self._known_classes)
+        else:
+            self._network.weight_align(self._total_classes - self._known_classes)
+
     def incremental_training(self, data_manager: DataManager):
         """Training model for current task"""
         self._cur_task += 1
@@ -115,6 +121,7 @@ class MEMO(BaseLearner):
             self._network == nn.DataParallel(self._network, self._multiple_gpus)
 
     def _train(self, train_loader: DataLoader, test_loader: DataLoader):
+        """Training model ..."""
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(params=filter(lambda p: p.requires_grad, self._network.parameters()),
@@ -175,11 +182,6 @@ class MEMO(BaseLearner):
             else:
                 raise NotImplementedError
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
-
-            if len(self._multiple_gpus) > 1:
-                self._network.module.weight_align(self._total_classes - self._known_classes)
-            else:
-                self._network.weight_align(self._total_classes - self._known_classes)
 
     def _init_train(self, train_loader: DataLoader, test_loader: DataLoader, optimizer, scheduler):
 

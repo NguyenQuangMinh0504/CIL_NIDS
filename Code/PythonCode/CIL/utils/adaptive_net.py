@@ -98,7 +98,6 @@ class AdaptiveNet(nn.Module):
 
     def weight_align(self, increment):
         logging.info("Align weight ...")
-        return None
         weights = self.fc.weight.data
         newnorm = (torch.norm(weights[-increment:, :], p=2, dim=1))
         oldnorm = (torch.norm(weights[:-increment, :], p=2, dim=1))
