@@ -1,3 +1,5 @@
+import logging
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -15,6 +17,9 @@ class TON_IoT_Network(iData):
     def download_data(self):
         path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/train_test_network.csv"
         dataset = pd.read_csv(path)
+
+        logging.info(dataset["type"].value_counts())
+
         dataset.drop(columns=["src_ip", "dst_ip"], inplace=True)
         dataset.drop(columns=["dns_query"], inplace=True)
         dataset.drop(columns=["label"], inplace=True)
