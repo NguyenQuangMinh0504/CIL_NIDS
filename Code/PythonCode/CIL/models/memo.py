@@ -175,6 +175,7 @@ class MEMO(BaseLearner):
             else:
                 raise NotImplementedError
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
+
             if len(self._multiple_gpus) > 1:
                 self._network.module.weight_align(self._total_classes - self._known_classes)
             else:
