@@ -8,4 +8,5 @@ python main.py \
     -p benchmark \
     -d -1 \
     --init_epoch 300 \
-    --epochs 300
+    --epochs 300 \
+    --pre_processing zscore

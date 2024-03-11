@@ -9,4 +9,5 @@ python3 main.py \
     --init_epoch 300 \
     --epochs 300 \
     --batch_size 128 \
-    -d -1
+    -d -1 \
+    --pre_processing zscore

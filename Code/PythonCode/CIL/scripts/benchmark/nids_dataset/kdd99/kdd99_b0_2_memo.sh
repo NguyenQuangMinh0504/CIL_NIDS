@@ -10,4 +10,5 @@ python3 main_memo.py \
     --epochs 300 \
     --batch_size 128 \
     -d -1 \
-    --lrate 0.001
+    --lrate 0.001 \
+    --pre_processing zscore

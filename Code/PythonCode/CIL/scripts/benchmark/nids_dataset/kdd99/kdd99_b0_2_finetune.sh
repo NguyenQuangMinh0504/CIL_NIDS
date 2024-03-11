@@ -9,3 +9,4 @@ python3 main.py \
     --batch_size 128 \
     --lrate 0.001 \
     --init_lr 0.001 \
+    --pre_processing zscore
