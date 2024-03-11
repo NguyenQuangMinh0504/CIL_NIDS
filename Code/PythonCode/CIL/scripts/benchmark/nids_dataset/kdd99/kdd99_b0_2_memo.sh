@@ -2,7 +2,7 @@ python3 main_memo.py \
     -model memo \
     -init 2 \
     -incre 2 \
-    -net kdd_fc \
+    -net kdd_memo_ann \
     --dataset kdd99 \
     --train_base \
     --scheduler steplr \

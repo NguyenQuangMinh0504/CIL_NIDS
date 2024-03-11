@@ -18,8 +18,8 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> tuple[nn.Module,
         return resnet32()
     elif name == "memo_resnet32":
         return get_memo_resnet32()
-    elif name == "kdd_fc":
-        return get_kdd_fc()
+    elif name == "kdd_memo_ann":
+        return get_memo_ann(input_dim=121)
     elif name == "kdd_memo_dnn":
         return get_memo_dnn(input_dim=121)
     elif name == "kdd_ann":
