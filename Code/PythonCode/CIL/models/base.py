@@ -142,7 +142,6 @@ class BaseLearner(object):
         model.eval()
         correct, total = 0, 0
         for i, (_, inputs, targets) in enumerate(loader):
-            logging.info(f"target is: {targets}")
             inputs = inputs.to(self._device)
             with torch.no_grad():
                 outputs = model(inputs)["logits"]
