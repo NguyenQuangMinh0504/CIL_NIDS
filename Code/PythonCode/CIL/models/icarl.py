@@ -161,7 +161,7 @@ class iCaRL(BaseLearner):
             writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
             writer.add_scalar("Accuracy/train", train_acc, epoch)
 
-            if epoch % 5 == 0:
+            if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
@@ -233,7 +233,7 @@ class iCaRL(BaseLearner):
             writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
             writer.add_scalar("Accuracy/train", train_acc, epoch)
 
-            if epoch % 5 == 0:
+            if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(

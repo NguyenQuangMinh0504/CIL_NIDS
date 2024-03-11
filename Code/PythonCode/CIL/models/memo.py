@@ -227,7 +227,7 @@ class MEMO(BaseLearner):
             writer.add_scalar("Accuracy/train", train_acc, epoch)
 
             # Generate info message
-            if epoch % 5 == 0:
+            if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = 'Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}'.format(
@@ -294,7 +294,7 @@ class MEMO(BaseLearner):
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
             writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
             writer.add_scalar("Accuracy/train", train_acc, epoch)
-            if epoch % 5 == 0:
+            if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Loss_clf {:.3f}, Loss_aux {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
