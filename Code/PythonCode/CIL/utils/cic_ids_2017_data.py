@@ -49,8 +49,6 @@ class CIC_IDS_2017(iData):
         dataset = pd.concat([dataset, friday_afternoon_port_scan_table])
         del friday_afternoon_port_scan_table
 
-        logging.info(f"len of columns is: {len(dataset.columns)}")
-
         # Drop 90% of benign traffic
         logging.info(dataset[" Label"].value_counts())
         dataset = dataset[~dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])]
