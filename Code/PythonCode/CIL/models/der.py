@@ -38,11 +38,12 @@ class DER(BaseLearner):
 
     def after_task(self):
         logging.info("Calling function after task ...")
-        if len(self._multiple_gpus) > 1:
-            self._network.module.weight_align(self._total_classes - self._known_classes)
-        else:
-            self._network.weight_align(self._total_classes - self._known_classes)
-        self._known_classes = self._total_classes
+        if self._cur_task != 0:
+            if len(self._multiple_gpus) > 1:
+                self._network.module.weight_align(self._total_classes - self._known_classes)
+            else:
+                self._network.weight_align(self._total_classes - self._known_classes)
+            self._known_classes = self._total_classes
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
     def incremental_training(self, data_manager: DataManager):
