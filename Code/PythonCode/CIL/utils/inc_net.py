@@ -7,7 +7,7 @@ from torch import nn
 from convs.linears import SimpleLinear
 from convs.cifar_resnet import resnet32
 from convs.memo_cifar_resnet import get_resnet32_a2fc as get_memo_resnet32
-from convs.memo_kdd_fc import get_kdd_fc, get_memo_ann, get_memo_dnn
+from convs.memo_kdd_fc import get_memo_ann, get_memo_dnn
 from convs.ann import get_ann, get_dnn
 
 

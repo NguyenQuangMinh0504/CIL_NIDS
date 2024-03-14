@@ -90,10 +90,14 @@ class AdaptiveNet(nn.Module):
         logging.info(f"New fc is: {self.fc}")
         new_task_size = nb_classes - sum(self.task_sizes)
         self.task_sizes.append(new_task_size)
+        logging.info("Generating new aux fc ...")
         self.aux_fc = self.generate_fc(self.out_dim, new_task_size + 1)
 
     def generate_fc(self, in_dim: int, out_dim: int) -> SimpleLinear:
         """Generate fully connected layers with input dimension in_dim and output dimension out_dim"""
+        logging.info("Generating fully connected layers ...")
+        logging.info(f"In feature size: {in_dim}")
+        logging.info(f"Out feature size: {out_dim}")
         return SimpleLinear(in_features=in_dim, out_features=out_dim)
 
     def weight_align(self, increment):
@@ -105,7 +109,6 @@ class AdaptiveNet(nn.Module):
         meannew = torch.mean(newnorm)
         meanold = torch.mean(oldnorm)
         gamma = meanold/meannew
-        print('align weights, gamma = ', gamma)
         self.fc.weight.data[-increment:, :] *= gamma
 
     def forward(self, x: torch.Tensor):

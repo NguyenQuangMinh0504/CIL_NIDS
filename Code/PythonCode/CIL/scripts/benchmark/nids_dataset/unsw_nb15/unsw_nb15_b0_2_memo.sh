@@ -11,4 +11,5 @@ python3 main_memo.py \
     --batch_size 128 \
     -d -1 \
     --memory_size 2000 \
-    --lrate 0.001
+    --lrate 0.001 \
+    --init_lr 0.001

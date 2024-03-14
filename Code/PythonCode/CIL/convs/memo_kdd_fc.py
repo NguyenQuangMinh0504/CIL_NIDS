@@ -60,10 +60,6 @@ class DeepSpecializedFC(nn.Module):
         return self.layers(x)
 
 
-def get_kdd_fc() -> (nn.Module, nn.Module):
-    return GeneralizedFC(input_dim=121), SpecializedFC()
-
-
 def get_memo_ann(input_dim: int) -> (nn.Module, nn.Module):
     return GeneralizedFC(input_dim=input_dim), SpecializedFC()
 
