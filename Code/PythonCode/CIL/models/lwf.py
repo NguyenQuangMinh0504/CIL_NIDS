@@ -198,6 +198,7 @@ class LwF(BaseLearner):
         for _, epoch in enumerate(prog_bar(self.args["epochs"])):
             self._network.train()
             losses = 0.0
+            losses_kd = 0.0
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
@@ -220,6 +221,7 @@ class LwF(BaseLearner):
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
+                losses_kd += loss_kd.item()
 
                 with torch.no_grad():
                     _, preds = torch.max(logits, dim=1)
