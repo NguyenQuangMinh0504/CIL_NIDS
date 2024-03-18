@@ -205,9 +205,9 @@ def _get_idata(dataset_name: str, **kwargs):
     logging.info("Get idata ...")
     name = dataset_name.lower()
     if name == "cifar10":
-        return iCIFAR10(**kwargs)
+        return iCIFAR10()
     elif name == "cifar100":
-        return iCIFAR100(**kwargs)
+        return iCIFAR100()
     elif name == "kdd99":
         return KDD99(**kwargs)
     elif name == "cic-ids-2017":
