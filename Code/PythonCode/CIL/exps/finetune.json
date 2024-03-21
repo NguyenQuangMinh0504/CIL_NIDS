@@ -11,5 +11,5 @@
     "convnet_type": "resnet32",
     "device": ["0","1","2","3"],
     "seed": [1993],
-    "exemplar_using": false
+    "exemplar_using": true
 }
