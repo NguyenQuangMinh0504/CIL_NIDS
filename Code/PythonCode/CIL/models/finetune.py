@@ -52,6 +52,7 @@ class FineTune(BaseLearner):
         self._train(self.train_loader, self.test_loader)
         if len(self._multiple_gpus) > 1:
             self._network = self._network.module
+        logging.info(f"Exemplar using: {self.args.get('exemplar_using')}")
 
     def _train(self, train_loader, test_loader):
         self._network.to(self._device)
