@@ -53,7 +53,7 @@ class FineTune(BaseLearner):
         if len(self._multiple_gpus) > 1:
             self._network = self._network.module
         if self.args.get("exemplar_using") is True:
-            self.build_rehearsal_memory()
+            self.build_rehearsal_memory(data_manager=data_manager, per_class=self.samples_per_class)
 
     def _train(self, train_loader, test_loader):
         self._network.to(self._device)
