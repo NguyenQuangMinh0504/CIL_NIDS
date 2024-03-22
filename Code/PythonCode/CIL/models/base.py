@@ -188,6 +188,7 @@ class BaseLearner(object):
         return np.concatenate(vectors), np.concatenate(targets)
 
     def _reduce_exemplar(self, data_manager: DataManager, m):
+        """Reduce exemplar of known classes. """
         logging.info("Calling function reduce exemplar ...")
         logging.info(f"Reducing exemplars...({m} per classes)")
         dummy_data, dummy_targets = copy.deepcopy(self._data_memory), copy.deepcopy(self._targets_memory)

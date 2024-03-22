@@ -41,8 +41,12 @@ class FineTune(BaseLearner):
         self._total_classes = self._known_classes + data_manager.get_task_size(self._cur_task)
         self._network.update_fc(self._total_classes)
         logging.info("Learning on {}-{}".format(self._known_classes, self._total_classes))
-        train_dataset = data_manager.get_dataset(np.arange(self._known_classes, self._total_classes),
-                                                 source="train", mode="train")
+        if self.args.get("exemplar_using") is True:
+            train_dataset = data_manager.get_dataset(
+                np.arange(self._known_classes, self._total_classes), source="train", mode="train", appendent=self._get_memory())
+        else:
+            train_dataset = data_manager.get_dataset(
+                np.arange(self._known_classes, self._total_classes), source="train", mode="train")
         self.train_loader = DataLoader(train_dataset, batch_size=self.args["batch_size"], shuffle=True, num_workers=num_workers)
         test_dataset = data_manager.get_dataset(np.arange(0, self._total_classes), source="test", mode="test")
         self.test_loader = DataLoader(test_dataset, batch_size=self.args["batch_size"], shuffle=False, num_workers=num_workers)
