@@ -42,7 +42,7 @@ def setup_parser():
     parser.add_argument("--pre_processing", type=str, default="min_max_scale")
     parser.add_argument("--lrate", type=float, default=0.001)
     parser.add_argument("--init_lr", type=float, default=0.001)
-    parser.add_argument("--using_exemplar", action="store_true")  # Using in finetune model for using exemplar or not
+    parser.add_argument("--exemplar_using", action="store_true")  # Using in finetune model for using exemplar or not
     return parser
 
 
