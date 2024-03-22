@@ -146,9 +146,14 @@ class FineTune(BaseLearner):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
 
                 logits = self._network(inputs)["logits"]
-                fake_targets = targets - self._known_classes
-                loss_clf = F.cross_entropy(logits[:, self._known_classes:], fake_targets)
-                loss = loss_clf
+
+                # Implementation of Loss function
+                if self.args.get("exemplar_using") is True:
+                    loss = F.cross_entropy(logits, targets)
+                else:
+                    fake_targets = targets - self._known_classes
+                    loss_clf = F.cross_entropy(logits[:, self._known_classes:], fake_targets)
+                    loss = loss_clf
 
                 optimizer.zero_grad()
                 loss.backward()
