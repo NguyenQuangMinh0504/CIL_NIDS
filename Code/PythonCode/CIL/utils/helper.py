@@ -70,6 +70,7 @@ def encode_numeric_min_max_scale(df: pd.DataFrame, name):
         logging.info(f"Min value is: {min_value}")
         logging.info(f"Mav value is: {max_value}")
         df.drop(labels=name, axis=1, inplace=True)
+        return None
     df[name] = (df[name] - min_value) / (max_value - min_value)
 
 
