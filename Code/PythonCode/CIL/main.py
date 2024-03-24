@@ -43,6 +43,7 @@ def setup_parser():
     parser.add_argument("--lrate", type=float, default=0.001)
     parser.add_argument("--init_lr", type=float, default=0.001)
     parser.add_argument("--exemplar_using", action="store_true")  # Using in finetune model for using exemplar or not
+    parser.add_argument("--regular_loss", action="store_true")  # Using in lwf for testing purpose
     return parser
 
 
