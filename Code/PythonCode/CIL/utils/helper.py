@@ -62,6 +62,7 @@ def encode_numeric_zscore(df: pd.DataFrame, name: str, mean=None, sd=None):
 
 def encode_numeric_min_max_scale(df, name):
     """Min Max Scaling a column of pandas Dataframe"""
+    logging.info(f"Min max normalizing feature {name} ...")
     min_value = df[name].min()
     max_value = df[name].max()
     if max_value == min_value:
