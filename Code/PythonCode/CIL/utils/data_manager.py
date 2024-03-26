@@ -215,7 +215,7 @@ def _get_idata(dataset_name: str, **kwargs):
     elif name == "cic-ids-2017":
         return CIC_IDS_2017(**kwargs)
     elif name == "ton-iot-network":
-        return TON_IoT_Network()
+        return TON_IoT_Network(**kwargs)
     elif name == "imagenet100":
         return iImageNet100()
     elif name == "unsw-nb15":

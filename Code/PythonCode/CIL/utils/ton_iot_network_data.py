@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from torchvision.transforms import ToTensor
 from utils.data import iData
-from utils.helper import encode_text_index, encode_text_dummy, encode_numeric_zscore
+from utils.helper import encode_text_index, encode_text_dummy, encode_numeric_zscore, encode_numeric_min_max_scale
 
 
 class TON_IoT_Network(iData):
@@ -13,6 +13,9 @@ class TON_IoT_Network(iData):
     train_trsf = []
     test_trsf = []
     common_trsf = [ToTensor()]
+
+    def __init__(self, **kwargs):
+        self.pre_processing = kwargs["pre_processing"]
 
     def download_data(self):
         path = "../../../Dataset/TON_IOT/Train_Test_datasets/Train_Test_Network_dataset/train_test_network.csv"
@@ -29,7 +32,10 @@ class TON_IoT_Network(iData):
                 if dataset[column].dtype == "object":
                     encode_text_dummy(dataset, column)
                 else:
-                    encode_numeric_zscore(dataset, column)
+                    if self.pre_processing == "z_score":
+                        encode_numeric_zscore(dataset, name=column)
+                    elif self.pre_processing == "min_max":
+                        encode_numeric_min_max_scale(dataset, name=column)
             else:
                 self.label_dict = encode_text_index(dataset, column)
 
