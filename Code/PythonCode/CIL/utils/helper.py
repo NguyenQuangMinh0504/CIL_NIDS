@@ -141,3 +141,7 @@ def encode_numeric_range(df, name, normalized_low=-1, normalized_high=1,
 
     df[name] = ((df[name] - data_low) / (data_high - data_low)) \
         * (normalized_high - normalized_low) + normalized_low
+
+
+def check_invalid_data(df: pd.DataFrame):
+    pass

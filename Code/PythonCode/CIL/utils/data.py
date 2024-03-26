@@ -103,6 +103,8 @@ class KDD99(iData):
         logging.info("Before dropping ...")
         logging.info(df.columns[df.isna().any()])
         logging.info(df.columns[df.isnull().any()])
+        logging.info("Duplicate data")
+        logging.info(df.columns[df.duplicated().any()])
 
         # ---------------- Droping all value that has less than 200 records.
         y_drop = ["spy.", "perl.", "phf.", "multihop.",
