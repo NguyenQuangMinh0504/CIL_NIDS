@@ -1,7 +1,7 @@
 import pandas as pd
 from torchvision.transforms import ToTensor
 from utils.data import iData
-from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy
+from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy, encode_numeric_min_max_scale
 from sklearn.model_selection import train_test_split
 import numpy as np
 import logging
@@ -11,6 +11,10 @@ warnings.simplefilter(action='ignore', category=pd.errors.PerformanceWarning)
 
 
 class UNSW_NB15(iData):
+
+    def __init__(self, **kwargs):
+        self.pre_processing = kwargs["pre_processing"]
+
     use_path = False
     train_trsf = []
     test_trsf = []
@@ -27,7 +31,12 @@ class UNSW_NB15(iData):
             elif column == "attack_cat":
                 encode_text_index(dataset, column)
             else:
-                encode_numeric_zscore(dataset, column)
+                if self.pre_processing == "z_score":
+                    encode_numeric_zscore(dataset, name=column)
+                elif self.pre_processing == "min_max":
+                    encode_numeric_min_max_scale(dataset, name=column)
+                else:
+                    raise Exception("Not implemented Normalization")
         x, y = to_xy(dataset, 'attack_cat')
         y = dataset["attack_cat"].to_numpy()
         dataset.drop(labels="attack_cat", axis=1)
