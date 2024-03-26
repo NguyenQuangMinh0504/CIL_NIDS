@@ -123,6 +123,8 @@ class DataManager(object):
             order = np.random.permutation(len(order)).tolist()
             if dataset_name == "cic-ids-2017":
                 order = [4, 0, 8, 2, 3, 7, 9, 6, 5, 1, 10, 11]
+            elif dataset_name == "kdd99":
+                order = [8, 2, 4, 0, 7, 1, 6, 10, 9, 5, 3]
         else:
             order = idata.class_order
         self._class_order = order
