@@ -119,10 +119,12 @@ class KDD99(iData):
                      "dst_host_srv_diff_host_rate", "dst_host_serror_rate",
                      "dst_host_srv_serror_rate", "dst_host_rerror_rate", "dst_host_srv_rerror_rate"]:
 
-            if self.pre_processing == "min_max_scale":
+            if self.pre_processing == "min_max":
                 encode_numeric_min_max_scale(df, name=name)
-            else:
+            elif self.pre_processing == "z_score":
                 encode_numeric_zscore(df, name=name)
+            else:
+                raise Exception("Not implement Normalization")
 
         encode_text_dummy(df, 'protocol_type')
         encode_text_dummy(df, 'service')
