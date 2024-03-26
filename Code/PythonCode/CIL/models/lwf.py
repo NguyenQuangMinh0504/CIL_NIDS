@@ -15,6 +15,7 @@ from models.base import BaseLearner
 from utils.toolkit import tensor2numpy
 from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
+from utils.data_manager import DataManager
 
 init_milestones = [60, 120, 160]
 init_lr_decay = 0.1
@@ -43,7 +44,7 @@ class LwF(BaseLearner):
         self._old_network = self._network.copy().freeze()
         self._known_classes = self._total_classes
 
-    def incremental_training(self, data_manager):
+    def incremental_training(self, data_manager: DataManager):
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(
             self._cur_task
