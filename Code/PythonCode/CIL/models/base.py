@@ -95,22 +95,19 @@ class BaseLearner(object):
         self._network.eval()
         y_pred, y_true = [], []
         for _, (_, inputs, targets) in enumerate(self.test_loader):
-            logging.info(f"{inputs.shape}")
             inputs = inputs.to(self._device)
             with torch.no_grad():
                 outputs = self._network(inputs)["logits"]
-                logging.info(f"Outputs is: {outputs}")
             predicts = torch.topk(outputs, k=1, dim=1, largest=True, sorted=True)[1]
             y_pred.append(predicts.cpu().numpy())
             y_true.append(targets.cpu().numpy())
         y_pred = np.concatenate(y_pred)
         y_true = np.concatenate(y_true)
-        logging.info(y_pred)
-        logging.info(type(y_pred))
-        logging.info(y_true)
-        logging.info(type(y_true))
+        # logging.info(y_pred)
+        # logging.info(type(y_pred))
+        # logging.info(y_true)
+        # logging.info(type(y_true))
         logging.info(f"{classification_report(y_true, y_pred)}")
-        logging.info(f"Fully connected layer weight is: {self._network.fc.weight}")
 
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)
