@@ -108,6 +108,7 @@ class BaseLearner(object):
         logging.info(y_true)
         logging.info(type(y_true))
         logging.info(f"{classification_report(y_true, y_pred)}")
+        logging.info(f"Fully connected layer is: {self._network.fc}")
 
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)

@@ -144,4 +144,7 @@ def encode_numeric_range(df, name, normalized_low=-1, normalized_high=1,
 
 
 def check_invalid_data(df: pd.DataFrame):
-    pass
+    """Checking for invalid data"""
+    logging.info("Checking duplicate data ...")
+    logging.info(df.duplicated().any())
+    logging.info("Checking for NaN value ...")
