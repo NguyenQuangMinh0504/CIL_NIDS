@@ -188,6 +188,9 @@ class FineTune(BaseLearner):
                 if losses == 0:
                     logging.info("Loss is 0")
                     logging.info(f"{logits}")
+                else:
+                    logging.info(type(losses))
+                    logging.info(f"{losses}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
