@@ -171,7 +171,7 @@ class FineTune(BaseLearner):
             scheduler.step()
             train_acc = np.around(tensor2numpy(correct) * 100 / total, decimals=2)
 
-            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)
+            writer.add_scalar("Loss/train", losses / len(train_loader), epoch)f
             writer.add_scalar("Accuracy/train", train_acc, epoch)
 
             if (epoch + 1) % 5 == 0:
@@ -186,7 +186,7 @@ class FineTune(BaseLearner):
                     test_acc,
                 )
                 if round(losses, ndigits=3) == 0:
-                    logging.info(f"{type(loss)}")
+                    logging.info(f"{logits}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
