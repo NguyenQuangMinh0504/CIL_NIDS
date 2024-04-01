@@ -5,9 +5,10 @@ import logging
 from sklearn import preprocessing
 
 
-# Encode text values to dummy variables(i.e. [1,0,0],[0,1,0],[0,0,1] for red,green,blue)
 def encode_text_dummy(df, name):
-
+    """
+    Encode text values to dummy variables(i.e. [1,0,0],[0,1,0],[0,0,1] for red,green,blue)
+    """
     dummies = pd.get_dummies(df[name])
     for x in dummies.columns:
         dummy_name = f"{name}-{x}"
