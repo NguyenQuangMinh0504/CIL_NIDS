@@ -161,7 +161,6 @@ class FineTune(BaseLearner):
                     loss = loss_clf
 
                 optimizer.zero_grad()
-                logging.info(f"Loss is: {loss}")
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
@@ -187,11 +186,11 @@ class FineTune(BaseLearner):
                     train_acc,
                     test_acc,
                 )
-                if round(losses, ndigits=3) == 0:
-                    logging.info(f"{logits}")
-                    logging.info(f"Target is: {targets}")
-                    logging.info(f"loss is: {loss}")
-                    logging.info(f"Pred is: {torch.max(logits, dim=1)}")
+                # if round(losses, ndigits=3) == 0:
+                #     logging.info(f"{logits}")
+                #     logging.info(f"Target is: {targets}")
+                #     logging.info(f"loss is: {loss}")
+                #     logging.info(f"Pred is: {torch.max(logits, dim=1)}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
