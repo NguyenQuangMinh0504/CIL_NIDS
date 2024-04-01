@@ -150,7 +150,6 @@ class FineTune(BaseLearner):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
 
                 logits = self._network(inputs)["logits"]
-                logging.info(f"Logits shape is: {logits.shape}")
                 # Implementation of Loss function
                 if self.args.get("exemplar_using") is True:
                     loss = F.cross_entropy(logits, targets)
@@ -187,6 +186,7 @@ class FineTune(BaseLearner):
                 )
                 if round(losses, ndigits=3) == 0:
                     logging.info(f"{logits}")
+                    logging.info(f"loss is: {loss}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
