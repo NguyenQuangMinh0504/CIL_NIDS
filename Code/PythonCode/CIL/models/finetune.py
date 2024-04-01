@@ -189,6 +189,7 @@ class FineTune(BaseLearner):
                     logging.info(f"{logits}")
                     logging.info(f"Target is: {targets}")
                     logging.info(f"loss is: {loss}")
+                    logging.info(f"Pred is: {torch.max(logits, dim=1)}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
