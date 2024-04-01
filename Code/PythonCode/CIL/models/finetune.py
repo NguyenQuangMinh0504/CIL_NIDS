@@ -187,6 +187,7 @@ class FineTune(BaseLearner):
                 )
                 if round(losses, ndigits=3) == 0:
                     logging.info(f"{logits}")
+                    logging.info(f"Target is: {targets}")
                     logging.info(f"loss is: {loss}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
