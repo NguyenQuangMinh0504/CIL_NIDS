@@ -159,6 +159,7 @@ class FineTune(BaseLearner):
                     loss = loss_clf
 
                 optimizer.zero_grad()
+                logging.info(f"Loss is: {loss}")
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
