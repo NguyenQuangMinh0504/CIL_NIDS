@@ -153,6 +153,8 @@ class FineTune(BaseLearner):
                 # Implementation of Loss function
                 if self.args.get("exemplar_using") is True:
                     loss = F.cross_entropy(logits, targets)
+                elif self.args.get("regular_loss") is True:
+                    loss = F.cross_entropy(logits, targets)
                 else:
                     fake_targets = targets - self._known_classes
                     loss_clf = F.cross_entropy(logits[:, self._known_classes:], fake_targets)
