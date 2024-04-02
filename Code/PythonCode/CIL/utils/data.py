@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import logging
 from sklearn.model_selection import train_test_split
-from utils.helper import encode_numeric_zscore, encode_text_dummy, encode_text_index, encode_numeric_min_max_scale
+from utils.helper import encode_numeric_zscore, encode_text_dummy, encode_text_index, encode_numeric_min_max_scale, check_invalid_data
 from torchvision.transforms import RandomCrop, RandomHorizontalFlip, ColorJitter, ToTensor, Normalize
 
 
@@ -100,11 +100,7 @@ class KDD99(iData):
         logging.info("Number of instances per classes: ")
         logging.info(df["outcome"].value_counts())
 
-        logging.info("Before dropping ...")
-        logging.info(df.columns[df.isna().any()])
-        logging.info(df.columns[df.isnull().any()])
-        logging.info("Duplicate data")
-        logging.info(df.duplicated().any())
+        check_invalid_data(df=df)
         df.drop_duplicates(inplace=True)
 
         # ---------------- Droping all value that has less than 200 records.
@@ -156,6 +152,9 @@ class KDD99(iData):
         # print(corr['outcome'].sort_values(ascending=False))
         # logging.info(df['outcome'])
         # logging.info(outcomes)
+
+        logging.info("After dropping")
+        check_invalid_data(df=df)
 
         y = df["outcome"].to_numpy()
 

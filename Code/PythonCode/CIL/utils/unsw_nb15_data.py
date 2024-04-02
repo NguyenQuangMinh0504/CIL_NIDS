@@ -1,7 +1,7 @@
 import pandas as pd
 from torchvision.transforms import ToTensor
 from utils.data import iData
-from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy, encode_numeric_min_max_scale
+from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy, encode_numeric_min_max_scale, check_invalid_data
 from sklearn.model_selection import train_test_split
 import numpy as np
 import logging
@@ -23,6 +23,7 @@ class UNSW_NB15(iData):
     def download_data(self):
         path = "../../../Dataset/UNSW-NB15/UNSW_NB15_training-set.csv"
         dataset = pd.read_csv(path)
+        check_invalid_data(df=dataset)
         dataset.drop(columns=["id", "label"], inplace=True)
         logging.info(dataset["attack_cat"].value_counts())
         for column in dataset.columns:
@@ -38,6 +39,10 @@ class UNSW_NB15(iData):
                 else:
                     raise Exception("Not implemented Normalization")
         x, y = to_xy(dataset, 'attack_cat')
+
+        logging.info("After processing")
+        check_invalid_data(df=dataset)
+
         y = dataset["attack_cat"].to_numpy()
         dataset.drop(labels="attack_cat", axis=1)
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(

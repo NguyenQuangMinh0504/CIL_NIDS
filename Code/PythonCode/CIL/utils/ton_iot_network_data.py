@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from torchvision.transforms import ToTensor
 from utils.data import iData
-from utils.helper import encode_text_index, encode_text_dummy, encode_numeric_zscore, encode_numeric_min_max_scale
+from utils.helper import encode_text_index, encode_text_dummy, encode_numeric_zscore, encode_numeric_min_max_scale, check_invalid_data
 
 
 class TON_IoT_Network(iData):
@@ -27,6 +27,8 @@ class TON_IoT_Network(iData):
         dataset.drop(columns=["dns_query"], inplace=True)
         dataset.drop(columns=["label"], inplace=True)
 
+        check_invalid_data(df=dataset)
+
         for column in dataset.columns:
             if column != "type":
                 if dataset[column].dtype == "object":
@@ -42,6 +44,9 @@ class TON_IoT_Network(iData):
         dataset.dropna(axis=1, inplace=True)
         y = dataset["type"].to_numpy()
         dataset.drop(labels="type", axis=1)
+
+        logging.info("After dropping")
+        check_invalid_data(df=dataset)
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)
