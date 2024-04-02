@@ -64,16 +64,12 @@ class CIC_IDS_2017(iData):
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
 
-        # dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
-
         check_invalid_data(df=dataset)
 
-        # Dropping missing columns
+        # Dropping missing rows
+        dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         dataset.dropna(axis=0, inplace=True)
 
-        logging.info("After dropping ...")
-        logging.info(dataset.columns[dataset.isna().any()])
-        logging.info(dataset.columns[dataset.isnull().any()])
         logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
@@ -85,8 +81,8 @@ class CIC_IDS_2017(iData):
             else:
                 self.label_dict = encode_text_index(dataset, name=column)
 
-        logging.info(dataset.columns[dataset.isna().any()])
-        logging.info(dataset.columns[dataset.isnull().any()])
+        logging.info("After processing ...")
+        check_invalid_data(df=dataset)
 
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1, inplace=True)
