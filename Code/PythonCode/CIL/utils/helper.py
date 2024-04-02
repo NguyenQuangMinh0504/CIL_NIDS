@@ -154,5 +154,5 @@ def check_invalid_data(df: pd.DataFrame) -> None:
     logging.info("Checking for Null value ...")
     logging.info(df.columns[df.isnull().any()])
     logging.info("Checking inf data ...")
-    logging.info(df.isin([np.inf, -np.inf]).values().any())
+    logging.info(df.isin([np.inf, -np.inf]).values.any())
     return None
