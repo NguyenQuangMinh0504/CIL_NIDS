@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 from utils.data import iData
 from torchvision.transforms import ToTensor
-from utils.helper import encode_text_index, encode_numeric_zscore, encode_numeric_min_max_scale
+from utils.helper import encode_text_index, encode_numeric_zscore, encode_numeric_min_max_scale, check_invalid_data
 
 
 class CIC_IDS_2017(iData):
@@ -64,11 +64,9 @@ class CIC_IDS_2017(iData):
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
 
-        dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
+        # dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
 
-        logging.info("Before dropping ...")
-        logging.info(dataset.columns[dataset.isna().any()])
-        logging.info(dataset.columns[dataset.isnull().any()])
+        check_invalid_data(df=dataset)
 
         # Dropping missing columns
         dataset.dropna(axis=0, inplace=True)
