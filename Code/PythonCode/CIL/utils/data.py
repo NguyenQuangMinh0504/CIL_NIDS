@@ -157,6 +157,7 @@ class KDD99(iData):
         check_invalid_data(df=df)
 
         y = df["outcome"].to_numpy()
+        logging.info(df["outcome"].value_counts())
 
         df.drop(labels="outcome", axis=1)
 
