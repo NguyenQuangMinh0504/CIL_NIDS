@@ -17,14 +17,12 @@ EPSILON = 1e-8
 
 init_epoch = 300
 init_lr = 0.001
-init_milestones = [100, 200]
 init_lr_decay = 0.1
 init_weight_decay = 0.0005
-
+momentum = 0
 
 epochs = 300
 lrate = 0.01
-milestones = [100, 200]
 lrate_decay = 0.1
 batch_size = 128
 weight_decay = 2e-4
@@ -98,23 +96,23 @@ class iCaRL(BaseLearner):
         if self._cur_task == 0:
             optimizer = optim.SGD(
                 self._network.parameters(),
-                momentum=0.9,
+                momentum=momentum,
                 lr=init_lr,
                 weight_decay=init_weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=init_milestones, gamma=init_lr_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=init_lr_decay
             )
             self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
             optimizer = optim.SGD(
                 self._network.parameters(),
                 lr=lrate,
-                momentum=0.9,
+                momentum=momentum,
                 weight_decay=weight_decay,
-            )  # 1e-5
+            )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=milestones, gamma=lrate_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay
             )
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 

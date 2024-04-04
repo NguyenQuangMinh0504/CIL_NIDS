@@ -17,14 +17,10 @@ from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 from utils.data_manager import DataManager
 
-init_milestones = [100, 200]
 init_lr_decay = 0.1
-init_weight_decay = 0.0005
-
-
-milestones = [100, 200]
+init_weight_decay = 0
 lrate_decay = 0.1
-weight_decay = 2e-4
+weight_decay = 0
 num_workers = 4
 T = 2
 lamda = 3
@@ -88,7 +84,7 @@ class LwF(BaseLearner):
                 weight_decay=init_weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=init_milestones, gamma=init_lr_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=init_lr_decay
             )
             if self.args['skip']:
                 if len(self._multiple_gpus) > 1:
@@ -109,7 +105,7 @@ class LwF(BaseLearner):
                 weight_decay=weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=milestones, gamma=lrate_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay
             )
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 

@@ -16,11 +16,11 @@ from utils.toolkit import tensor2numpy
 from utils.prog_bar import prog_bar
 
 
-init_weight_decay = 0.0005
+init_weight_decay = 0
 lrate_decay = 0.1
-milestones = [100, 200]
 num_workers = 4
-weight_decay = 2e-4
+weight_decay = 0
+momentum = 0
 
 
 class FineTune(BaseLearner):
@@ -58,9 +58,9 @@ class FineTune(BaseLearner):
     def _train(self, train_loader, test_loader):
         self._network.to(self._device)
         if self._cur_task == 0:
-            optimizer = optim.SGD(self._network.parameters(), momentum=0.9, lr=self.args["init_lr"], weight_decay=init_weight_decay)
+            optimizer = optim.SGD(self._network.parameters(), momentum=momentum, lr=self.args["init_lr"], weight_decay=init_weight_decay)
             # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.args["init_epoch"])
-            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
+            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay)
             if self.args["skip"]:
                 if len(self._multiple_gpus) > 1:
                     self._network = self._network.module
@@ -73,8 +73,8 @@ class FineTune(BaseLearner):
             else:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
-            optimizer = optim.SGD(self._network.parameters(), self.args["lrate"], momentum=0.9, weight_decay=weight_decay)
-            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
+            optimizer = optim.SGD(self._network.parameters(), self.args["lrate"], momentum=momentum, weight_decay=weight_decay)
+            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay)
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
     def _init_train(self, train_loader, test_loader, optimizer: optim.SGD, scheduler):

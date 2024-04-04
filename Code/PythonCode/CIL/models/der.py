@@ -14,16 +14,14 @@ from utils.toolkit import count_parameters, tensor2numpy
 from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 
-# init_epoch = 200
 
 batch_size = 128
 num_workers = 4
-init_weight_decay = 0.1
-init_milestones = [100, 200]
+init_weight_decay = 0
 init_lr_decay = 0.1
-milestones = [100, 200]
-weight_decay = 2e-4
+weight_decay = 0
 lrate_decay = 0.1
+momentum = 0
 
 
 class DER(BaseLearner):
@@ -73,11 +71,11 @@ class DER(BaseLearner):
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(filter(lambda p: p.requires_grad, self._network.parameters()),
-                                  momentum=0.9,
+                                  momentum=momentum,
                                   lr=self.args["init_lr"],
                                   weight_decay=init_weight_decay)
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=init_milestones, gamma=init_lr_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=init_lr_decay
             )
             if not self.args["skip"]:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
@@ -89,11 +87,11 @@ class DER(BaseLearner):
             optimizer = optim.SGD(
                 filter(lambda p: p.requires_grad, self._network.parameters()),
                 lr=self.args["lrate"],
-                momentum=0.9,
+                momentum=momentum,
                 weight_decay=weight_decay
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=milestones, gamma=lrate_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay
             )
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
