@@ -63,15 +63,13 @@ class CIC_IDS_2017(iData):
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
         # drop unnecessary data
         # dataset.drop(columns=['Flow ID', ' Source IP', ' Source Port', ' Destination IP', ' Timestamp'], inplace=True)
-
+        logging.info(dataset[" Label"].value_counts())
         check_invalid_data(df=dataset)
 
         # Dropping missing rows
         dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         dataset.dropna(axis=0, inplace=True)
         dataset.drop_duplicates(inplace=True)
-
-        logging.info(dataset[" Label"].value_counts())
 
         for column in dataset.columns:
             if column != " Label":
@@ -84,6 +82,7 @@ class CIC_IDS_2017(iData):
 
         logging.info("After processing ...")
         check_invalid_data(df=dataset)
+        logging.info(dataset[" Label"].value_counts())
 
         y = dataset[" Label"].to_numpy()
         dataset.drop(labels=" Label", axis=1, inplace=True)
