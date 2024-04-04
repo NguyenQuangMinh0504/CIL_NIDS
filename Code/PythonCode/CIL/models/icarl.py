@@ -250,6 +250,7 @@ class iCaRL(BaseLearner):
 
 
 def _KD_loss(pred, soft, T):
+    """Calculating knowledge distillation loss"""
     pred = torch.log_softmax(pred / T, dim=1)
     soft = torch.softmax(soft / T, dim=1)
     return -1 * torch.mul(soft, pred).sum() / pred.shape[0]

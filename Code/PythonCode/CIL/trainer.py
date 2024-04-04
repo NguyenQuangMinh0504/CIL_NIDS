@@ -251,24 +251,24 @@ def save_results(args, cnn_curve, nme_curve, no_nme=False):
                 f.write(f"{_acc},")
             # f.write(f"{cnn_top5[-1]} \n")
 
-    # # -------NME TOP1----------
-    # if no_nme is False:
-    #     _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top1")
-    #     os.makedirs(_log_dir, exist_ok=True)
-    #     _log_path = os.path.join(_log_dir, f"{args['csv_name']}.csv")
-    #     if args['prefix'] == 'benchmark':
-    #         with open(_log_path, "a+") as f:
-    #             f.write(f"{args['time_str']},{args['model_name']},")
-    #             for _acc in nme_top1[:-1]:
-    #                 f.write(f"{_acc},")
-    #             f.write(f"{nme_top1[-1]} \n")
-    #     else:
-    #         assert args['prefix'] in ['fair', 'auc']
-    #         with open(_log_path, "a+") as f:
-    #             f.write(f"{args['time_str']},{args['model_name']},{args['memory_size']},")
-    #             for _acc in nme_top1[:-1]:
-    #                 f.write(f"{_acc},")
-    #             f.write(f"{nme_top1[-1]} \n")
+    # -------NME TOP1----------
+    if no_nme is False:
+        _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top1")
+        os.makedirs(_log_dir, exist_ok=True)
+        _log_path = os.path.join(_log_dir, f"{args['csv_name']}.csv")
+        if args['prefix'] == 'benchmark':
+            with open(_log_path, "a+") as f:
+                f.write(f"{args['time_str']},{args['model_name']},")
+                for _acc in nme_top1[:-1]:
+                    f.write(f"{_acc},")
+                f.write(f"{nme_top1[-1]} \n")
+        else:
+            assert args['prefix'] in ['fair', 'auc']
+            with open(_log_path, "a+") as f:
+                f.write(f"{args['time_str']},{args['model_name']},{args['memory_size']},")
+                for _acc in nme_top1[:-1]:
+                    f.write(f"{_acc},")
+                f.write(f"{nme_top1[-1]} \n")
 
     #     # -------NME TOP5----------
     #     _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top5")
