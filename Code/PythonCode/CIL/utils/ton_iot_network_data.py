@@ -47,6 +47,7 @@ class TON_IoT_Network(iData):
 
         logging.info("After dropping")
         check_invalid_data(df=dataset)
+        logging.info(dataset["type"].value_counts())
 
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
             dataset.to_numpy(), y, test_size=0.2, random_state=42)
