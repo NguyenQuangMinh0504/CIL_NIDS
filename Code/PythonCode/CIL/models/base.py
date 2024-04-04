@@ -92,7 +92,7 @@ class BaseLearner(object):
 
     def eval_task(self, save_conf=False):
         """Evaluating result after each task. return cnn_accy and nme_accy. This function is called after training finish"""
-
+        logging.info("Calling function eval task ...")
         logging.info("Logging classification report using sklearn.metrics.classification_report")
         self._network.eval()
         y_pred, y_true = [], []
@@ -165,6 +165,7 @@ class BaseLearner(object):
 
     def _eval_nme(self, loader, class_means):
         """Classification based on neareast mean of exemplars"""
+        logging.info("Evaluating using neareast mean of exemplar ...")
         self._network.eval()
         vectors, y_true = self._extract_vectors(loader=loader)
         vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
