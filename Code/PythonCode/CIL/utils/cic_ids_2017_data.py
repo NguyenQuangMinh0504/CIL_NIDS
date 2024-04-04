@@ -69,6 +69,7 @@ class CIC_IDS_2017(iData):
         # Dropping missing rows
         dataset.replace(to_replace=np.inf, value=np.nan, inplace=True)
         dataset.dropna(axis=0, inplace=True)
+        dataset.drop_duplicates(inplace=True)
 
         logging.info(dataset[" Label"].value_counts())
 
