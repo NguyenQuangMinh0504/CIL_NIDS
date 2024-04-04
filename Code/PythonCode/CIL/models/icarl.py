@@ -20,6 +20,10 @@ T = 2
 
 
 class iCaRL(BaseLearner):
+    """
+    Implementation of paper iCaRL: Incremental Classifier and Representation Learning
+    https://openaccess.thecvf.com/content_cvpr_2017/html/Rebuffi_iCaRL_Incremental_Classifier_CVPR_2017_paper.html
+    """
     def __init__(self, args):
         super().__init__(args)
         self._network = IncrementalNet(args["convnet_type"], False)

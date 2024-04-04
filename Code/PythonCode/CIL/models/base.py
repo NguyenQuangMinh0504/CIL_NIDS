@@ -26,7 +26,9 @@ class BaseLearner(object):
     _known_classes: int
     """Total knowned classes"""
     _total_classes: int
-    """Total class: Equal known_class + number of class trained in the current step"""
+    """Equal known_class + number of class trained in the current step"""
+    _class_means: None
+    """Use for classification: First mentioned in paper iCaRL: Incremental Classifier and Representation Learning"""
 
     def __init__(self, args: dict):
         self.args = args
