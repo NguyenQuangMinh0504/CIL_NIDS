@@ -19,13 +19,13 @@ def get_convnet(convnet_type: str, pretrained: bool = False) -> tuple[nn.Module,
     elif name == "memo_resnet32":
         return get_memo_resnet32()
     elif name == "kdd_memo_ann":
-        return get_memo_ann(input_dim=121)
+        return get_memo_ann(input_dim=120)
     elif name == "kdd_memo_dnn":
-        return get_memo_dnn(input_dim=121)
+        return get_memo_dnn(input_dim=120)
     elif name == "kdd_ann":
-        return get_ann()
+        return get_ann(input_dim=120)
     elif name == "kdd_dnn":
-        return get_dnn()
+        return get_dnn(input_dim=120)
     elif name == "cic_ids_ann":
         return get_ann(input_dim=69)
     elif name == "ton_iot_network_ann":

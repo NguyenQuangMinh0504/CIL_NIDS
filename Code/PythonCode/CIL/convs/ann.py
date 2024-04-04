@@ -17,7 +17,7 @@ class ANN(nn.Module):
         return {"features": self.layers(x)}
 
 
-def get_ann(input_dim: int = 121):
+def get_ann(input_dim: int = 120):
     """Basic fully connected net with input -> Linear -> Relu -> Linear -> Relu"""
     return ANN(input_dim=input_dim)
 
@@ -41,6 +41,6 @@ class DNN(nn.Module):
         return {"features": self.layers(x)}
 
 
-def get_dnn(input_dim: int = 121):
+def get_dnn(input_dim: int = 120):
     """Basic fully connected net with input -> Linear -> Relu -> Linear -> Relu"""
     return DNN(input_dim=input_dim)
