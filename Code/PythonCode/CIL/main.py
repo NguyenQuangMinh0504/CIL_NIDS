@@ -45,6 +45,7 @@ def setup_parser():
     parser.add_argument("--exemplar_using", action="store_true")  # Using in finetune model for using exemplar or not
     parser.add_argument("--regular_loss", action="store_true")  # Using in lwf for testing purpose
     parser.add_argument("--milestones", type=list, default=[100, 200])
+    parser.add_argument("--momentum", type=float, default=0, help="Momentum of SGD")
     return parser
 
 

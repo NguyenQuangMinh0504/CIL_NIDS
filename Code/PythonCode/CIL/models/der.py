@@ -21,7 +21,6 @@ init_weight_decay = 0
 init_lr_decay = 0.1
 weight_decay = 0
 lrate_decay = 0.1
-momentum = 0
 
 
 class DER(BaseLearner):
@@ -71,7 +70,7 @@ class DER(BaseLearner):
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(filter(lambda p: p.requires_grad, self._network.parameters()),
-                                  momentum=momentum,
+                                  momentum=self.args["momentum"],
                                   lr=self.args["init_lr"],
                                   weight_decay=init_weight_decay)
             scheduler = optim.lr_scheduler.MultiStepLR(
@@ -87,7 +86,7 @@ class DER(BaseLearner):
             optimizer = optim.SGD(
                 filter(lambda p: p.requires_grad, self._network.parameters()),
                 lr=self.args["lrate"],
-                momentum=momentum,
+                momentum=self.args["momentum"],
                 weight_decay=weight_decay
             )
             scheduler = optim.lr_scheduler.MultiStepLR(

@@ -96,7 +96,7 @@ class iCaRL(BaseLearner):
         if self._cur_task == 0:
             optimizer = optim.SGD(
                 self._network.parameters(),
-                momentum=momentum,
+                momentum=self.args["momentum"],
                 lr=init_lr,
                 weight_decay=init_weight_decay,
             )
@@ -108,7 +108,7 @@ class iCaRL(BaseLearner):
             optimizer = optim.SGD(
                 self._network.parameters(),
                 lr=lrate,
-                momentum=momentum,
+                momentum=self.args["momentum"],
                 weight_decay=weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(

@@ -79,7 +79,7 @@ class LwF(BaseLearner):
         if self._cur_task == 0:
             optimizer = optim.SGD(
                 self._network.parameters(),
-                momentum=0.9,
+                momentum=self.args["momentum"],
                 lr=self.args["init_lr"],
                 weight_decay=init_weight_decay,
             )
@@ -101,7 +101,7 @@ class LwF(BaseLearner):
             optimizer = optim.SGD(
                 self._network.parameters(),
                 lr=self.args["lrate"],
-                momentum=0.9,
+                momentum=self.args["momentum"],
                 weight_decay=weight_decay,
             )
             scheduler = optim.lr_scheduler.MultiStepLR(

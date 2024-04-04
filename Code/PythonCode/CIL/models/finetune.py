@@ -20,7 +20,6 @@ init_weight_decay = 0
 lrate_decay = 0.1
 num_workers = 4
 weight_decay = 0
-momentum = 0
 
 
 class FineTune(BaseLearner):
@@ -58,8 +57,7 @@ class FineTune(BaseLearner):
     def _train(self, train_loader, test_loader):
         self._network.to(self._device)
         if self._cur_task == 0:
-            optimizer = optim.SGD(self._network.parameters(), momentum=momentum, lr=self.args["init_lr"], weight_decay=init_weight_decay)
-            # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.args["init_epoch"])
+            optimizer = optim.SGD(self._network.parameters(), momentum=self.args["momentum"], lr=self.args["init_lr"], weight_decay=init_weight_decay)
             scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay)
             if self.args["skip"]:
                 if len(self._multiple_gpus) > 1:
@@ -73,7 +71,11 @@ class FineTune(BaseLearner):
             else:
                 self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
-            optimizer = optim.SGD(self._network.parameters(), self.args["lrate"], momentum=momentum, weight_decay=weight_decay)
+            optimizer = optim.SGD(self._network.parameters(),
+                                  self.args["lrate"],
+                                  momentum=self.args["momentum"],
+                                  weight_decay=weight_decay)
+
             scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay)
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
