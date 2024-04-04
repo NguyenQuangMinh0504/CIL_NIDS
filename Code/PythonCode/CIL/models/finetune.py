@@ -15,12 +15,8 @@ from utils.data_manager import DataManager
 from utils.toolkit import tensor2numpy
 from utils.prog_bar import prog_bar
 
-# init_epoch = 200
-init_weight_decay = 0.0005
 
-# epochs = 80
-# epochs = 30
-# batch_size = 128
+init_weight_decay = 0.0005
 lrate_decay = 0.1
 milestones = [100, 200]
 num_workers = 4
@@ -63,7 +59,8 @@ class FineTune(BaseLearner):
         self._network.to(self._device)
         if self._cur_task == 0:
             optimizer = optim.SGD(self._network.parameters(), momentum=0.9, lr=self.args["init_lr"], weight_decay=init_weight_decay)
-            scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.args["init_epoch"])
+            # scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.args["init_epoch"])
+            scheduler = optim.lr_scheduler.MultiStepLR(optimizer=optimizer, milestones=milestones, gamma=lrate_decay)
             if self.args["skip"]:
                 if len(self._multiple_gpus) > 1:
                     self._network = self._network.module

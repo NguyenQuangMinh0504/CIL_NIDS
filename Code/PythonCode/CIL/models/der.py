@@ -18,16 +18,12 @@ from utils.prog_bar import prog_bar
 
 batch_size = 128
 num_workers = 4
-init_weight_decay = 0.0005
-init_milestones = [60, 120, 170]
+init_weight_decay = 0.1
+init_milestones = [100, 200]
 init_lr_decay = 0.1
-milestones = [80, 120, 150]
+milestones = [100, 200]
 weight_decay = 2e-4
 lrate_decay = 0.1
-
-
-# epochs = 170
-# epochs = 50
 
 
 class DER(BaseLearner):

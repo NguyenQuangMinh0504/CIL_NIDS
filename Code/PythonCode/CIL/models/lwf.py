@@ -17,12 +17,12 @@ from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
 from utils.data_manager import DataManager
 
-init_milestones = [60, 120, 160]
+init_milestones = [100, 200]
 init_lr_decay = 0.1
 init_weight_decay = 0.0005
 
 
-milestones = [60, 120, 180, 220]
+milestones = [100, 200]
 lrate_decay = 0.1
 weight_decay = 2e-4
 num_workers = 4
