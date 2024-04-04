@@ -42,6 +42,7 @@ class UNSW_NB15(iData):
 
         logging.info("After processing")
         check_invalid_data(df=dataset)
+        logging.info(dataset["attack_cat"].value_counts())
 
         y = dataset["attack_cat"].to_numpy()
         dataset.drop(labels="attack_cat", axis=1)
