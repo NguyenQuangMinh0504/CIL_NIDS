@@ -12,6 +12,7 @@ from utils.inc_net import IncrementalNet
 from utils.toolkit import tensor2numpy
 from utils.notify import send_telegram_notification
 from utils.prog_bar import prog_bar
+from utils.data_manager import DataManager
 
 EPSILON = 1e-8
 
@@ -34,7 +35,7 @@ class iCaRL(BaseLearner):
         self._known_classes = self._total_classes
         logging.info("Exemplar size: {}".format(self.exemplar_size))
 
-    def incremental_training(self, data_manager):
+    def incremental_training(self, data_manager: DataManager):
         self._cur_task += 1
         self._total_classes = self._known_classes + data_manager.get_task_size(
             self._cur_task
