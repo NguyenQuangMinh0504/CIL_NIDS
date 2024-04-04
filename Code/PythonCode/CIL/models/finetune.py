@@ -22,7 +22,7 @@ init_weight_decay = 0.0005
 # epochs = 30
 # batch_size = 128
 lrate_decay = 0.1
-milestones = [40, 70]
+milestones = [100, 200]
 num_workers = 4
 weight_decay = 2e-4
 
@@ -186,11 +186,6 @@ class FineTune(BaseLearner):
                     train_acc,
                     test_acc,
                 )
-                # if round(losses, ndigits=3) == 0:
-                #     logging.info(f"{logits}")
-                #     logging.info(f"Target is: {targets}")
-                #     logging.info(f"loss is: {loss}")
-                #     logging.info(f"Pred is: {torch.max(logits, dim=1)}")
             else:
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
