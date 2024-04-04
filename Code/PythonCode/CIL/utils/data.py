@@ -137,22 +137,8 @@ class KDD99(iData):
         encode_text_dummy(df, 'is_host_login')
         encode_text_dummy(df, 'is_guest_login')
 
-        # logging.info(df["outcome"].value_counts(normalize=False, sort=True))
-        # logging.info((df[df["outcome"] == "smurf."]))
-        # corr = df.corr()
-        # logging.info(corr['outcome'].sort_values(ascending=False))
-        # logging.info(corr)
-        # outcomes = encode_text_index(df, 'outcome')
         self.label_dict = encode_text_index(df, "outcome")
-
         df.dropna(inplace=True, axis=1)
-
-        # corr = df.corr()
-        # print(corr)
-        # print(corr['outcome'].sort_values(ascending=False))
-        # logging.info(df['outcome'])
-        # logging.info(outcomes)
-
         logging.info("After dropping")
         check_invalid_data(df=df)
 
