@@ -105,10 +105,6 @@ class BaseLearner(object):
             y_true.append(targets.cpu().numpy())
         y_pred = np.concatenate(y_pred)
         y_true = np.concatenate(y_true)
-        # logging.info(y_pred)
-        # logging.info(type(y_pred))
-        # logging.info(y_true)
-        # logging.info(type(y_true))
         logging.info(f"{classification_report(y_true, y_pred)}")
 
         y_pred, y_true = self._eval_cnn(self.test_loader)
@@ -168,6 +164,7 @@ class BaseLearner(object):
         return np.concatenate(y_pred), np.concatenate(y_true)
 
     def _eval_nme(self, loader, class_means):
+        """Classification based on neareast mean of exemplars"""
         self._network.eval()
         vectors, y_true = self._extract_vectors(loader=loader)
         vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
@@ -194,7 +191,9 @@ class BaseLearner(object):
         logging.info("Calling function reduce exemplar ...")
         logging.info(f"Reducing exemplars...({m} per classes)")
         dummy_data, dummy_targets = copy.deepcopy(self._data_memory), copy.deepcopy(self._targets_memory)
+
         self._class_means = np.zeros((self._total_classes, self.feature_dim))
+
         self._data_memory, self._targets_memory = np.array([]), np.array([])
         for class_idx in range(self._known_classes):
             mask = np.where(dummy_targets == class_idx)[0]
