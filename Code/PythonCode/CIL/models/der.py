@@ -18,6 +18,7 @@ num_workers = 4
 
 
 class DER(BaseLearner):
+    """Implementation of Paper DER: Dynamically Expandable Representation for Class Incremental Learning"""
     def __init__(self, args):
         super().__init__(args)
         self.args = args
