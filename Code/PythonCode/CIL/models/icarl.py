@@ -15,17 +15,6 @@ from utils.prog_bar import prog_bar
 
 EPSILON = 1e-8
 
-init_epoch = 300
-init_lr = 0.001
-init_lr_decay = 0.1
-init_weight_decay = 0.0005
-momentum = 0
-
-epochs = 300
-lrate = 0.01
-lrate_decay = 0.1
-batch_size = 128
-weight_decay = 2e-4
 num_workers = 4
 T = 2
 
@@ -58,13 +47,13 @@ class iCaRL(BaseLearner):
             appendent=self._get_memory(),
         )
         self.train_loader = DataLoader(
-            train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
+            train_dataset, batch_size=self.args["batch_size"], shuffle=True, num_workers=num_workers
         )
         test_dataset = data_manager.get_dataset(
             np.arange(0, self._total_classes), source="test", mode="test"
         )
         self.test_loader = DataLoader(
-            test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
+            test_dataset, batch_size=self.args["batch_size"], shuffle=False, num_workers=num_workers
         )
 
         if self.args['skip'] and self._cur_task == 0:
@@ -97,22 +86,24 @@ class iCaRL(BaseLearner):
             optimizer = optim.SGD(
                 self._network.parameters(),
                 momentum=self.args["momentum"],
-                lr=init_lr,
-                weight_decay=init_weight_decay,
+                lr=self.args["init_lr"],
+                weight_decay=self.args["weight_decay"],
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=self.args["milestones"], gamma=init_lr_decay
+                optimizer=optimizer,
+                milestones=self.args["milestones"],
+                gamma=self.args["lrate_decay"]
             )
             self._init_train(train_loader, test_loader, optimizer, scheduler)
         else:
             optimizer = optim.SGD(
                 self._network.parameters(),
-                lr=lrate,
+                lr=self.args["lrate"],
                 momentum=self.args["momentum"],
-                weight_decay=weight_decay,
+                weight_decay=self.args["weight_decay"],
             )
             scheduler = optim.lr_scheduler.MultiStepLR(
-                optimizer=optimizer, milestones=self.args["milestones"], gamma=lrate_decay
+                optimizer=optimizer, milestones=self.args["milestones"], gamma=self.args["lrate_decay"]
             )
             self._update_representation(train_loader, test_loader, optimizer, scheduler)
 
@@ -164,7 +155,7 @@ class iCaRL(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -174,7 +165,7 @@ class iCaRL(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    init_epoch,
+                    self.args["init_epoch"],
                     losses / len(train_loader),
                     train_acc,
                 )
@@ -237,7 +228,7 @@ class iCaRL(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                     test_acc,
@@ -246,7 +237,7 @@ class iCaRL(BaseLearner):
                 info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
-                    epochs,
+                    self.args["epochs"],
                     losses / len(train_loader),
                     train_acc,
                 )

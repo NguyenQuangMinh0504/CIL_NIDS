@@ -36,16 +36,21 @@ def setup_parser():
     parser.add_argument('--device', '-d', nargs='+', type=int, default=[0, 1, 2, 3])
     parser.add_argument('--debug', action="store_true")
     parser.add_argument('--skip', action="store_true")
-    parser.add_argument("--init_epoch", type=int, default=200)
-    parser.add_argument("--epochs", type=int, default=170)
-    parser.add_argument("--batch_size", type=int, default=128)
+    parser.add_argument("--init_epoch", type=int, default=300)
+    parser.add_argument("--epochs", type=int, default=300)
+    parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--pre_processing", type=str, default="min_max")
-    parser.add_argument("--lrate", type=float, default=0.001)
-    parser.add_argument("--init_lr", type=float, default=0.001)
+
+    parser.add_argument("--init_lr", type=float, default=0.1)
     parser.add_argument("--exemplar_using", action="store_true")  # Using in finetune model for using exemplar or not
     parser.add_argument("--regular_loss", action="store_true")  # Using in lwf for testing purpose
-    parser.add_argument("--milestones", type=list, default=[100, 200])
+
+    # Training parameters
+    parser.add_argument("--lrate", type=float, default=0.1, help="Lrate of SGD")
     parser.add_argument("--momentum", type=float, default=0, help="Momentum of SGD")
+    parser.add_argument("--weight_decay", type=float, default=0, help="Weight decay of SGD")
+    parser.add_argument("--lrate_decay", type=float, default=0.1, help="Lrate decay of MultiStepLR")
+    parser.add_argument("--milestones", type=list, default=[100, 200], help="Milestones of MultiStepLR")
     return parser
 
 
