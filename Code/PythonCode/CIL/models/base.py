@@ -116,6 +116,8 @@ class BaseLearner(object):
             logging.info(f"size of class mean is: {self._class_means.shape}")
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
+            logging.info("Classification report of Neareast Mean of Exemplars")
+            logging.info(f"{classification_report(y_true, y_pred)}")
         else:
             nme_accy = None
 
@@ -175,7 +177,6 @@ class BaseLearner(object):
         vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T  # Normalize the data
         dists = cdist(class_means, vectors, "sqeuclidean")  # Calculate sqeuclidiean distance
         scores = dists.T  # Tranpose the results
-        logging.info(f"Shape of score is: {scores.shape}")
         return np.argsort(scores, axis=1)[:, : self.topk], y_true
 
     def _extract_vectors(self, loader):
