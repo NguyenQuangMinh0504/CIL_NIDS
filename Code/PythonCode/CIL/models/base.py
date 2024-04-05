@@ -166,7 +166,7 @@ class BaseLearner(object):
             y_true.append(targets.cpu().numpy())
         return np.concatenate(y_pred), np.concatenate(y_true)
 
-    def _eval_nme(self, loader, class_means):
+    def _eval_nme(self, loader: DataLoader, class_means):
         """Classification based on neareast mean of exemplars"""
 
         logging.info("Evaluating using neareast mean of exemplar ...")
@@ -175,10 +175,12 @@ class BaseLearner(object):
         vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T  # Normalize the data
         dists = cdist(class_means, vectors, "sqeuclidean")  # Calculate sqeuclidiean distance
         scores = dists.T  # Tranpose the results
+        logging.info(f"Shape of score is: {scores.shape}")
         return np.argsort(scores, axis=1)[:, : self.topk], y_true
 
     def _extract_vectors(self, loader):
         """Passing input and return layer before fully connected layer"""
+        logging.info("Extract vectors ...")
         self._network.eval()
         vectors, targets = [], []
         for _, _inputs, _targets in loader:
