@@ -111,6 +111,7 @@ class BaseLearner(object):
         cnn_accy = self._evaluate(y_pred, y_true)
 
         if hasattr(self, "_class_means"):
+            logging.info(f"Class mean is: {self._class_means}")
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
         else:
@@ -165,12 +166,13 @@ class BaseLearner(object):
 
     def _eval_nme(self, loader, class_means):
         """Classification based on neareast mean of exemplars"""
+
         logging.info("Evaluating using neareast mean of exemplar ...")
         self._network.eval()
-        vectors, y_true = self._extract_vectors(loader=loader)
-        vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T
-        dists = cdist(class_means, vectors, "sqeuclidean")
-        scores = dists.T
+        vectors, y_true = self._extract_vectors(loader=loader)  # Get the vectors
+        vectors = (vectors.T / (np.linalg.norm(vectors.T, axis=0) + EPSILON)).T  # Normalize the data
+        dists = cdist(class_means, vectors, "sqeuclidean")  # Calculate sqeuclidiean distance
+        scores = dists.T  # Tranpose the results
         return np.argsort(scores, axis=1)[:, : self.topk], y_true
 
     def _extract_vectors(self, loader):
