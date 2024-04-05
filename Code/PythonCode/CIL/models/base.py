@@ -112,6 +112,8 @@ class BaseLearner(object):
 
         if hasattr(self, "_class_means"):
             logging.info(f"Class mean is: {self._class_means}")
+            logging.info(f"Type of class mean is: {type(self._class_means)}")
+            logging.info(f"size of class mean is: {self._class_means.shape}")
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
         else:
