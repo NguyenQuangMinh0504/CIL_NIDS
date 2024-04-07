@@ -252,7 +252,7 @@ def save_results(args, cnn_curve, nme_curve, no_nme=False):
             # f.write(f"{cnn_top5[-1]} \n")
 
     # -------NME TOP1----------
-    if nme_top1 is not None:
+    if nme_top1 != []:
         if no_nme is False:
             _log_dir = os.path.join("./results/", f"{args['prefix']}", "nme_top1")
             os.makedirs(_log_dir, exist_ok=True)
