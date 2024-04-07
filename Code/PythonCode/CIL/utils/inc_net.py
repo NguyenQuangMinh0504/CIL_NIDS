@@ -86,7 +86,8 @@ class IncrementalNet(BaseNet):
             self.set_gradcam_hook()
 
     def update_fc(self, nb_classes):
-        logging.info(self.feature_dim)
+        """Updating fully connected layer. Create a new fc layer, copy weight from old fc to new fc"""
+        logging.info("Updating fully connected layer ...")
         fc = self.generate_fc(self.feature_dim, nb_classes)
         if self.fc is not None:
             nb_output = self.fc.out_features
