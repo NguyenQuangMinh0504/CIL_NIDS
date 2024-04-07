@@ -113,12 +113,8 @@ class BaseLearner(object):
         if hasattr(self, "_class_means"):
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
-            logging.info(f"Y prediction is: {y_pred}")
-            logging.info(f"Y prediction filtered is: {y_pred[:, :1]}")
-            logging.info(f"Concatenate of y prediction is: {np.concatenate(y_pred[:, :1])}")
-            logging.info(f"Y true is: {y_true}")
-            # logging.info("Classification report of Neareast Mean of Exemplars")
-            # logging.info(f"{classification_report(y_true, y_pred)}")
+            logging.info("Classification report of Neareast Mean of Exemplars")
+            logging.info(f"{classification_report(y_true, np.concatenate(y_pred[:, :1]))}")
         else:
             nme_accy = None
 
