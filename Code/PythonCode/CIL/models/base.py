@@ -116,8 +116,11 @@ class BaseLearner(object):
             logging.info(f"size of class mean is: {self._class_means.shape}")
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
-            logging.info("Classification report of Neareast Mean of Exemplars")
-            logging.info(f"{classification_report(y_true, y_pred)}")
+            logging.info(f"Y prediction is: {y_pred}")
+            logging.info(f"Y true is: {y_true}")
+            logging.info(y_true)
+            # logging.info("Classification report of Neareast Mean of Exemplars")
+            # logging.info(f"{classification_report(y_true, y_pred)}")
         else:
             nme_accy = None
 
