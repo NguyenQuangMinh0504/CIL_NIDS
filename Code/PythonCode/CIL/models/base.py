@@ -115,6 +115,7 @@ class BaseLearner(object):
             nme_accy = self._evaluate(y_pred, y_true)
             logging.info(f"Y prediction is: {y_pred}")
             logging.info(f"Y prediction filtered is: {y_pred[:, :1]}")
+            logging.info(f"Concatenate of y prediction is: {np.concatenate(y_pred[:, :1])}")
             logging.info(f"Y true is: {y_true}")
             # logging.info("Classification report of Neareast Mean of Exemplars")
             # logging.info(f"{classification_report(y_true, y_pred)}")
