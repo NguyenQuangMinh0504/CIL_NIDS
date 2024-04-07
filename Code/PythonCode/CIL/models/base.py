@@ -27,7 +27,7 @@ class BaseLearner(object):
     """Total knowned classes"""
     _total_classes: int
     """Equal known_class + number of class trained in the current step"""
-    _class_means: None
+    _class_means: np.ndarray
     """Use for classification: First mentioned in paper iCaRL: Incremental Classifier and Representation Learning"""
 
     def __init__(self, args: dict):
@@ -111,14 +111,11 @@ class BaseLearner(object):
         cnn_accy = self._evaluate(y_pred, y_true)
 
         if hasattr(self, "_class_means"):
-            logging.info(f"Class mean is: {self._class_means}")
-            logging.info(f"Type of class mean is: {type(self._class_means)}")
-            logging.info(f"size of class mean is: {self._class_means.shape}")
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
             logging.info(f"Y prediction is: {y_pred}")
+            logging.info(f"Y prediction filtered is: {y_pred[:, :1]}")
             logging.info(f"Y true is: {y_true}")
-            logging.info(y_true)
             # logging.info("Classification report of Neareast Mean of Exemplars")
             # logging.info(f"{classification_report(y_true, y_pred)}")
         else:
@@ -173,7 +170,6 @@ class BaseLearner(object):
 
     def _eval_nme(self, loader: DataLoader, class_means):
         """Classification based on neareast mean of exemplars"""
-
         logging.info("Evaluating using neareast mean of exemplar ...")
         self._network.eval()
         vectors, y_true = self._extract_vectors(loader=loader)  # Get the vectors
