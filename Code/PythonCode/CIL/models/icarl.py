@@ -25,6 +25,9 @@ class iCaRL(BaseLearner):
     Implementation of paper iCaRL: Incremental Classifier and Representation Learning
     https://openaccess.thecvf.com/content_cvpr_2017/html/Rebuffi_iCaRL_Incremental_Classifier_CVPR_2017_paper.html
     """
+
+    _old_network: None
+    """This is weights from former training task and is used to in knowledge distillation loss"""
     def __init__(self, args):
         super().__init__(args)
         self._network = IncrementalNet(args["convnet_type"], False)
