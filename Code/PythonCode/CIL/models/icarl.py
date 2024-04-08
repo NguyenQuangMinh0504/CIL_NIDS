@@ -211,7 +211,7 @@ class iCaRL(BaseLearner):
                 else:
                     loss_clf = F.cross_entropy(logits, targets)
                     loss_kd = _KD_loss(
-                        logits[:, : self._known_classes],
+                        logits[:, :self._known_classes],
                         self._old_network(inputs)["logits"],
                         T,
                     )
