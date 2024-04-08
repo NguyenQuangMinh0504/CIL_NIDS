@@ -203,14 +203,16 @@ class iCaRL(BaseLearner):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
                 logits = self._network(inputs)["logits"]
 
-                loss_clf = F.cross_entropy(logits, targets)
-                loss_kd = _KD_loss(
-                    logits[:, : self._known_classes],
-                    self._old_network(inputs)["logits"],
-                    T,
-                )
-
-                loss = loss_clf + loss_kd
+                if self.args.get("regular_loss") is True:
+                    loss = F.cross_entropy(logits, targets)
+                else:
+                    loss_clf = F.cross_entropy(logits, targets)
+                    loss_kd = _KD_loss(
+                        logits[:, : self._known_classes],
+                        self._old_network(inputs)["logits"],
+                        T,
+                    )
+                    loss = loss_clf + loss_kd
 
                 optimizer.zero_grad()
                 loss.backward()
