@@ -132,8 +132,10 @@ def _train(args: dict):
                 logging.info("Can not get key from nme_curve !!!")
 
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
+            logging.info(f"Average Accuracy {sum(cnn_curve['top1']) / len(cnn_curve['top1'])}")
             logging.info("CNN top5 curve: {}".format(cnn_curve["top5"]))
             logging.info("NME top1 curve: {}".format(nme_curve["top1"]))
+            logging.info(f"Average NME Accuracy {sum(nme_curve['top1']) / len(nme_curve['top1'])}")
             logging.info("NME top5 curve: {}\n".format(nme_curve["top5"]))
 
         else:
