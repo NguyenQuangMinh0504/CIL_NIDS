@@ -205,6 +205,7 @@ class iCaRL(BaseLearner):
 
                 if self.args.get("regular_loss") is True:
                     loss = F.cross_entropy(logits, targets)
+                    logging.info("Just checking")
                 else:
                     loss_clf = F.cross_entropy(logits, targets)
                     loss_kd = _KD_loss(
