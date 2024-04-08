@@ -211,7 +211,12 @@ class LwF(BaseLearner):
                     losses_kd += loss_kd.item()
                     loss = lamda * loss_kd + loss_clf
                 else:
-                    loss = F.cross_entropy(logits, targets)
+                    loss_kd = _KD_loss(
+                        pred=logits[:, : self._known_classes],
+                        soft=self._old_network(inputs)["logits"],
+                        T=T,
+                    )
+                    loss = F.cross_entropy(logits, targets) + lamda * loss_kd
 
                 optimizer.zero_grad()
                 loss.backward()
