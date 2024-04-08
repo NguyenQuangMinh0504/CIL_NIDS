@@ -197,7 +197,7 @@ class LwF(BaseLearner):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
                 logits = self._network(inputs)["logits"]
 
-                if self.args.get("regular_loss") is True:
+                if self.args.get("regular_loss") is False:
                     fake_targets = targets - self._known_classes
                     # Default of F.cross_entropy reducion is mean.
                     loss_clf = F.cross_entropy(
@@ -216,8 +216,8 @@ class LwF(BaseLearner):
                         soft=self._old_network(inputs)["logits"],
                         T=T,
                     )
-                    # loss = F.cross_entropy(logits, targets) + lamda * loss_kd
-                    loss = F.cross_entropy(logits, targets)
+                    loss = F.cross_entropy(logits, targets) + lamda * loss_kd
+                    # loss = F.cross_entropy(logits, targets)
 
                 optimizer.zero_grad()
                 loss.backward()
