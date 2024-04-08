@@ -122,7 +122,7 @@ class DataManager(object):
             np.random.seed(seed=seed)
             order = np.random.permutation(len(order)).tolist()
             if dataset_name == "cic-ids-2017":
-                order = [4, 0, 8, 2, 3, 7, 9, 6, 5, 1, 10, 11]
+                order = [0, 4, 2, 8, 3, 7, 6, 5, 9, 1, 10, 11]
             elif dataset_name == "kdd99":
                 order = [3, 2, 0, 8, 6, 9, 1, 7, 5, 4]
             elif dataset_name == "unsw-nb15":
