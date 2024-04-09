@@ -24,6 +24,7 @@ class UNSW_NB15(iData):
         path = "../../../Dataset/UNSW-NB15/UNSW_NB15_training-set.csv"
         dataset = pd.read_csv(path)
         check_invalid_data(df=dataset)
+        dataset.drop_duplicates(inplace=True)
         dataset.drop(columns=["id", "label"], inplace=True)
         logging.info(dataset["attack_cat"].value_counts())
         for column in dataset.columns:
