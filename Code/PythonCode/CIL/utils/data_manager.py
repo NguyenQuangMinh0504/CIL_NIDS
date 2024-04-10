@@ -126,7 +126,7 @@ class DataManager(object):
             elif dataset_name == "kdd99":
                 order = [3, 2, 0, 8, 6, 9, 1, 7, 5, 4]
             elif dataset_name == "unsw-nb15":
-                order = [6, 5, 3, 4, 2, 7, 0, 1, 8, 9]
+                order = [6, 3, 4, 7, 5, 2, 0, 1, 8, 9]
             elif dataset_name == "ton-iot-network":
                 order = [5, 0, 1, 2, 3, 4, 6, 7, 8, 9]
         else:
