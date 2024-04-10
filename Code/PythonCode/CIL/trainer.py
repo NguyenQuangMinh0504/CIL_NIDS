@@ -150,6 +150,7 @@ def _train(args: dict):
                 logging.info("Can not get key from cnn_curve !!!")
 
             logging.info("CNN top1 curve: {}".format(cnn_curve["top1"]))
+            logging.info(f"Average Accuracy {sum(cnn_curve['top1']) / len(cnn_curve['top1'])}")
             logging.info("CNN top5 curve: {}\n".format(cnn_curve["top5"]))
 
     # Logging to tensorboard
