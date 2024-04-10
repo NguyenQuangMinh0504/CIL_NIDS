@@ -23,9 +23,9 @@ class UNSW_NB15(iData):
     def download_data(self):
         path = "../../../Dataset/UNSW-NB15/UNSW_NB15_training-set.csv"
         dataset = pd.read_csv(path)
-        check_invalid_data(df=dataset)
-        logging.info("Drop duplicate data ...")
-        dataset.drop_duplicates(inplace=True)
+        # logging.info("Drop duplicate data ...")
+        # dataset.drop_duplicates(inplace=True)
+        logging.info("Dropping column [label, id] ...")
         dataset.drop(columns=["id", "label"], inplace=True)
         # dataset.drop_duplicates(inplace=True)
         check_invalid_data(df=dataset)
