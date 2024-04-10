@@ -222,7 +222,7 @@ class DER(BaseLearner):
                     self.args["epochs"],
                     losses / len(train_loader),
                     losses_clf / len(train_loader),
-                    loss_aux / len(train_loader),
+                    losses_aux / len(train_loader),
                     train_acc,
                     test_acc
                 )
@@ -233,7 +233,7 @@ class DER(BaseLearner):
                     epoch + 1,
                     self.args["epochs"],
                     losses / len(train_loader),
-                    loss_clf / len(train_loader),
+                    losses_clf / len(train_loader),
                     losses_aux / len(train_loader),
                     train_acc,
                 )
