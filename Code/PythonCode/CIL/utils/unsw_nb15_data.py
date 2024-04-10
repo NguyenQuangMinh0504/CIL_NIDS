@@ -27,6 +27,8 @@ class UNSW_NB15(iData):
         logging.info("Drop duplicate data ...")
         dataset.drop_duplicates(inplace=True)
         dataset.drop(columns=["id", "label"], inplace=True)
+        # dataset.drop_duplicates(inplace=True)
+        check_invalid_data(df=dataset)
         logging.info(dataset["attack_cat"].value_counts())
         for column in dataset.columns:
             if column in ["proto", "service", "state"]:
