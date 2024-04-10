@@ -214,8 +214,10 @@ def save_time(args, cost_time):
 
 def save_results(args, cnn_curve, nme_curve, no_nme=False):
     logging.info("Calling function save results ...")
-    cnn_top1, cnn_top5 = cnn_curve["top1"], cnn_curve['top5']
-    nme_top1, nme_top5 = nme_curve["top1"], nme_curve['top5']
+    cnn_top1, cnn_top5 = cnn_curve["top1"]
+    cnn_top5 = cnn_curve["top5"]
+    nme_top1 = nme_curve["top1"]
+    # nme_top5 = nme_curve["top5"]
 
     # -------CNN TOP1----------
     _log_dir = os.path.join("./results/", f"{args['prefix']}", "cnn_top1")
