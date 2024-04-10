@@ -1,7 +1,7 @@
 import pandas as pd
 from torchvision.transforms import ToTensor
 from utils.data import iData
-from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, to_xy, encode_numeric_min_max_scale, check_invalid_data
+from utils.helper import encode_text_dummy, encode_numeric_zscore, encode_text_index, encode_numeric_min_max_scale, check_invalid_data
 from sklearn.model_selection import train_test_split
 import numpy as np
 import logging

@@ -148,7 +148,10 @@ def check_invalid_data(df: pd.DataFrame) -> None:
     """Checking for invalid data"""
     logging.info("Checking invalid data ...")
     logging.info("Checking duplicate data ...")
-    logging.info(df.duplicated().any())
+    duplicated = df.duplicated().any()
+    logging.info(duplicated)
+    if duplicated:
+        logging.info(f"Number of duplicate rows is: {df.duplicated().value_counts()}")
     logging.info("Checking for NaN value ...")
     logging.info(df.columns[df.isna().any()])
     logging.info("Number of NaN rows ...")
