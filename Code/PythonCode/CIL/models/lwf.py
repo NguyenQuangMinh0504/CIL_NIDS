@@ -223,6 +223,7 @@ class LwF(BaseLearner):
                 loss.backward()
                 optimizer.step()
                 losses += loss.item()
+                losses_kd += loss_kd.item()
 
                 with torch.no_grad():
                     _, preds = torch.max(logits, dim=1)
