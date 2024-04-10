@@ -40,16 +40,13 @@ class UNSW_NB15(iData):
                     encode_numeric_min_max_scale(dataset, name=column)
                 else:
                     raise Exception("Not implemented Normalization")
-        x, y = to_xy(dataset, 'attack_cat')
-
         logging.info("After processing")
         check_invalid_data(df=dataset)
         logging.info(dataset["attack_cat"].value_counts())
-
         y = dataset["attack_cat"].to_numpy()
-        dataset.drop(labels="attack_cat", axis=1)
+        dataset.drop(labels="attack_cat", axis=1, inplace=True)
         self.train_data, self.test_data, self.train_targets, self.test_targets = train_test_split(
-            x, y, test_size=0.2, random_state=42)
+            dataset.to_numpy(), y, test_size=0.2, random_state=42)
 
         self.train_data = self.train_data.astype(np.float32)
         self.test_data = self.test_data.astype(np.float32)
