@@ -191,13 +191,17 @@ class DER(BaseLearner):
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs. targets = inputs.to(self._device), targets.to(self._device)
                 outputs = self._network(inputs)
-                logits, aux_logits = outputs["logits"], outputs["aux_logits"]
+                logits = outputs["logits"]
+                aux_logits = outputs["aux_logits"]
                 loss_clf = F.cross_entropy(logits, targets)
                 aux_targets = targets.clone()
                 aux_targets = torch.where(aux_targets - self._known_classes + 1 > 0,
                                           aux_targets - self._known_classes + 1, 0)
                 loss_aux = F.cross_entropy(aux_logits, aux_targets)
-                loss = loss_clf + loss_aux
+                if self.args.get("regular_loss") is True:
+                    loss = loss_clf
+                else:
+                    loss = loss_clf + loss_aux
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
