@@ -192,6 +192,7 @@ class LwF(BaseLearner):
             self._network.train()
             losses = 0.0
             losses_kd = 0.0
+            losses_clf = 0.0
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
@@ -222,8 +223,9 @@ class LwF(BaseLearner):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-                losses += loss.item()
+                losses_clf += loss_clf.item()
                 losses_kd += loss_kd.item()
+                losses += loss.item()
 
                 with torch.no_grad():
                     _, preds = torch.max(logits, dim=1)
@@ -239,21 +241,23 @@ class LwF(BaseLearner):
             if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Losses_kd, {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Losses {:.3f}, Losses_clf {:.3f}, Losses_kd, {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses / len(train_loader),
+                    losses_clf / len(train_loader),
                     losses_kd / len(train_loader),
                     train_acc,
                     test_acc,
                 )
             else:
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Losses_kd {:.3f}, Train_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Losses {:.3f}, Losses_clf {:.3f}, Losses_kd {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses / len(train_loader),
+                    losses_clf / len(train_loader),
                     losses_kd / len(train_loader),
                     train_acc,
                 )
