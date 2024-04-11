@@ -217,11 +217,12 @@ class iCaRL(BaseLearner):
                         T,
                     )
                     loss = loss_clf + loss_kd
+                    kd_losses += loss_kd.item()
 
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-                kd_losses += loss_kd.item()
+
                 losses += loss.item()
 
                 _, preds = torch.max(logits, dim=1)
