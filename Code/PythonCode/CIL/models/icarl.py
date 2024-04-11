@@ -201,6 +201,7 @@ class iCaRL(BaseLearner):
         for _, epoch in enumerate(prog_bar(self.args["init_epoch"])):
             self._network.train()
             losses = 0.0
+            kd_losses = 0.0
             correct, total = 0, 0
             for i, (_, inputs, targets) in enumerate(train_loader):
                 inputs, targets = inputs.to(self._device), targets.to(self._device)
@@ -220,6 +221,7 @@ class iCaRL(BaseLearner):
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
+                kd_losses += loss_kd.item()
                 losses += loss.item()
 
                 _, preds = torch.max(logits, dim=1)
@@ -235,20 +237,22 @@ class iCaRL(BaseLearner):
             if (epoch + 1) % 5 == 0:
                 test_acc = self._compute_accuracy(self._network, test_loader)
                 writer.add_scalar("Accuracy/Test", test_acc, epoch)
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}, Test_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Losses_kd {:.3f} Train_accy {:.2f}, Test_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses / len(train_loader),
+                    kd_losses / len(train_loader),
                     train_acc,
                     test_acc,
                 )
             else:
-                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Train_accy {:.2f}".format(
+                info = "Task {}, Epoch {}/{} => Loss {:.3f}, Losses_kd {:.3f}, Train_accy {:.2f}".format(
                     self._cur_task,
                     epoch + 1,
                     self.args["epochs"],
                     losses / len(train_loader),
+                    kd_losses / len(train_loader),
                     train_acc,
                 )
             logging.info(info)
