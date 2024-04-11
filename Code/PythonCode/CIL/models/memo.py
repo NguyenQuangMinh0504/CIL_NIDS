@@ -136,7 +136,7 @@ class MEMO(BaseLearner):
             if self.args["scheduler"] == "steplr":
                 scheduler = optim.lr_scheduler.MultiStepLR(
                     optimizer=optimizer,
-                    milestones=self.args["init_milestones"],
+                    milestones=self.args["milestones"],
                     gamma=self.args["lrate_decay"],
                 )
             elif self.args["scheduler"] == "cosine":
