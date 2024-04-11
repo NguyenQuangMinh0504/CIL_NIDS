@@ -217,8 +217,8 @@ class LwF(BaseLearner):
                         soft=self._old_network(inputs)["logits"],
                         T=T,
                     )
-                    loss = F.cross_entropy(logits, targets) + lamda * loss_kd
-                    # loss = F.cross_entropy(logits, targets)
+                    loss_clf = F.cross_entropy(logits, targets)
+                    loss = lamda * loss_kd + loss_clf
 
                 optimizer.zero_grad()
                 loss.backward()
