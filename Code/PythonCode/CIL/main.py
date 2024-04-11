@@ -50,7 +50,7 @@ def setup_parser():
     parser.add_argument("--momentum", type=float, default=0, help="Momentum of SGD")
     parser.add_argument("--weight_decay", type=float, default=0, help="Weight decay of SGD")
     parser.add_argument("--lrate_decay", type=float, default=0.1, help="Lrate decay of MultiStepLR")
-    parser.add_argument("--milestones", nargs="+", default=[100, 200], help="Milestones of MultiStepLR")
+    parser.add_argument("--milestones", nargs="+", type=int, default=[100, 200], help="Milestones of MultiStepLR")
     return parser
 
 
