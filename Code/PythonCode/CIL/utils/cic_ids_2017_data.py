@@ -55,9 +55,9 @@ class CIC_IDS_2017(iData):
         # Drop 90% of benign traffic
         logging.info(dataset[" Label"].value_counts())
         dataset = dataset[~dataset[" Label"].isin(["Web Attack � Sql Injection", "Heartbleed", "Infiltration"])]
-        # benign_dataset = dataset[dataset[" Label"] == "BENIGN"].sample(n=200000)
-        # dataset = dataset[dataset[" Label"] != "BENIGN"].copy()
-        # dataset = pd.concat([dataset, benign_dataset])
+        benign_dataset = dataset[dataset[" Label"] == "BENIGN"].sample(n=200000, random_state=1993)
+        dataset = dataset[dataset[" Label"] != "BENIGN"].copy()
+        dataset = pd.concat([dataset, benign_dataset])
         logging.info(dataset.columns)
 
         dataset.drop(columns=[" Fwd Header Length.1"], inplace=True)  # duplicate of Fwd Header Length
