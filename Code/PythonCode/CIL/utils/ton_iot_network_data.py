@@ -26,9 +26,9 @@ class TON_IoT_Network(iData):
         dataset.drop(columns=["src_ip", "dst_ip"], inplace=True)
         dataset.drop(columns=["dns_query"], inplace=True)
         dataset.drop(columns=["label"], inplace=True)
-
         check_invalid_data(df=dataset)
-
+        logging.info("Dropping duplicates data ...")
+        dataset.drop_duplicates(inplace=True)
         for column in dataset.columns:
             if column != "type":
                 if dataset[column].dtype == "object":
