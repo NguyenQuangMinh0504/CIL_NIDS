@@ -19,7 +19,7 @@ class Random_Data(iData):
                                    n_classes=10,
                                    n_samples=10000,
                                    n_informative=15,
-                                   n_features=15,
+                                   n_features=120,
                                    n_clusters_per_class=1,
                                    class_sep=6,
                                    n_redundant=0,
