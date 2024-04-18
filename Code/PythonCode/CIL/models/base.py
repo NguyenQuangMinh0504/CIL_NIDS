@@ -79,8 +79,8 @@ class BaseLearner(object):
         """Return grouped accy, top1 accy and top k accy (k is set)"""
         ret = {}
         logging.info("Calling _evalute function ....")
-        logging.info(f"y pred is: {y_pred}")
-        logging.info(f"y_true is: {y_true}")
+        # logging.info(f"y pred is: {y_pred}")
+        # logging.info(f"y_true is: {y_true}")
         grouped = accuracy(y_pred.T[0], y_true, self._known_classes)
         ret["grouped"] = grouped
         ret["top1"] = grouped["total"]
