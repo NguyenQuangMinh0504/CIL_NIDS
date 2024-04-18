@@ -4,10 +4,13 @@ from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
 from utils.data import iData, iCIFAR10, iCIFAR100, KDD99
+
+# Loading dataset
 from utils.cic_ids_2017_data import CIC_IDS_2017
 from utils.ton_iot_network_data import TON_IoT_Network
 from utils.unsw_nb15_data import UNSW_NB15
 from utils.image_net_100_data import iImageNet100
+from utils.random_data import Random_Data
 
 
 class DataManager(object):
@@ -23,7 +26,7 @@ class DataManager(object):
         logging.info("Initialize Data Manager ...")
         self.dataset_name = dataset_name
 
-        if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network", "unsw-nb15"]:
+        if self.dataset_name in ["kdd99", "cic-ids-2017", "ton-iot-network", "unsw-nb15", "random"]:
             self.is_image = False
         else:
             self.is_image = True
@@ -224,6 +227,8 @@ def _get_idata(dataset_name: str, **kwargs):
         return iImageNet100()
     elif name == "unsw-nb15":
         return UNSW_NB15(**kwargs)
+    elif name == "random":
+        return Random_Data(**kwargs)
     else:
         raise NotImplementedError("Unknown dataset {}.".format(dataset_name))
 
