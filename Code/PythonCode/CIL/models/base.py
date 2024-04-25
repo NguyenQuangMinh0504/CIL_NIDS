@@ -105,7 +105,7 @@ class BaseLearner(object):
             y_true.append(targets.cpu().numpy())
         y_pred = np.concatenate(y_pred)
         y_true = np.concatenate(y_true)
-        logging.info(f"{classification_report(y_true, y_pred)}")
+        logging.info(f"{classification_report(y_true, y_pred, zero_division=0)}")
 
         y_pred, y_true = self._eval_cnn(self.test_loader)
         cnn_accy = self._evaluate(y_pred, y_true)
@@ -114,7 +114,7 @@ class BaseLearner(object):
             y_pred, y_true = self._eval_nme(self.test_loader, self._class_means)
             nme_accy = self._evaluate(y_pred, y_true)
             logging.info("Classification report of Neareast Mean of Exemplars")
-            logging.info(f"{classification_report(y_true, np.concatenate(y_pred[:, :1]))}")
+            logging.info(f"{classification_report(y_true, np.concatenate(y_pred[:, :1]), zero_division=0)}")
         else:
             nme_accy = None
 
