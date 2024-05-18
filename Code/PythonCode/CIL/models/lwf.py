@@ -207,7 +207,7 @@ class LwF(BaseLearner):
                     loss_kd = _KD_loss(
                         pred=logits[:, : self._known_classes],
                         soft=self._old_network(inputs)["logits"],
-                        T=T,
+                        T=self.args.get("temperature"),
                     )
                     losses_kd += loss_kd.item()
                     loss = lamda * loss_kd + loss_clf
@@ -215,7 +215,7 @@ class LwF(BaseLearner):
                     loss_kd = _KD_loss(
                         pred=logits[:, : self._known_classes],
                         soft=self._old_network(inputs)["logits"],
-                        T=T,
+                        T=self.args.get("temperature"),
                     )
                     loss_clf = F.cross_entropy(logits, targets)
                     loss = lamda * loss_kd + loss_clf
