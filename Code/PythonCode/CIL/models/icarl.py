@@ -17,7 +17,6 @@ from utils.data_manager import DataManager
 EPSILON = 1e-8
 
 num_workers = 4
-T = 2
 
 
 class iCaRL(BaseLearner):
@@ -214,7 +213,7 @@ class iCaRL(BaseLearner):
                     loss_kd = _KD_loss(
                         logits[:, :self._known_classes],
                         self._old_network(inputs)["logits"],
-                        T,
+                        T=self.args.get("temperature"),
                     )
                     loss = loss_clf + loss_kd
                     kd_losses += loss_kd.item()
