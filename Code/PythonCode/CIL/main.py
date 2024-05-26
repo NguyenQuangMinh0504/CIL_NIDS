@@ -44,7 +44,7 @@ def setup_parser():
     parser.add_argument("--init_lr", type=float, default=0.1)
     parser.add_argument("--exemplar_using", action="store_true")  # Using in finetune model for using exemplar or not
     parser.add_argument("--regular_loss", action="store_true")  # Using in lwf for testing purpose
-    parser.add_argument("--temperature", type=int, default=2,
+    parser.add_argument("--temperature", type=float, default=2,
                         help="Temperature parameter T, introduced in famous paper distilling the knowledge in a neural network")
 
     # Training parameters
